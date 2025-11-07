@@ -22,4 +22,4 @@ jobs:
       with:
         path: storybook-static # change to your build folder
         install_command: npm install
-        build_command: gulp build-storybook
+        build_command: npm run build && gulp build-storybook
