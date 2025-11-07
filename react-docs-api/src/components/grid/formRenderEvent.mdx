@@ -1,0 +1,58 @@
+import { Link } from 'react-router'
+
+# FormRenderEvent
+
+Represents the event triggered when a form is initialized for editing or adding a row.
+This interface provides access to the form validator and the associated row data,
+allowing configuration of validation logic and dynamic form behavior during rendering.
+
+
+## Props
+
+The following table outlines the props for the FormRenderEvent:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>data</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">T</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Contains the complete data object for the row being edited or added.
+Provides access to field values required for conditional rendering,
+dynamic validation, or logic execution during form setup.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>formRef</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">RefObject&lt;IFormValidator&gt;</span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Holds a reference to the form validator instance used for validating input fields.
+Enables access to validation methods and state, allowing programmatic control
+over form validation during initialization or interaction.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>rowIndex</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Specifies the index of the row for which the form is rendered.
+Identifies the row's position in the grid's data source, supporting both
+edit and insert operations within the grid component.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

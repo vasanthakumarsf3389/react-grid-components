@@ -1,0 +1,112 @@
+import { Link } from 'react-router'
+
+# DataRequestEvent
+
+Defines event arguments for custom data service requests in the Data Grid component.
+Provides parameters for querying data from a remote or custom data source, including pagination, filtering, sorting, and searching.
+Used to configure and execute data retrieval operations for the grid.
+
+## Props
+
+The following table outlines the props for the DataRequestEvent:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>action</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper"><Link to="/data-grid/filterevent" className="link-type"><span className="doc-prop-wrapper">FilterEvent</span></Link></span> &#124; <span className="doc-prop-wrapper"><Link to="/data-grid/sortevent" className="link-type"><span className="doc-prop-wrapper">SortEvent</span></Link></span> &#124; <span className="doc-prop-wrapper"><Link to="/data-grid/searchevent" className="link-type"><span className="doc-prop-wrapper">SearchEvent</span></Link></span> &#124; <span className="doc-prop-wrapper"><Link to="/data-grid/pageevent" className="link-type"><span className="doc-prop-wrapper">PageEvent</span></Link></span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Contains details about the grid action (e.g., paging, grouping, filtering, sorting, searching) that triggered the request.
+Provides context about the user or programmatic action driving the data query.
+Used to handle specific action-related logic in the data service.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>aggregates</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">Aggregates[]</span></div></td>
+<td><div className="prop-default">[ ]</div></td>
+<td className="doc-description">
+Contains an array of aggregation criteria for summarizing data in the grid.
+Specifies functions like sum, average, min, max, or count to be applied on specific fields.
+Used to compute and display aggregated values in the grid.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>name</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Specifies the name of the action associated with the data request.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>requiresCounts</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">false</div></td>
+<td className="doc-description">
+Indicates whether the data service should return both records and the total record count.
+When true, requires the service to include the total count for pagination.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>search</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/searchsettings" className="link-type"><span className="doc-prop-wrapper">SearchSettings[]</span></Link></div></td>
+<td><div className="prop-default">[ ]</div></td>
+<td className="doc-description">
+Contains an array of search criteria for full-text or field-specific searches.
+Specifies search terms or conditions to filter data across one or more fields.
+Used to implement search functionality within the grid.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>skip</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number</span></div></td>
+<td><div className="prop-default">0</div></td>
+<td className="doc-description">
+Specifies the number of records to skip in the data source for pagination.
+Used to navigate to specific pages or subsets of data.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>sort</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/sortdescriptor" className="link-type"><span className="doc-prop-wrapper">SortDescriptor[]</span></Link></div></td>
+<td><div className="prop-default">[ ]</div></td>
+<td className="doc-description">
+Contains an array of sort criteria defining the fields and directions for sorting.
+Specifies how data should be ordered, such as ascending or descending by column.
+Used to apply sorting to the grid’s data based on user or programmatic input.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>take</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number</span></div></td>
+<td><div className="prop-default">12</div></td>
+<td className="doc-description">
+Specifies the number of records to retrieve per page from the data source.
+Used to limit the data fetched in a single request.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>where</td>
+<td><div className="doc-prop-type"><Link to="/data/predicate" className="link-type"><span className="doc-prop-wrapper">Predicate[]</span></Link></div></td>
+<td><div className="prop-default">[ ]</div></td>
+<td className="doc-description">
+Contains an array of filter criteria for querying the data source.
+Specifies conditions to filter data, such as equality or range checks on specific fields.
+Used to apply user-defined or programmatic filters to the grid’s data.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

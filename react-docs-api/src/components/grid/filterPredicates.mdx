@@ -1,0 +1,100 @@
+import { Link } from 'react-router'
+
+# FilterPredicates
+
+Configures filter predicates for individual columns in the Data Grid component.
+Defines the criteria, operators, and behavior for filtering data in a specific column.
+Supports filtering scenarios with logical conditions.
+
+## Props
+
+The following table outlines the props for the FilterPredicates:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>caseSensitive</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">false</div></td>
+<td className="doc-description">
+Determines whether string filtering is case-sensitive.
+When true, exact case matching is enforced for string fields. When false, filtering is case-insensitive.
+Does not affect non-string fields like numbers or dates.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>field</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Identifies the column `field` in the data source to which the filter is applied.
+Used to map the filter condition to the correct column.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>ignoreAccent</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">false</div></td>
+<td className="doc-description">
+Enables accent-insensitive filtering for string fields.
+When true, diacritic characters (e.g., accents like á, é) are treated as their base characters during filtering.
+Enhances filter capabilities for multilingual data.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>operator</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Specifies the comparison operator used for filtering grid column data.
+Determines how the filter value is compared to column data.
+Must align with the column’s data type (e.g., string, number, date) to ensure valid filtering behavior.
+Common operators include:
+* `equal`, `notEqual` – for exact matches.
+* `greaterThan`, `lessThan` – for numeric or date comparisons.
+* `contains`, `startsWith`, `endsWith` – for string-based filtering.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>predicate</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Specifies the logical operator ('and' or 'or') to combine this predicate with others.
+Enables filtering by linking multiple conditions for the same or different columns.
+Used to build advanced filter queries.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>uid</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Provides a unique identifier for the filter predicate to track its state.
+Used by the grid to manage and reference individual filter conditions.
+Ensures accurate filter application and state persistence.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>value</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/unions#valuetype" className="link-type"><span className="doc-prop-wrapper">ValueType</span></Link> &#124; <Link to="/data-grid/unions#valuetype" className="link-type"><span className="doc-prop-wrapper">ValueType[]</span></Link></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Defines the `value` used to filter records in the column.
+Supports single value or arrays for strings, numbers, dates, or booleans, depending on the column type.
+Used to match records against the specified operator.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

@@ -1,0 +1,55 @@
+import { Link } from 'react-router'
+
+# SelectionSettings
+
+Configures selection behavior in the Data Grid component.
+Defines settings for enabling selection, specifying selection mode, and controlling selection type.
+Manages how to interact with row selection in the grid.
+
+## Props
+
+The following table outlines the props for the SelectionSettings:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>enableToggle</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">false</div></td>
+<td className="doc-description">
+Specifies whether selection toggling is permitted for a selected row.
+When set to true, a selected row can be deselected through interaction.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>enabled</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">true</div></td>
+<td className="doc-description">
+Determines whether row selection is enabled in the grid.
+When set to true, allows to select rows via clicks or keyboard interactions. When false, disables all selection functionality.
+Affects the grid’s interactivity for row-based operations.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>mode</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span> &#124; <Link to="/data-grid/enums#selectionmode" className="link-type"><span className="doc-prop-wrapper">SelectionMode</span></Link></div></td>
+<td><div className="prop-default">'Single' | SelectionMode.Single</div></td>
+<td className="doc-description">
+Specifies the selection mode for the grid, controlling how many rows can be selected.
+Supports `Single` for selecting one row at a time or `Multiple` for selecting multiple rows using CTRL or SHIFT keys.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

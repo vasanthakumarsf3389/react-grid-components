@@ -1,0 +1,58 @@
+import { Link } from 'react-router'
+
+# RowAddEvent
+
+Describes the structure of the event triggered during a row add operation in the grid.
+Provides access to the new row's data and index, and supports conditional cancellation
+of the insertion process based on custom logic or validation requirements.
+
+
+## Props
+
+The following table outlines the props for the RowAddEvent:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>cancel</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">false</div></td>
+<td className="doc-description">
+Indicates whether the add operation should be cancelled.
+When set to true, the row insertion is prevented, allowing conditional control
+over grid updates based on business rules or validation outcomes.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>data</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">T</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+The initial data object for the row being added.
+Represents the field values intended for insertion, allowing transformation,
+validation, or enrichment prior to committing the row to the grid.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>rowIndex</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+The zero-based index at which the new row will be inserted in the grid's data source.
+Indicates the target position for the new entry, which can be used to determine
+placement logic or enforce ordering constraints.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

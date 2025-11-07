@@ -1,0 +1,77 @@
+import { Link } from 'react-router'
+
+# CellFocusEvent
+
+Defines event arguments for cell focus events in the Data Grid.
+Provides detailed context about the focused cell, including its position, data, and triggering event.
+Used to handle focus-related interactions and updates.
+
+## Props
+
+The following table outlines the props for the CellFocusEvent:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>column</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/columnprops" className="link-type"><span className="doc-prop-wrapper">ColumnProps</span></Link></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Contains the column configuration associated with the focused cell.
+Provides metadata such as field name, data type, or formatting for the column.
+Enables access to column-specific properties during focus events.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>columnIndex</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Specifies the zero-based column index of the focused cell in the grid.
+Identifies the column position of the cell that has received focus.
+Used for tracking or processing the focused column’s context.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>data</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">T</span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Contains the data object associated with the focused cell’s row.
+Provides access to the row’s record data for processing or display.
+Useful for retrieving context about the focused cell’s content.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>event</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">MouseEvent</span> &#124; <span className="doc-prop-wrapper">KeyboardEvent</span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Contains the synthetic event object that triggered the focus event.
+Provides details about the user action (e.g., click or keypress) that caused the focus change.
+Useful for advanced event handling or custom logic.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>rowIndex</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Specifies the zero-based row index of the focused cell in the grid.
+Identifies the row position of the cell that has received focus.
+Used for tracking or processing the focused row’s context.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

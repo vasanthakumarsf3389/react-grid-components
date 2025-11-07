@@ -1,0 +1,39 @@
+import { Link } from 'react-router'
+
+# TemplateParams
+
+Defines configuration options for template-based columns in the Syncfusion React Data Grid.
+This interface is used to control accessibility attributes applied to grid cells rendered using templates.
+It helps improve usability for assistive technologies and ensures compliance with accessibility standards.
+
+
+## Props
+
+The following table outlines the props for the TemplateParams:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>ariaLabel</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="prop-default">''</div></td>
+<td className="doc-description">
+Specifies the value of the `aria-label` attribute applied to cells in template-based columns.
+When this property is set, the grid assigns the provided string as an accessibility label
+to each template cell in the column. This enhances screen reader support and improves accessibility
+for users relying on assistive technologies. If left empty, the `aria-label` attribute is not applied.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

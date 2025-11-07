@@ -1,0 +1,54 @@
+import { Link } from 'react-router'
+
+# DeleteEvent
+
+Event triggered at the start of a delete operation.
+It provides access to the records targeted for deletion and
+supports cancellation of the operation based on custom logic.
+
+
+## Props
+
+The following table outlines the props for the DeleteEvent:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>action</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span> &#124; <Link to="/data-grid/enums#actiontype" className="link-type"><span className="doc-prop-wrapper">ActionType</span></Link></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Specifies the type of action being performed, such as add, edit, or delete.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>cancel</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">false</div></td>
+<td className="doc-description">
+Specifies whether to cancel the delete operation.
+If true, the deletion is aborted and no changes are made.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>data</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">T[]</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Array of record objects that are about to be deleted from the grid.
+Each object represents a row in the grid's data source.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

@@ -1,0 +1,36 @@
+import { Link } from 'react-router'
+
+# FilterTemplateProps
+
+Defines the props passed to a custom filter template component in the Data Grid.
+Used to customize the filter UI for individual columns by providing column-specific metadata.
+Enables dynamic rendering of filter controls based on `column` configuration.
+
+## Props
+
+The following table outlines the props for the FilterTemplateProps:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>column</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/columnprops" className="link-type"><span className="doc-prop-wrapper">ColumnProps</span></Link></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Provides the `column` configuration associated with the filter template.
+Includes metadata such as `field`, `headerText`, and filter settings used to render the custom filter UI.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

@@ -1,0 +1,98 @@
+import { Link } from 'react-router'
+
+# RecordDoubleClickEvent
+
+Defines the structure of the event arguments triggered when a row is double-clicked in the grid.
+Provides contextual information about the target element, cell, row, and associated data,
+enabling precise handling of double-click interactions within grid components.
+
+
+## Props
+
+The following table outlines the props for the RecordDoubleClickEvent:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>cell</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">Element</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+The cell element within the row where the double-click occurred.
+Refers to the HTML element representing the cell, which can be used
+for styling, attribute inspection, or interaction logic.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>column</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/columnprops" className="link-type"><span className="doc-prop-wrapper">ColumnProps</span></Link></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+The column configuration object associated with the clicked cell.
+Contains metadata such as field name, header text, formatting rules,
+and other column-level settings defined in the grid configuration.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>columnIndex</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+The zero-based index of the clicked cell within its parent row.
+Indicates the position of the cell in the row, useful for identifying
+column alignment or applying cell-specific operations.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>data</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">T</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+The data object bound to the clicked row.
+Represents the complete data associated with the row, enabling
+contextual operations such as editing, selection, or detail expansion.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>event</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">MouseEvent&lt;HTMLDivElement&gt;</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+The mouse event triggered by the double-click action.
+Provides access to event metadata such as cursor position, button state,
+and the target element, allowing detailed interaction handling.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>row</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">Element</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+The row element where the double-click occurred.
+Refers to the HTML element representing the row, which can be accessed
+for styling, DOM traversal, or row-level manipulation.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>rowIndex</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+The zero-based index of the clicked row within the grid.
+Indicates the row's position in the grid's data source, supporting
+navigation, selection, and programmatic access to row data.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

@@ -1,0 +1,54 @@
+# Reusable React Component Development — Rules to Avoid
+
+## ❌ Guidelines: What *Not* to Do When Generating Code
+---
+
+### 1. **Tight Coupling**
+- ❌ Do not tightly couple the component with external state managers like Redux or Context internally.
+- ❌ Do not hardcode business logic inside the component — instead, expose behaviors through props or custom hooks.
+
+### 2. **Imperative Code**
+- ❌ Avoid direct DOM manipulation using `document.querySelector` or similar methods.
+- ❌ Avoid using `ref` for triggering layout changes unless absolutely necessary.
+
+### 3. **State Anti-patterns**
+- ❌ Do not manage the parent’s state inside the component; instead, use callbacks such as `onChange`.
+- ❌ Do not embed business logic inside reusable components — keep components "dumb" and hoist logic outside when needed.
+
+### 4. **Naming Issues**
+- ❌ Do not use generic or unclear component names like `Box`, `Wrapper`, etc.
+- ✅ Use meaningful, descriptive names that reflect the component's purpose.
+
+### 5. **Styling Pitfalls**
+- ❌ Do not use inline or static styles inside the component.
+- ✅ Always move styles into an external stylesheet or use CSS-in-JS solutions.
+- ❌ Avoid hardcoding colors, font sizes, or other design tokens — use theme variables or CSS custom properties instead.
+
+### 6. **Prop Overload**
+- ❌ Do not overload the component with excessive props.
+- ❌ Do not expose internal implementation details through public props.
+
+### 7. **Uncontrolled Behavior**
+- ❌ Do not mix controlled and uncontrolled patterns (e.g., setting both `value` and `defaultValue`).
+- ❌ Do not directly update internal state based on props without proper synchronization using `useEffect`.
+
+### 8. **Class Component Usage**
+- ❌ Do not use class components or mix class-based patterns.
+- ✅ Always generate pure functional components using `forwardRef` when needed.
+
+### 9. **Console Statements**
+- ❌ Do not leave `console.log`, `console.warn`, or any console statements in production code.
+
+### 10. **Event Listeners**
+- ❌ Do not manually bind events using JavaScript `addEventListener` where explicit binding not needed.
+- ✅ Always bind event handlers directly through JSX (e.g., `onClick`, `onChange`) for all possible casing.
+
+### 11. **EJ2 Components**
+- ❌ Do not import or use `ej2-react-components` inside the new implementation.
+- ✅ Build the components entirely using standard React practices.
+
+### 12. **External Sources**
+- ❌ Do not copy or reference implementations from external competitors (such as MUI, Kendo, etc.).
+- ✅ Focus on original, clean, React-native code generation based on the specifications provided.
+
+---

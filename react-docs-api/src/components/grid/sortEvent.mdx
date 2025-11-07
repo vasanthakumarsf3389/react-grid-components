@@ -1,0 +1,77 @@
+import { Link } from 'react-router'
+
+# SortEvent
+
+Represents event arguments for sort complete events in the Data Grid.
+Provides details about the completed sort operation, including column and direction.
+Used to handle post-sort logic or UI updates in the grid header.
+
+## Props
+
+The following table outlines the props for the SortEvent:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>action</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span> &#124; <Link to="/data-grid/enums#actiontype" className="link-type"><span className="doc-prop-wrapper">ActionType</span></Link></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Indicates the type of sort action that was completed (e.g., 'Sorting', 'ClearSorting').
+Describes the operation performed, aiding in post-sort processing.
+Helps differentiate between various sort-related actions.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>columns</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/sortdescriptor" className="link-type"><span className="doc-prop-wrapper">SortDescriptor[]</span></Link></div></td>
+<td><div className="prop-default">[ ]</div></td>
+<td className="doc-description">
+Contains an array of active sort descriptors.
+Each descriptor defines a column `field` and its sort direction.
+Useful for retrieving the current sort state across multiple `columns`.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>direction</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/enums#sortdirection" className="link-type"><span className="doc-prop-wrapper">SortDirection</span></Link> &#124; <span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="prop-default">SortDirection.Ascending | 'Ascending'</div></td>
+<td className="doc-description">
+Defines the direction of the completed sort operation for the column.
+Indicates whether the column was sorted in ascending or descending order, typically from the `SortDirection` enum.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>event</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">MouseEvent</span> &#124; <span className="doc-prop-wrapper">KeyboardEvent</span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+The React event that triggered the sort operation.
+Can be a mouse or keyboard event, depending on the interaction type.
+Provides access to event metadata such as the target element, key pressed,
+or mouse coordinates, enabling contextual handling of sort logic.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>field</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Specifies the `field` name of the column that was sorted.
+Identifies the column in the data source affected by the completed sort operation.
+Useful for logging or updating UI after sorting.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

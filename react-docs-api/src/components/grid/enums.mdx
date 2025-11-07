@@ -1,0 +1,245 @@
+import { Link } from 'react-router'
+
+## Enums
+
+The following enums are available in the Data Grid component:
+
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+
+<tr className='api-row'>
+<td className='prop-name'>ActionType</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">'Add' | 'BeginEdit' | 'ClearFiltering' | 'ClearSorting' | 'Delete' | 'Edit' | 'Filtering' | 'Paging' | 'Searching' | 'Sorting'</span></div></td>
+<td className="doc-description">
+Defines the set of supported actions triggered during component interactions or programmatic operations.
+Used across event interfaces to identify the type of operation performed, such as sorting, filtering, or editing.
+Enables consistent handling and conditional logic based on action context.
+
+<ul><li><code>Add</code> - Represents the initiation of a new record creation process.
+Used to distinguish between create and update operations.</li><li><code>BeginEdit</code> - Represents before modification of an existing record.
+Used to dynamically modify update logic or validations.</li><li><code>ClearFiltering</code> - Represents the removal of all active filters.
+Typically used to reset filtering state.</li><li><code>ClearSorting</code> - Represents the removal of an existing sort configuration.
+Typically used to reset sorting state.</li><li><code>Delete</code> - Represents the deletion of an existing record.
+Used to distinguish between delete operations.</li><li><code>Edit</code> - Represents the modification of an existing record.
+Used to apply update logic or validations.</li><li><code>Filtering</code> - Represents a filtering operation applied to one or more fields.
+Typically triggered by input changes or programmatic filter logic.</li><li><code>Paging</code> - Represents a pagination operation applied to grid component.
+Commonly triggered by interaction with pager component items or programmatic pagination logic.</li><li><code>Searching</code> - Represents a searching operation applied to fields.
+Typically triggered by toolbar search input changes or programmatic search logic.</li><li><code>Sorting</code> - Represents a sorting operation applied to one or more fields.
+Commonly triggered by interaction with column headers or programmatic sort logic.</li></ul>
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>AggregateType</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">'Average' | 'Count' | 'Custom' | 'FalseCount' | 'Max' | 'Min' | 'Sum' | 'TrueCount'</span></div></td>
+<td className="doc-description">
+Enumerates the types of aggregate calculations supported by the Data Grid component.
+Defines the available aggregation methods for summarizing data in the grid’s footer sections.
+Used to configure how data is aggregated for display in aggregate rows or columns.
+
+<ul><li><code>Average</code></li><li><code>Count</code></li><li><code>Custom</code></li><li><code>FalseCount</code></li><li><code>Max</code></li><li><code>Min</code></li><li><code>Sum</code></li><li><code>TrueCount</code></li></ul>
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>CellType</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">'Aggregate' | 'Content' | 'Header'</span></div></td>
+<td className="doc-description">
+Defines the structural category of a layout element.
+Used to distinguish between header, content, and aggregate sections for styling and behavior customization.
+Applicable to cell-level configurations in React Data Grid component.
+
+<ul><li><code>Aggregate</code> - Represents the aggregate or summary section of a layout.
+Typically used for totals, summaries, or computed values.</li><li><code>Content</code> - Represents the main content section of a layout.
+Typically used for displaying primary data or interactive elements.</li><li><code>Header</code> - Represents the header section of a layout.
+Commonly used for column titles, labels, or control elements.</li></ul>
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>ClipMode</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">'Clip' | 'Ellipsis' | 'EllipsisWithTooltip'</span></div></td>
+<td className="doc-description">
+Defines the cell content's overflow handling mode.
+Controls how text is displayed when it exceeds the cell's visible area.
+
+<ul><li><code>Clip</code> - Truncates the cell content when it overflows its area.
+No visual indication is provided for clipped content.</li><li><code>Ellipsis</code> - Displays an ellipsis (`...`) when the cell content overflows.
+Provides a visual cue that content is truncated.</li><li><code>EllipsisWithTooltip</code> - Applies an ellipsis to overflowing cell content and shows a tooltip on hover.
+Enhances readability by allowing users to view the full content.</li></ul>
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>ColumnType</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">'Boolean' | 'Date' | 'DateTime' | 'Number' | 'String'</span></div></td>
+<td className="doc-description">
+Defines the supported data types for grid columns.
+Used to define how data is interpreted and rendered in each column.
+If not explicitly defined, the type is inferred from the first row's data based on each cell value type.
+
+<ul><li><code>Boolean</code> - Represents boolean values.
+Used for true/false or yes/no type fields.</li><li><code>Date</code> - Represents date values.
+Used for timestamps, birthdays, or scheduling data.</li><li><code>DateTime</code> - Represents date and time values.
+Used for precise timestamps, scheduling data with time.</li><li><code>Number</code> - Represents numeric values.
+Used for quantities, prices, or any numerical data.</li><li><code>String</code> - Represents text or string values.
+Commonly used for names, descriptions, or identifiers.</li></ul>
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>EditType</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">'CheckBox' | 'DatePicker' | 'DropDownList' | 'NumericTextBox' | 'TextBox'</span></div></td>
+<td className="doc-description">
+Defines the available edit types for grid columns.
+Used to configure the input control rendered during column cell editing.
+
+<ul><li><code>CheckBox</code> - Defines a checkbox for editing boolean values.
+Used for true/false or yes/no type fields.</li><li><code>DatePicker</code> - Defines a date picker for editing date values.
+Ideal for scheduling, timestamps, or calendar-based inputs.</li><li><code>DropDownList</code> - Defines a dropdown list for selecting string values.
+Useful for predefined options or lookup fields.</li><li><code>NumericTextBox</code> - Defines a numeric input for editing number values.
+Supports validation and formatting for numeric fields.</li><li><code>TextBox</code> - Defines a default standard text input for editing string values.
+Suitable for general-purpose text fields.</li></ul>
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>FilterBarMode</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">'Immediate' | 'OnEnter'</span></div></td>
+<td className="doc-description">
+Defines the filter bar mode options for grid filtering behavior.
+Determines how and when the filter operation is triggered in the grid.
+
+<ul><li><code>Immediate</code> - Initiates the filter operation automatically after a short delay (default: 500 ms).
+Ideal for responsive filtering as the user types.</li><li><code>OnEnter</code> - Initiates the filter operation only after the Enter key is pressed.
+Suitable for precise filtering and reducing unnecessary operations.</li></ul>
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>FilterBarType</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">'DatePicker' | 'NumericTextBox' | 'TextBox'</span></div></td>
+<td className="doc-description">
+Enumerates the filter bar types supported by Data Grid component for column-level filtering.
+Defines the type of filter UI and logic applied to a column, such as string, numeric, or date-based filtering.
+Used to configure the filtering behavior and user interface for specific columns in the grid.
+
+<ul><li><code>DatePicker</code> - Applies a date-based filter using a date picker.
+Useful for filtering columns with date values.</li><li><code>NumericTextBox</code> - Applies a numeric filter using a number input.
+Ideal for filtering numeric fields such as price, quantity, etc.</li><li><code>TextBox</code> - Applies a string-based filter using a text input.
+Suitable for filtering textual data.</li></ul>
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>GridLine</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">'Both' | 'Default' | 'Horizontal' | 'None' | 'Vertical'</span></div></td>
+<td className="doc-description">
+Defines the grid line display modes for the grid layout.
+Controls the visibility of horizontal and vertical lines between cells, enhancing visual structure and readability.
+
+<ul><li><code>Both</code> - Displays both horizontal and vertical grid lines.
+Provides a fully bordered layout for clear separation of cells.</li><li><code>Default</code> - Displays only horizontal grid lines.
+Useful for row-based separation while keeping columns visually merged.</li><li><code>Horizontal</code> - Displays only horizontal grid lines.
+Useful for row-based separation while keeping columns visually merged.</li><li><code>None</code> - No grid lines are displayed.
+Creates a clean, borderless layout for minimalistic design.</li><li><code>Vertical</code> - Displays only vertical grid lines.
+Useful for column-based separation while keeping rows visually merged.</li></ul>
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>NewRowPosition</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">'Bottom' | 'Top'</span></div></td>
+<td className="doc-description">
+Defines the available positions for inserting a new row within a data grid.
+Used to control where the newly added record appears in the grid layout.
+This enum is referenced by the `newRowPosition` property in `EditSettings`.
+
+<ul><li><code>Bottom</code> - Inserts the new row at the end of the grid.
+Suitable for chronological data entry or bottom-up workflows.</li><li><code>Top</code> - Inserts the new row at the beginning of the grid.
+Useful for prioritizing newly added records or maintaining top-down workflows.</li></ul>
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>RowType</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">'Aggregate' | 'Content' | 'Header'</span></div></td>
+<td className="doc-description">
+Defines the structural category of a layout element.
+Used to distinguish between header, content, and aggregate sections for styling and behavior customization.
+Applicable to row-level configurations in React Data Grid component.
+
+<ul><li><code>Aggregate</code> - Represents the aggregate or summary section of a layout.
+Typically used for totals, summaries, or computed values.</li><li><code>Content</code> - Represents the main content section of a layout.
+Typically used for displaying primary data or interactive elements.</li><li><code>Header</code> - Represents the header section of a layout.
+Commonly used for column titles, labels, or control elements.</li></ul>
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>SelectionMode</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">'Multiple' | 'Single'</span></div></td>
+<td className="doc-description">
+Specifies the selection behavior supported by the Data Grid component.
+Determines whether selection is limited to a `Single` row or can be applied to `Multiple` row simultaneously.
+This enum is used internally to configure selection logic and user interactions.
+
+<ul><li><code>Multiple</code> - Enables multi-row selection.
+Users can select by multiple row in sequence, typically using the Ctrl or Shift key.</li><li><code>Single</code> - Allows selection by only one row at a time.
+Selecting a new row will clear the previous row selection.</li></ul>
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>SortDirection</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">'Ascending' | 'Descending'</span></div></td>
+<td className="doc-description">
+Defines the direction of sorting applied to grid columns.
+Used to control the order in which data is displayed.
+
+<ul><li><code>Ascending</code> - Sorts data in ascending order (e.g., A–Z, 0–9).
+Commonly used for alphabetical or chronological sorting.</li><li><code>Descending</code> - Sorts data in descending order (e.g., Z–A, 9–0).
+Useful for prioritizing higher values or latest entries.</li></ul>
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>SortMode</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">'Multiple' | 'Single'</span></div></td>
+<td className="doc-description">
+Specifies the sorting behavior supported by the Data Grid component.
+Determines whether sorting is limited to a single column or can be applied to multiple columns simultaneously.
+This enum is used internally to configure sorting logic and user interactions.
+
+<ul><li><code>Multiple</code> - Enables multi-column sorting.
+Users can sort by multiple columns in sequence, typically using the Ctrl key.</li><li><code>Single</code> - Allows sorting by only one column at a time.
+Selecting a new column will clear the previous sort.</li></ul>
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>TextAlign</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">'Center' | 'Justify' | 'Left' | 'Right'</span></div></td>
+<td className="doc-description">
+Defines the horizontal text alignment within grid cells and headers.
+Used to control the visual alignment of text for better readability and layout consistency.
+
+<ul><li><code>Center</code> - Centers the text horizontally within the cell.
+Useful for headers or balanced visual presentation.</li><li><code>Justify</code> - Justifies the text to evenly spread across the cell width.
+Best suited for paragraph-style content or long descriptions.</li><li><code>Left</code> - Aligns text to the left edge of the cell.
+Commonly used for textual and string-based data.</li><li><code>Right</code> - Aligns text to the right edge of the cell.
+Ideal for numeric or financial data to maintain column alignment.</li></ul>
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>WrapMode</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">'Both' | 'Content' | 'Header'</span></div></td>
+<td className="doc-description">
+Defines the available text wrapping modes for grid cells.
+Used to control how text is displayed within header and content cells, improving readability and layout flexibility.
+
+<ul><li><code>Both</code> - Enables wrapping for both header and content cells.
+Ensures full visibility of labels and cell values, especially useful for long or multilingual text.</li><li><code>Content</code> - Wraps only the content cells.
+Header cells stay single-line to maintain alignment and layout consistency.</li><li><code>Header</code> - Wraps only the header cells.
+Content cells remain single-line for a compact layout while preserving header readability.</li></ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+

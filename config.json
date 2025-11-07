@@ -1,0 +1,74 @@
+{
+  "spec": [],
+  "typedoc": ["./src/**/*.d.ts"],
+  "components": [
+		"grid"
+	],
+  "ts": [
+    "./**/*.ts",
+    "./**/*.tsx",
+    "!./samples/**/*.tsx",
+    "!./react-datagrid-jest-orchestrator/**/*.ts",
+    "!./react-datagrid-jest-orchestrator/**/*.tsx",
+    "!./virtual-scroll/**/*.tsx",
+    "!./node_modules/**/*.ts",
+    "!./node_modules/**/*.tsx"
+  ],
+  "dedupe": ["./src/**/*.*", "!./src/**/*.ts"],
+  "tslint": ["./src/**/*.ts", "./src/**/*.tsx", "!./src/**/*-model.d.ts"],
+  "styleDependency": [
+    {
+      "grid": [
+        "react-inputs/input",
+        "react-inputs/numerictextbox",
+        "react-buttons/button",
+        "react-buttons/radio-button",
+        "react-buttons/check-box",
+        "react-dropdowns/dropdownlist",
+        "react-popups/spinner",
+        "react-popups/tooltip",
+        "react-navigations/toolbar",
+        "react-navigations/context-menu",
+        "react-notifications/skeleton",
+        "react-pager/pager"
+      ]
+    }
+  ],
+  "locale": {
+    "grid": {
+      "noRecordsMessage": "No records to display",
+      "filterBarTooltip": "\"s filter bar cell",
+      "invalidFilterMessage": "Invalid filter data",
+      "booleanTrueLabel": "true",
+      "booleanFalseLabel": "false",
+      "addButtonLabel": "Add",
+      "editButtonLabel": "Edit",
+      "cancelButtonLabel": "Cancel",
+      "updateButtonLabel": "Update",
+      "deleteButtonLabel": "Delete",
+      "searchButtonLabel": "Search",
+      "unsavedChangesConfirmation": "Unsaved changes will be lost. Are you sure you want to continue?",
+      "noRecordsEditMessage": "No records selected for edit operation",
+      "noRecordsDeleteMessage": "No records selected for delete operation",
+      "okButtonLabel": "OK",
+      "confirmDeleteMessage": "Are you sure you want to delete the record?"
+    }
+  },
+  "customWords": [
+    "altrow"
+  ],
+  "dependentAPI": {
+    "grid": {
+      "NumberFormatOptions": "/base/numberformatoptions",
+      "DateFormatOptions": "/base/dateformatoptions",
+      "FormValueType": "/form/unions#formvaluetype",
+      "DataManager": "/data/datamanager",
+      "Query": "/data/query",
+      "Predicate": "/data/predicate",
+      "DataResult": "/data/dataresult"
+    }
+  },
+  "changelogTypo": [],
+  "coverageConfig": {},
+  "releasedVersion": "v28.1.33"
+}

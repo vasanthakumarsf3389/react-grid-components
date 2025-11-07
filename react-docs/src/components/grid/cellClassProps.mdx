@@ -1,0 +1,66 @@
+import { Link } from 'react-router'
+
+# CellClassProps
+
+Defines event arguments for applying custom CSS classes to the cells in the Syncfusion React Data Grid.
+Provides metadata to dynamically style cells based on cell type, column configuration, row data, or row position.
+Used to customize the visual appearance of individual cells during rendering.
+
+## Props
+
+The following table outlines the props for the CellClassProps:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>cellType</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span> &#124; <Link to="/data-grid/enums#celltype" className="link-type"><span className="doc-prop-wrapper">CellType</span></Link></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Type of the cell: `Header`, `Content`, or `Aggregate`.
+Useful for applying different styles based on cell category.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>column</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/columnprops" className="link-type"><span className="doc-prop-wrapper">ColumnProps</span></Link></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Represents the column configuration associated with the cell.
+Includes metadata such as field, type, format, and other column-specific properties.
+Enables conditional styling logic to the cell based on column attributes.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>data</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">T</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Contains the complete data object for the row containing the cell.
+Enables conditional styling logic based on any field value within the row.
+Useful for dynamic styling to the cell based on business rules or row data context.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>rowIndex</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Specifies the zero-based index of the row in the grid.
+Identifies the row’s position, enabling row-specific styling such as alternating row colors.
+Used for applying CSS classes to the cell based on row position or sequence.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

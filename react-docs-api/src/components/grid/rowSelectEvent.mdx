@@ -1,0 +1,108 @@
+import { Link } from 'react-router'
+
+# RowSelectEvent
+
+Represents event arguments for row selection events in the Data Grid component.
+Provides detailed context about selected rows, including data and DOM elements.
+Used to handle post-selection logic or UI updates in the row.
+
+## Props
+
+The following table outlines the props for the RowSelectEvent:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>data</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">T</span> &#124; <span className="doc-prop-wrapper">T[]</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Contains the data object associated with the selected row.
+Provides access to the record data for single or multiple selected rows for processing or display.
+Returns a single object for single selection or an array for multiple selections.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>deSelectedCurrentRowIndexes</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number[]</span></div></td>
+<td><div className="prop-default">[ ]</div></td>
+<td className="doc-description">
+Contains zero-based indexes of rows newly deselected during the current interaction.
+Excludes rows that were already unselected before the event.
+Used in multiple selection mode to track incremental deselection changes.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>deSelectedRowIndex</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Specifies the zero-based index of the deselected row in the grid.
+Identifies the position of the deselected row within the data source for reference or manipulation.
+Used in single selection mode or to track the primary deselected row.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>event</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">MouseEvent</span> &#124; <span className="doc-prop-wrapper">KeyboardEvent</span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+The React event that triggered the row selection.
+Can be a mouse or keyboard event, depending on the user's interaction.
+Provides access to event metadata such as target element, key pressed,
+or mouse coordinates, enabling contextual handling of selection logic.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>row</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">Element</span> &#124; <span className="doc-prop-wrapper">Element[]</span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+References the DOM elements of the selected rows.
+Provides access to the row elements for styling, manipulation, or other DOM operations.
+Returns a single element or an array based on selection mode.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>selectedCurrentRowIndexes</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number[]</span></div></td>
+<td><div className="prop-default">[ ]</div></td>
+<td className="doc-description">
+Contains zero-based indexes of rows newly selected during the current interaction.
+Excludes rows that were already selected before the event.
+Used in multiple selection mode to track incremental selection changes.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>selectedRowIndex</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Specifies the zero-based index of the selected row in the grid.
+Identifies the position of the selected row within the data source for reference or manipulation.
+Used in single selection mode or to track the primary selected row.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>selectedRowIndexes</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number[]</span></div></td>
+<td><div className="prop-default">[ ]</div></td>
+<td className="doc-description">
+Contains an array of zero-based indexes for all selected rows.
+Used in multiple selection mode to track all rows currently highlighted.
+Enables bulk processing of selected row positions.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

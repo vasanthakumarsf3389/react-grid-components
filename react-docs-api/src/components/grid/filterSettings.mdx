@@ -1,0 +1,87 @@
+import { Link } from 'react-router'
+
+# FilterSettings
+
+Defines the configuration for filtering functionality in the Data Grid component.
+Specifies settings for enabling filtering, defining filter conditions, and customizing the filter UI.
+Controls how data is filtered based on user input and predefined criteria.
+
+## Props
+
+The following table outlines the props for the FilterSettings:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>caseSensitive</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">false</div></td>
+<td className="doc-description">
+Enables or disables case-sensitive filtering for string fields.
+When true, string filtering distinguishes between uppercase and lowercase letters. When false, it is case-insensitive.
+Does not affect filtering for numbers, booleans, or dates.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>columns</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/filterpredicates" className="link-type"><span className="doc-prop-wrapper">FilterPredicates[]</span></Link></div></td>
+<td><div className="prop-default">[ ]</div></td>
+<td className="doc-description">
+Specifies an array of `FilterPredicates` objects to define initial or active filter conditions for grid columns.
+Each predicate represents a filter rule applied to a specific column, such as `field`, `operator`, and `value`.
+Used to pre-filter data on grid initialization or to retrieve the current filter state.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>enabled</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">false</div></td>
+<td className="doc-description">
+Determines whether filtering is enabled for the grid’s columns.
+When set to true, allows to apply filters via the filter bar. When false, disables all filtering functionality from the grid.
+Affects all columns unless overridden by individual column settings.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>ignoreAccent</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">false</div></td>
+<td className="doc-description">
+Enables or disables accent-insensitive filtering for string fields.
+When true, diacritic characters (e.g., accents like é, ñ) are ignored during filtering, treating them as their base characters.
+Improves filter usability for multilingual datasets.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>immediateModeDelay</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number</span></div></td>
+<td><div className="prop-default">1500</div></td>
+<td className="doc-description">
+Sets the time delay (in milliseconds) for filtering in `Immediate` mode.
+Controls the wait time before the grid processes filter input, balancing responsiveness and performance.
+Only applicable when the filter mode is set to `Immediate`.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>mode</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/enums#filterbarmode" className="link-type"><span className="doc-prop-wrapper">FilterBarMode</span></Link> &#124; <span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="prop-default">'Immediate'</div></td>
+<td className="doc-description">
+Specifies the operational mode of the filter bar, controlling when filtering is triggered.
+Supports `OnEnter` (filtering starts when the Enter key is pressed) or `Immediate` (filtering starts after a time delay).
+Influences the responsiveness and user experience of filtering interactions.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

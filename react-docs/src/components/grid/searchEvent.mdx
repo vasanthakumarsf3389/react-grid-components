@@ -1,0 +1,37 @@
+import { Link } from 'react-router'
+
+# SearchEvent
+
+Represents the event triggered when a search operation completes in the Data Grid.
+Provides details about the completed search, including the applied search string.
+Used to handle post-search logic or UI updates.
+
+## Props
+
+The following table outlines the props for the SearchEvent:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>value</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Specifies the string value used in the completed search operation.
+Reflects the search input that was applied to filter the grid’s records.
+Useful for logging or updating UI after a search.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

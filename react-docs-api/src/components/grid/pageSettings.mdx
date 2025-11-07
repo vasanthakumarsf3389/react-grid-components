@@ -1,0 +1,75 @@
+import { Link } from 'react-router'
+
+# PageSettings
+
+Configures pagination settings for the Data Grid component.
+Controls the behavior and appearance of pagination, including page size and navigation.
+Enables customization of how data is paginated and displayed in the grid.
+
+## Props
+
+The following table outlines the props for the PageSettings:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>currentPage</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number</span></div></td>
+<td><div className="prop-default">1</div></td>
+<td className="doc-description">
+Sets the current page number to display in the grid.
+Determines which page of data is actively shown, based on the page size and total records.
+Used to initialize or programmatically navigate to a specific page.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>enabled</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">false</div></td>
+<td className="doc-description">
+Determines whether pagination is enabled for the grid.
+When set to true, splits the grid’s data into pages with navigation controls. When false, displays all data without pagination.
+Affects the visibility and functionality of the pager component.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>pageCount</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number</span></div></td>
+<td><div className="prop-default">8</div></td>
+<td className="doc-description">
+Controls the range of page numbers displayed for navigation, enhancing usability.
+Affects the pager’s visual layout and navigation options.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>pageSize</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number</span></div></td>
+<td><div className="prop-default">12</div></td>
+<td className="doc-description">
+Specifies the number of records to display on each page of the grid.
+Impacts the pagination calculations and user experience.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>template</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span> &#124; <span className="doc-prop-wrapper">ReactElement</span> &#124; <span className="doc-prop-wrapper">Function</span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Defines a custom template for rendering the pager component.
+Allows replacement of the default pager UI with custom strings, React elements, or functions for dynamic rendering.
+Enables advanced customization of the pager’s appearance and behavior.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

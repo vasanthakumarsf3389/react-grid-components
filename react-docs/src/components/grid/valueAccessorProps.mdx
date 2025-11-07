@@ -1,0 +1,54 @@
+import { Link } from 'react-router'
+
+# ValueAccessorProps
+
+Defines event arguments for customizing data cell rendering in the Syncfusion React Data Grid. It enables modification of displayed content
+based on the column field and row data, strictly for presentation purposes. These changes do not affect the original data source, and
+operations such as filtering, sorting, searching, CRUD actions, etc., are based on the actual source values.
+
+## Props
+
+The following table outlines the props for the ValueAccessorProps:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>column</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/columnprops" className="link-type"><span className="doc-prop-wrapper">ColumnProps</span></Link></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Defines the column configuration object, including metadata such as field, type, headerText, and other column-specific properties.
+Provides context for dynamic cell rendering and supports logic based on the column’s definition. Commonly used when customizing cell content according to column settings.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>data</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">T</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Contains the complete data object for the row being rendered, providing access to all field values and enabling calculations
+across fields, merging or transforming values, applying conditional formatting, and customizing cell display logic based on row data.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>field</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Specifies the field name of the column being rendered. Identifies the corresponding data key in the row object. Typically accessed
+directly when transforming or displaying cell values, without referencing the full column configuration.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

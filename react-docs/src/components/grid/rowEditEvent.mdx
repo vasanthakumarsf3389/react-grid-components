@@ -1,0 +1,53 @@
+import { Link } from 'react-router'
+
+# RowEditEvent
+
+Event structure triggered during a row edit operation.
+This interface allows access to the row data and index, and supports cancellation
+of the edit operation based on custom conditions.
+
+
+## Props
+
+The following table outlines the props for the RowEditEvent:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>cancel</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">false</div></td>
+<td className="doc-description">
+Flag indicating whether to cancel the edit operation.
+Set to true to prevent the row from entering edit mode.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>data</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">T</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Data object containing the current values of the row being edited.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>rowIndex</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Index of the row being edited in the grid's data source.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

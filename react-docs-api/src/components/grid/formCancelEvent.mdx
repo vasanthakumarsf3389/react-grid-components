@@ -1,0 +1,54 @@
+import { Link } from 'react-router'
+
+# FormCancelEvent
+
+Event triggered when an edit or add form is cancelled.
+It provides access to the form state and row context,
+allowing cleanup or rollback logic to be executed.
+
+
+## Props
+
+The following table outlines the props for the FormCancelEvent:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>data</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">T</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Data object containing the current form state for the row.
+Includes field values at the time of cancellation.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>formRef</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">RefObject&lt;IFormValidator&gt;</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Reference to the form component used for editing or adding the row.
+Can be used to reset validation or perform cleanup actions.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>rowIndex</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Index of the row being edited or added in the grid's data source.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

@@ -1,0 +1,57 @@
+import { Link } from 'react-router'
+
+# ColumnFilterParams
+
+Configures filtering behavior for columns in the Syncfusion React Data Grid.
+Defines settings for the filter UI, operator, and component parameters.
+Used to customize how data is filtered within specific columns.
+
+## Props
+
+The following table outlines the props for the ColumnFilterParams:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>filterBarType</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span> &#124; <Link to="/data-grid/enums#filterbartype" className="link-type"><span className="doc-prop-wrapper">FilterBarType</span></Link></div></td>
+<td><div className="prop-default">'StringFilter' | FilterBarType.TextBox</div></td>
+<td className="doc-description">
+Specifies the filter type for the column, such as `stringFilter` or `numericFilter`.
+Defines the filtering logic applied to the column’s data, aligning with its data type.
+Ensures appropriate filtering behavior for strings, numbers, or other data.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>operator</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="prop-default">''</div></td>
+<td className="doc-description">
+Defines the operator used for filtering requests, such as `contains` or `equal`.
+Specifies how the filter value is matched against column data during filtering.
+Used to customize the filtering logic for specific columns.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>params</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">Partial&lt;TextBoxProps &amp; NumericTextBoxProps &amp; DatePickerProps &amp; DropDownListProps&gt;</span></div></td>
+<td><div className="prop-default">{ `{}` }</div></td>
+<td className="doc-description">
+Specifies configuration parameters for the filter component, such as text box, numeric input, or dropdown properties.
+Allows customization of the filter UI components, like placeholders or value ranges.
+Enhances the filtering experience with tailored input controls.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

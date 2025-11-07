@@ -1,0 +1,99 @@
+import { Link } from 'react-router'
+
+# EditFormTemplate
+
+Props interface for custom row-level edit form templates in the grid.
+Provides row data, column configurations, validation state, and action callbacks for implementing full editing forms.
+Enables dynamic field updates, error display, and control over save/cancel operations during add or edit modes.
+
+## Props
+
+The following table outlines the props for the EditFormTemplate:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>columns</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/columnprops" className="link-type"><span className="doc-prop-wrapper">ColumnProps[]</span></Link></div></td>
+<td><div className="prop-default">[ ]</div></td>
+<td className="doc-description">
+Array of column configurations for the grid.
+Used to render fields matching editable columns, including types and validation rules.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>data</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">T</span></div></td>
+<td><div className="prop-default">{ `{}` }</div></td>
+<td className="doc-description">
+Complete data object for the row being edited or added.
+Contains current field values updates via `onFieldChange` reflect here for form state management.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>disabled</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">false</div></td>
+<td className="doc-description">
+Boolean to disable form controls during processing.
+Set true during save operations to prevent concurrent edits.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>formState</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">FormState</span></div></td>
+<td><div className="prop-default">{ `{}` }</div></td>
+<td className="doc-description">
+Current state of the form, including validity and dirty flags.
+Used for conditional rendering or disabling controls.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>isAddOperation</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">false</div></td>
+<td className="doc-description">
+Boolean indicating if the operation is for adding a new row.
+True for add mode, false for edit mode—enables conditional logic.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>onFieldChange</td>
+<td><div className="doc-prop-type"><div className="doc-prop-wrapper event-type">(field: null | null) => void</div></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Callback to update a specific field value in the row data.
+Triggers validation and form re-render on change.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>setInternalData</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">React.Dispatch&lt;<span className="doc-prop-wrapper">React.SetStateAction&lt;T&gt;</span>&gt;</span></div></td>
+<td><div className="prop-default">{ `{}` }</div></td>
+<td className="doc-description">
+State setter for internal form data updates.
+Allows manual synchronization of data beyond `onFieldChange`.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>validationErrors</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">Object</span> &#124; <span className="doc-prop-wrapper">Object</span></div></td>
+<td><div className="prop-default">{ `{}` }</div></td>
+<td className="doc-description">
+Object mapping field keys to validation error messages.
+Displays per-field errors when present empty for valid states.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

@@ -1,0 +1,55 @@
+import { Link } from 'react-router'
+
+## Unions
+
+The following unions are available in the Data Grid component:
+
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+
+<tr className='api-row'>
+<td className='prop-name'>AggregateData</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">'unknown'</span></div></td>
+<td className="doc-description">
+Represents the structure of aggregate result values returned by the Data Grid component.
+Includes raw numeric values for computation and formatted display values for rendering.
+Raw values are keyed by `field - type` (e.g., `Freight - sum` for summation on the "Freight" field).
+Formatted values are keyed by `AggregateType` enum members (e.g., `Sum` for rendering summation results).
+
+Used in `footerTemplate` rendering and custom aggregation logic.
+
+
+
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>ToolbarItems</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">'Add' | 'Edit' | 'Update' | 'Delete' | 'Cancel' | 'Search'</span></div></td>
+<td className="doc-description">
+Defines the set of actionable items displayed in the grid toolbar. Each item maps to a specific user command. Enables direct data operations, UI control.
+
+<ul><li><code> Add</code> - Creates new row or record. Opens blank form or inserts editable row.</li><li><code> Edit</code> - Enables editing for selected row. Supports selection logic, inline editing.</li><li><code> Update</code> - Saves changes to data source. Triggers validation, lifecycle hooks.</li><li><code> Delete</code> - Removes selected row or record.</li><li><code> Cancel</code> - Discards unsaved changes. Exits edit mode, maintains data integrity.</li><li><code> Search</code> - Displays input for row filtering. Supports keyword match, column-level queries</li></ul>
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>ValueType</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">'number' | 'string' | 'Date' | 'boolean'</span></div></td>
+<td className="doc-description">
+Defines the supported data types for grid values, used in filtering, sorting, and other operations.
+
+<ul><li><code> number</code> - Represents numeric values.</li><li><code> string</code> - Represents text values.</li><li><code> Date</code> - Represents date values.</li><li><code> boolean</code> - Represents true/false values.</li></ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+

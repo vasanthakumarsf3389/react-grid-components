@@ -1,0 +1,39 @@
+# Ignore dependencies and logs
+node_modules/
+package-lock.json
+*.log
+*.html
+
+# Ignore .js & css files only in specific folders
+src/**/*.js
+spec/**/*.js
+styles/**/*.css
+themes/**/*.css
+samples/**/*.js
+samples/**/*.css
+demos/**/*.js
+
+# Ignore specific files
+/grid.js
+/grid.ts
+/index.js
+/index.ts
+
+# Ignore TypeScript declarations and package files
+**/*.d.ts
+*.tgz
+
+# Ignore specific folders
+public/**
+coverage/**
+styles/
+themes/
+react-datagrid-jest-orchestrator/
+virtual-scroll/
+
+# Ignore configuration files
+.eslintrc.json
+tslint.json
+
+# Exclude specific files from ignore rules
+!.storybook/preview-head.html

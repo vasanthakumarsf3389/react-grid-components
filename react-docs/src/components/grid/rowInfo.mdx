@@ -1,0 +1,80 @@
+import { Link } from 'react-router'
+
+# RowInfo
+
+Represents information about a specific row and cell in the grid.
+Used for identifying row/cell context during events and operations.
+
+## Props
+
+The following table outlines the props for the RowInfo:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>cell</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">Element</span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Represents the element of a cell within a grid row.
+This element provides access to the cell's DOM properties and methods.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>column</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/columnprops" className="link-type"><span className="doc-prop-wrapper">ColumnProps</span></Link></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Provides configuration for the column associated with the cell.
+Such as column name, formatting rules and more.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>columnIndex</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number</span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Specifies the zero-based index of the cell within its parent row.
+Used for identifying the cell's position in the row.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>data</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">T</span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Contains the data object associated with the row.
+This object holds the row's data, which can be used for rendering or processing.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>row</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">Element</span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Represents the element of the row within the grid.
+This element provides access to the row's DOM properties and methods.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>rowIndex</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number</span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Specifies the zero-based index of the row within the grid.
+Used for identifying the row's position in the grid.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

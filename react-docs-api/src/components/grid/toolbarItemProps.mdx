@@ -1,0 +1,87 @@
+import { Link } from 'react-router'
+
+# ToolbarItemProps
+
+Configures individual toolbar items for the Grid’s toolbar.
+Defines properties for buttons or controls, such as ID, text, and behavior.
+Used to customize the appearance and functionality of toolbar items.
+
+## Props
+
+The following table outlines the props for the ToolbarItemProps:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>disabled</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">false</div></td>
+<td className="doc-description">
+Determines whether the toolbar item is disabled and non-interactive.
+When true, prevents user interaction with the item, visually indicating its disabled state.
+Useful for controlling item availability based on grid context.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>icon</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">node</span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Defines an icon for the toolbar item, typically an SVG element for optimal rendering.
+Enhances the visual representation of the item, complementing or replacing the text.
+Used to improve the toolbar’s aesthetic and usability.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>id</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Specifies a unique identifier for the toolbar item.
+Used to distinguish the item within the toolbar for event handling or state management.
+Ensures accurate targeting of specific items in the toolbar.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>onClick</td>
+<td><div className="doc-prop-type"><div className="doc-prop-wrapper event-type">{`( ) => void`}</div></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Specifies a custom click handler function for the toolbar item.
+Executes custom logic when the item is clicked, allowing tailored grid interactions.
+Enables developers to define specific actions for toolbar controls.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>text</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Specifies the display text for the toolbar item.
+Represents the visible label shown on the button or control in the toolbar UI.
+Enhances user understanding of the item’s purpose or action.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>title</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Specifies the tooltip text displayed when hovering over the toolbar item.
+Provides additional context or description for the item’s purpose or functionality.
+Enhances user experience by offering guidance on toolbar actions.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

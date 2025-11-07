@@ -1,0 +1,106 @@
+import { Link } from 'react-router'
+
+# EditTemplateProps
+
+Props interface for custom edit template components used in grid.
+This interface defines the structure of data and callbacks passed to a custom
+React component used for editing grid rows.
+
+
+## Props
+
+The following table outlines the props for the EditTemplateProps:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>action</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span> &#124; <Link to="/data-grid/enums#actiontype" className="link-type"><span className="doc-prop-wrapper">ActionType</span></Link></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Specifies the current editing context in which the template is being rendered.
+This property indicates whether the template is used for adding a new record or editing an existing one.
+It helps differentiate between create and update operations, allowing conditional rendering or logic
+based on the editing mode.
+Supported values:
+- `Add`: The template is used to create a new record.
+- `Edit`: The template is used to modify an existing record.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>column</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/columnprops" className="link-type"><span className="doc-prop-wrapper">ColumnProps</span></Link></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Configuration object for the current column being edited.
+Includes metadata such as field name, data type, validation rules, and display settings.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>data</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">T</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Complete data object for the row currently being edited.
+Useful for accessing other field values or performing conditional logic within the template.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>defaultValue</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/unions#valuetype" className="link-type"><span className="doc-prop-wrapper">ValueType</span></Link> &#124; <span className="doc-prop-wrapper">Object</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+The initial value for the field being edited.
+This value is typically used to populate the input control within the template.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>
+
+## Methods
+
+The following table outlines the methods for the EditTemplateProps:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Parameters</th>
+<th>Returns</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>onChange</td>
+<td>
+<li className="doc-params"><p>value</p> : <Link to="/data-grid/unions#valuetype" className="link-type"><span className="doc-prop-wrapper">ValueType</span></Link> &#124; <span className="doc-prop-wrapper">Object</span></li>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>void</span></div>
+</td>
+<td className="doc-description">
+Callback function triggered when the field value changes.
+<br></br>
+<b>Params: </b>
+<br></br>
+<div className="doc-param-message">
+<li><b>value</b>: The updated value from the input control.</li>                
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>

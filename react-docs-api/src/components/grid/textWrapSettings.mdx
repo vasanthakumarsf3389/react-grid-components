@@ -1,0 +1,46 @@
+import { Link } from 'react-router'
+
+# TextWrapSettings
+
+Configures text wrapping behavior in grid cells and headers. When enabled, text content wraps automatically to fit within the available cell width, ensuring full visibility.
+
+## Props
+
+The following table outlines the props for the TextWrapSettings:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>enabled</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">false</div></td>
+<td className="doc-description">
+Enables text wrapping in grid cells.
+When enabled, this property allows text in grid cells to wrap to multiple lines if it exceeds the column width.
+This is especially useful for columns containing lengthy content.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>wrapMode</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/enums#wrapmode" className="link-type"><span className="doc-prop-wrapper">WrapMode</span></Link> &#124; <span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="prop-default">WrapMode.Both | 'Both'</div></td>
+<td className="doc-description">
+The `wrapMode` property defines how the text in the grid cells should be wrapped. The available modes are:
+* `Both`: Wraps text in both the header and content cells.
+* `Content`: Wraps text in the content cells only.
+* `Header`: Wraps texts in the header cells only.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

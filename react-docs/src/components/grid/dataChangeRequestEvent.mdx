@@ -1,0 +1,95 @@
+import { Link } from 'react-router'
+
+# DataChangeRequestEvent
+
+Defines event arguments for custom data source change requests in the Data Grid component.
+Provides parameters for handling data modifications, such as adding, updating, or deleting records.
+Used to manage data change operations and their associated actions in the grid.
+
+## Props
+
+The following table outlines the props for the DataChangeRequestEvent:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>action</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Specifies the type of action being performed, such as add, edit, or delete.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>cancelDataChanges</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">Function</span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Specifies a function to cancel the editing process.
+Executes logic to discard changes and revert the grid to its previous state.
+Used to handle cancellation of inline editing operations.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>data</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">T</span> &#124; <span className="doc-prop-wrapper">T[]</span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Contains the modified data for the operation.
+Represents the record affected by the data change, such as new or updated rows.
+Used to process or validate the data being modified.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>key</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span> &#124; <span className="doc-prop-wrapper">string[]</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Specifies the primary column field used to identify records in the data source.
+Defines the unique key for operations like updating or deleting specific records.
+Used to target specific rows for data modifications.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>rowIndex</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number</span></div></td>
+<td><div className="prop-default">0</div></td>
+<td className="doc-description">
+Specifies the index of the row affected by the data change operation.
+Identifies the row’s position in the grid for operations like insertion or selection.
+Used to manage row-specific actions or UI updates.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>saveDataChanges</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">Function</span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Specifies a function to finalize the editing process after a data change.
+Executes logic to complete the edit operation.
+Used to manage the conclusion of editing in the grid.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>state</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/datarequestevent" className="link-type"><span className="doc-prop-wrapper">DataRequestEvent</span></Link></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Contains the state of the grid’s data request, including pagination, filtering, or sorting criteria.
+Provides context for the data change operation, such as the current grid state.
+Used to align the change with the grid’s current data configuration.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

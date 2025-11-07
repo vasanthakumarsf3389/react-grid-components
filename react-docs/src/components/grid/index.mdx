@@ -1,0 +1,1147 @@
+import { Snippet } from '../../common/snippet'
+import { Link } from 'react-router'
+
+# Data Grid Component
+
+
+## Props
+
+The following table outlines the props for the Data Grid component:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>aggregates</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">AggregateRowProps[]</span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Configures summary rows with aggregate functions.
+The aggregates property allows you to add summary rows to the grid, such as totals, averages, or counts.
+Each aggregate row can contain multiple aggregations that apply functions like sum, average, min, max, or count to specific columns.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>allowKeyboard</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">true</div></td>
+<td className="doc-description">
+Controls whether keyboard navigation is enabled for the Data Grid.
+By default, navigation and interaction with grid elements can be performed using keyboard shortcuts and arrow keys.
+When set to false, the grid's default focus navigation behavior is disable
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>clipMode</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/enums#clipmode" className="link-type"><span className="doc-prop-wrapper">ClipMode</span></Link> &#124; <span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="prop-default">ClipMode.Ellipsis | 'Ellipsis'</div></td>
+<td className="doc-description">
+Defines the cell content's overflow mode. The available modes are
+* `Clip` -  Truncates the cell content when it overflows its area.
+* `Ellipsis` -  Displays ellipsis when the cell content overflows its area.
+* `EllipsisWithTooltip` - Applies an ellipsis to overflowing cell content and displays a tooltip on hover for enhanced readability.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>columns</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/columnprops" className="link-type"><span className="doc-prop-wrapper">ColumnProps[]</span></Link></div></td>
+<td><div className="prop-default">[ ]</div></td>
+<td className="doc-description">
+Defines the columns to be displayed in the grid.
+An array of ColumnProps objects that specify how each column in the grid should be configured.
+This includes properties like `field`, `headerText`, `width`, `format`, and more.
+The order of columns in the array determines their display order in the grid.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>dataSource</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">T[]</span> &#124; <span className="doc-prop-wrapper"><Link to="/data/datamanager" className="link-type"><span className="doc-prop-wrapper">DataManager</span></Link></span> &#124; <span className="doc-prop-wrapper"><Link to="/data/dataresult" className="link-type"><span className="doc-prop-wrapper">DataResult</span></Link></span></div></td>
+<td><div className="prop-default">[ ]</div></td>
+<td className="doc-description">
+Supplies the data to be displayed in the grid.
+The data source can be provided as:
+* An array of JavaScript objects
+* A `DataManager` instance for local/remote data operations
+* A `DataResult` object with processed data
+The grid will automatically bind to this data and render rows based on the provided records.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>editSettings</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/editsettings" className="link-type"><span className="doc-prop-wrapper">EditSettings</span></Link></div></td>
+<td><div className="prop-default">{ `{ allowAdd: false, allowEdit: false, allowDelete: false, mode: 'Normal', editOnDoubleClick: true, confirmOnEdit: true, confirmOnDelete: false, newRowPosition: 'Top' }` }</div></td>
+<td className="doc-description">
+Configures the editing behavior of the Data Grid.
+The editSettings property enables and controls editing functionality.
+It defines which editing operations are permitted, such as adding, editing, and deleting rows,
+and specifies the editing mode to be used.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>emptyRecordTemplate</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper"><span className="doc-prop-wrapper">ComponentType&lt;void&gt;</span></span> &#124; <span className="doc-prop-wrapper">ReactElement</span> &#124; <span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Template for displaying content when the grid has no records.
+Customizes what is displayed when the grid has no data to show. This can be provided as a string, React element, or a function that returns content.
+It provides better user experience by explaining why the grid is empty or suggesting actions to take.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>enableAltRow</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">true</div></td>
+<td className="doc-description">
+Determines whether the `sf-alt-row` CSS class is added to alternate rows in the Data Grid.
+When set to true, the grid adds the `sf-alt-row` class to alternate row elements.
+This supports alternating row styles, which can improve readability in data-dense layouts.
+The grid does not apply any default styling for this class. Styling must be defined externally.
+When set to false, the grid does not add the `sf-alt-row` class to any row.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>enableHover</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">true</div></td>
+<td className="doc-description">
+Controls whether hover effect is applied to grid rows.
+By default, rows are visually highlighted on pointer hover.
+When set to false, rows retain a static appearance regardless of pointer hover movement.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>enableHtmlSanitizer</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">false</div></td>
+<td className="doc-description">
+Controls HTML sanitization for grid content.
+When set to true, the grid will sanitize any suspected untrusted HTML content before rendering it.
+This helps prevent cross-site scripting (XSS) attacks by removing or neutralizing potentially malicious scripts and HTML.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>enableStickyHeader</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">false</div></td>
+<td className="doc-description">
+Makes the grid header remain visible during scrolling.
+When enabled, column headers will "stick" to the top of the viewport and remain visible even when the user scrolls down through the grid data.
+This improves usability by keeping column headers in view at all times.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>filterSettings</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/filtersettings" className="link-type"><span className="doc-prop-wrapper">FilterSettings</span></Link></div></td>
+<td><div className="prop-default">{ `{ enabled: false, columns: [], type: 'FilterBar', mode: 'Immediate', immediateModeDelay: 1500, ignoreAccent: false, operators: null, caseSensitive: false }` }</div></td>
+<td className="doc-description">
+Specifies the filtering configuration for the grid, controlling the filter UI and behavior.
+Includes options to enable/disable filtering, set the filter UI type, define custom operators, and configure case or accent sensitivity.
+Used to tailor the filtering experience to match application requirements and data types.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>gridLines</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/enums#gridline" className="link-type"><span className="doc-prop-wrapper">GridLine</span></Link> &#124; <span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="prop-default">'Default'</div></td>
+<td className="doc-description">
+Configures the visibility of grid lines between cells.
+Determines which grid lines are displayed in the grid. Available options are:
+* `Default`: Shows horizontal lines only.
+* `None`: Displays no grid lines.
+* `Both`: Shows both horizontal and vertical grid lines.
+* `Horizontal`: Shows horizontal lines only.
+* `Vertical`: Shows vertical lines only.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>height</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number</span> &#124; <span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="prop-default">'auto'</div></td>
+<td className="doc-description">
+Sets the height of the grid component.
+Controls the vertical size of the grid. Can be specified as:
+* A number (interpreted as pixels).
+* A string with CSS units (e.g., '500px', '100%').
+* `auto` to adjust to content.
+When a fixed height is set, scrollbars appear automatically when content exceeds the height.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>id</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="prop-default">React.useId()</div></td>
+<td className="doc-description">
+Specifies a unique identifier for the grid component.
+Provides a distinct ID for the grid instance, enabling targeted interactions, styling, or accessibility features.
+Used to differentiate multiple grid instances within the same application or DOM.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>pageSettings</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/pagesettings" className="link-type"><span className="doc-prop-wrapper">PageSettings</span></Link></div></td>
+<td><div className="prop-default">{ `{ enabled: false, currentPage: 1, pageSize: 12, pageCount: 8 }` }</div></td>
+<td className="doc-description">
+Specifies the pagination configuration for the grid, controlling how data is divided and navigated.
+Includes options to enable/disable pagination, set the number of records per page, define the number of navigation links, and select the initial page.
+Used to tailor the pagination UI and behavior for efficient data handling.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>query</td>
+<td><div className="doc-prop-type"><Link to="/data/query" className="link-type"><span className="doc-prop-wrapper">Query</span></Link></div></td>
+<td><div className="prop-default">new Query()</div></td>
+<td className="doc-description">
+Defines a query to execute against the data source.
+Allows you to apply a predefined `Query` object to the data source, which can include filtering, sorting, paging, and other data operations.
+This is especially useful when working with remote data sources or when you need complex data operations.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>rowClass</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span> &#124; <span className="doc-prop-wrapper">((props?: RowClassProps<T>) => string)</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Applies a CSS class to each grid row either globally or conditionally.
+Accepts a static class name or a callback function that returns a class name based on row context.
+The callback receives a `RowClassProps` object with the following properties:
+* `rowType` – Identifies the structural role of the row: `Header`, `Content`, or `Aggregate`. Useful for styling header, data, or summary rows.
+* `rowIndex` – The zero-based index of the row.
+* `data` – The full data object for the row, enabling conditional styling based on field values.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>rowHeight</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number</span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Sets a fixed height for all rows in the grid.
+This property sets a uniform height for all rows in the grid. When set to a number, all rows will have exactly that height in pixels.
+When null (default), row height is determined automatically based on content and styles.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>rowTemplate</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper"><span className="doc-prop-wrapper">ComponentType&lt;T&gt;</span></span> &#124; <span className="doc-prop-wrapper">ReactElement</span> &#124; <span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Specifies a custom template for rendering rows in the grid.
+Allows complete customization of row rendering by providing a template that replaces the default row structure.
+This can be a string template, React element, or function that returns the row content.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>searchSettings</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/searchsettings" className="link-type"><span className="doc-prop-wrapper">SearchSettings</span></Link></div></td>
+<td><div className="prop-default">{ `{ enabled: false, fields: [], value: undefined, operator: 'contains', caseSensitive: true, ignoreAccent: false }` }</div></td>
+<td className="doc-description">
+Specifies the search configuration for the grid, controlling how data is searched.
+Defines settings for enabling the search bar, specifying searchable fields, initial search terms, operators, and case/accent sensitivity.
+Used to customize the search experience for filtering grid data.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>selectionSettings</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/selectionsettings" className="link-type"><span className="doc-prop-wrapper">SelectionSettings</span></Link></div></td>
+<td><div className="prop-default">{ `{ enabled: true, mode: 'Single', enableToggle: true }` }</div></td>
+<td className="doc-description">
+Configures the grid's selection settings, determines whether `Single` or `Multiple` selections are allowed.
+Used to customize the selection experience for user interactions.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>sortSettings</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/sortsettings" className="link-type"><span className="doc-prop-wrapper">SortSettings</span></Link></div></td>
+<td><div className="prop-default">{ `{ columns: [], allowUnsort: true, enabled: false, mode: 'Multiple' }` }</div></td>
+<td className="doc-description">
+Specifies the sorting configuration for the grid, includes options to enable/disable sorting and controlling how data is ordered.
+Used to customize sorting behavior for data presentation and user interactions.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>textWrapSettings</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/textwrapsettings" className="link-type"><span className="doc-prop-wrapper">TextWrapSettings</span></Link></div></td>
+<td><div className="prop-default">{ `{ enabled: false, wrapMode: 'Both' }` }</div></td>
+<td className="doc-description">
+Specifies the text wrapping configuration for the grid, controlling how text is displayed.
+Defines the wrap mode to determine which grid sections (header, content, or both) apply text wrapping.
+Used to customize text display for readability and layout optimization.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>toolbar</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">Array&lt;string &#124; [ToolbarItemProps](./toolbarItemProps)&gt;</span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Configures the grid toolbar with predefined or custom items.
+The toolbar property allows you to add a toolbar to the grid with both predefined actions (add, edit, delete, update, cancel, search)
+and custom items. Custom items can include text, template content, and click handlers.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>width</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number</span> &#124; <span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="prop-default">'auto'</div></td>
+<td className="doc-description">
+Sets the width of the grid component.
+Controls the horizontal size of the grid. Can be specified as:
+* A number (interpreted as pixels).
+* A string with CSS units (e.g., '800px', '100%').
+* `auto` to adjust to parent container.
+When a fixed width is set, horizontal scrollbars appear automatically when content exceeds the width.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>
+
+## Methods
+
+The following table outlines the methods for the Data Grid component:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Parameters</th>
+<th>Returns</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>addRecord</td>
+<td>
+<li className="doc-params"><p>data?</p> :  <span className="doc-prop-wrapper">T</span></li><li className="doc-params"><p>index?</p> :  <span className="doc-prop-wrapper">number</span></li>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>void</span></div>
+</td>
+<td className="doc-description">
+Adds a new record to the grid’s data source.
+Inserts a new row with the provided data at the specified index or at the start if no index is provided.
+<br></br>
+<b>Params: </b>
+<br></br>
+<div className="doc-param-message">
+<li><b>data</b>: Optional. The data object for the new record.</li>          
+</div> <div className="doc-param-message">
+<li><b>index</b>: Optional. The index at which to insert the new record.</li>          
+</div>
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>cancelDataChanges</td>
+<td>
+<div>-</div>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>void</span></div>
+</td>
+<td className="doc-description">
+Aborts the active CRUD operation, exits edit mode, and restores the original row state.
+Typically invoked via the Cancel toolbar action or Escape key during editing.
+
+
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>clearFilter</td>
+<td>
+<li className="doc-params"><p>fields?</p> :  <span className="doc-prop-wrapper">string[]</span></li>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>void</span></div>
+</td>
+<td className="doc-description">
+Clears filters applied to the specified fields or all columns in the grid.
+Removes filtering conditions, restoring the grid to display all data or data for specified fields.
+Used to programmatically reset filtering for a fresh data view.
+<br></br>
+<b>Params: </b>
+<br></br>
+<div className="doc-param-message">
+<li><b>fields</b>: Optional. An array of field names to clear filters for. If omitted, clears all filters.</li>                
+</div>
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>clearRowSelection</td>
+<td>
+<li className="doc-params"><p>indexes</p> :  <span className="doc-prop-wrapper">number[]</span></li>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>void</span></div>
+</td>
+<td className="doc-description">
+Deselects specific rows by their indexes in the grid.
+Removes the specified rows from the current selection, updating the grid’s UI accordingly.
+Used to programmatically remove selection from specific rows.
+<br></br>
+<b>Params: </b>
+<br></br>
+<div className="doc-param-message">
+<li><b>indexes</b>: An array of zero-based row indexes to deselect.</li>                
+</div>
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>clearSelection</td>
+<td>
+<div>-</div>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>void</span></div>
+</td>
+<td className="doc-description">
+Clears all currently selected rows in the grid.
+Removes the selection state from all rows, resetting the grid’s selection UI.
+Used to programmatically clear all row selections.
+
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>clearSort</td>
+<td>
+<li className="doc-params"><p>fields?</p> :  <span className="doc-prop-wrapper">string[]</span></li>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>void</span></div>
+</td>
+<td className="doc-description">
+Clears sorting from all columns in the grid.
+Resets the grid to an unsorted state, removing all sorting applied to any columns.
+Used to programmatically revert the grid to its original data order.
+<br></br>
+<b>Params: </b>
+<br></br>
+<div className="doc-param-message">
+<li><b>fields</b>: Optional. An array of field names to clear sorts for. If omitted, clears all sorts.</li>                
+</div>
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>deleteRecord</td>
+<td>
+<li className="doc-params"><p>fieldName?</p> :  <span className="doc-prop-wrapper">string</span></li><li className="doc-params"><p>data?</p> :  <span className="doc-prop-wrapper">T</span></li>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>void</span></div>
+</td>
+<td className="doc-description">
+Deletes a record from the grid’s data source based on specified criteria or the selected row.
+Removes a record matching the provided field name and data, or deletes the currently selected row if no parameters are provided.
+Used to programmatically remove records, updating the grid’s display and data source accordingly.
+<br></br>
+<b>Params: </b>
+<br></br>
+<div className="doc-param-message">
+<li><b>fieldName</b>: Optional. The field name to match for identifying the record to delete.</li>          
+</div> <div className="doc-param-message">
+<li><b>data</b>: Optional. The data object or array of objects to match for deletion.</li>          
+</div>
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>editRecord</td>
+<td>
+<li className="doc-params"><p>rowElement?</p> :  <span className="doc-prop-wrapper">HTMLTableRowElement</span></li>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>void</span></div>
+</td>
+<td className="doc-description">
+Initiates editing for a specified row or the currently selected row.
+Used to programmatically trigger the editing mode for a specific or selected row.
+<br></br>
+<b>Params: </b>
+<br></br>
+<div className="doc-param-message">
+<li><b>rowElement</b>: Optional. The row element to edit. If omitted, edits the selected row.</li>                
+</div>
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>filterByColumn</td>
+<td>
+<li className="doc-params"><p>fieldName</p> :  <span className="doc-prop-wrapper">string</span></li><li className="doc-params"><p>filterOperator</p> :  <span className="doc-prop-wrapper">string</span></li><li className="doc-params"><p>filterValue</p> : <Link to="/data-grid/unions#valuetype" className="link-type"><span className="doc-prop-wrapper">ValueType</span></Link> &#124; <Link to="/data-grid/unions#valuetype" className="link-type"><span className="doc-prop-wrapper">ValueType[]</span></Link></li><li className="doc-params"><p>predicate?</p> :  <span className="doc-prop-wrapper">string</span></li><li className="doc-params"><p>caseSensitive?</p> :  <span className="doc-prop-wrapper">boolean</span></li><li className="doc-params"><p>ignoreAccent?</p> :  <span className="doc-prop-wrapper">boolean</span></li>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>void</span></div>
+</td>
+<td className="doc-description">
+Filters grid rows by a specified column with given options.
+Applies a filter to the column identified by its `field` name, using the provided operator and value, with optional predicate and sensitivity settings.
+Used to programmatically filter grid data based on column-specific criteria.
+<br></br>
+<b>Params: </b>
+<br></br>
+<div className="doc-param-message">
+<li><b>fieldName</b>: The `field` name of the column to filter.</li>          
+</div> <div className="doc-param-message">
+<li><b>filterOperator</b>: The operator to apply (e.g., 'contains', 'equal').</li>          
+</div> <div className="doc-param-message">
+<li><b>filterValue</b>: The value to filter against.</li>          
+</div> <div className="doc-param-message">
+<li><b>predicate</b>: Optional. The relationship between filter queries ('AND' or 'OR').</li>          
+</div> <div className="doc-param-message">
+<li><b>caseSensitive</b>: Optional. If true, performs case-sensitive filtering. If false, ignores case.</li>          
+</div> <div className="doc-param-message">
+<li><b>ignoreAccent</b>: Optional. If true, ignores diacritic characters during filtering.</li>          
+</div>
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>getColumnByField</td>
+<td>
+<li className="doc-params"><p>field</p> :  <span className="doc-prop-wrapper">string</span></li>
+</td>
+<td>
+<div className="prop-default"><Link to="/data-grid/columnprops" className="link-type"><span className='method-return'>ColumnProps</span></Link></div>
+</td>
+<td className="doc-description">
+Retrieves the column configuration object for a specified field name.
+Returns the ColumnProps object matching the provided field, enabling access to column metadata like field, header text, or formatting.
+Used for dynamically accessing or modifying column properties at runtime.
+<br></br>
+<b>Params: </b>
+<br></br>
+<div className="doc-param-message">
+<li><b>field</b>: The field name of the column to retrieve.</li>                
+</div>
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>getColumns</td>
+<td>
+<div>-</div>
+</td>
+<td>
+<div className="prop-default"><Link to="/data-grid/columnprops" className="link-type"><span className='method-return'>ColumnProps[]</span></Link></div>
+</td>
+<td className="doc-description">
+Retrieves the current configuration of all columns in the grid.
+Returns an array of `ColumnProps` objects representing the grid’s column settings.
+Used to access column data for dynamic processing or modifications.
+
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>getData</td>
+<td>
+<li className="doc-params"><p>skipPage?</p> :  <span className="doc-prop-wrapper">boolean</span></li><li className="doc-params"><p>requiresCount?</p> :  <span className="doc-prop-wrapper">boolean</span></li>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>T[]</span> &#124; <span className='method-return'><span className="doc-prop-wrapper">Promise&lt;Response</span> &#124; <span className='method-return'>DataReturnType&gt;</span></span></div>
+</td>
+<td className="doc-description">
+Retrieves all records from the grid based on current settings.
+Returns an array of data objects reflecting applied pagination, filters, sorting, and searching settings.
+For remote data sources, returns only the current view data.
+<br></br>
+<b>Params: </b>
+<br></br>
+<div className="doc-param-message">
+<li><b>skipPage</b>: Optional. If true, excludes pagination information from the returned data.</li>          
+</div> <div className="doc-param-message">
+<li><b>requiresCount</b>: Optional. If true, includes the total record count in the response.</li>          
+</div>
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>getHiddenColumns</td>
+<td>
+<div>-</div>
+</td>
+<td>
+<div className="prop-default"><Link to="/data-grid/columnprops" className="link-type"><span className='method-return'>ColumnProps[]</span></Link></div>
+</td>
+<td className="doc-description">
+Retrieves an array of configuration objects for all currently hidden columns in the grid.
+Used to access metadata for hidden columns for dynamic processing or UI updates.
+
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>getPrimaryKeyFieldNames</td>
+<td>
+<div>-</div>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>string[]</span></div>
+</td>
+<td className="doc-description">
+Retrieves the `field` names of the primary key columns defined in the grid.
+Used to identify the primary keys for data operations like updates or deletions.
+
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>getRowInfo</td>
+<td>
+<li className="doc-params"><p>target</p> :  <span className="doc-prop-wrapper">Element</span></li>
+</td>
+<td>
+<div className="prop-default"><Link to="/data-grid/<span classname="doc-prop-wrapper">rowinfo&lt;t&gt;</span>" className="link-type"><span className='method-return'><span className="doc-prop-wrapper">RowInfo&lt;T&gt;</span></span></Link></div>
+</td>
+<td className="doc-description">
+Retrieves detailed information about the row containing a specified cell element or event target.
+Returns a `RowInfo` object with metadata about the associated row, such as its index or data.
+Used to access row-specific details for dynamic processing or event handling.
+<br></br>
+<b>Params: </b>
+<br></br>
+<div className="doc-param-message">
+<li><b>target</b>: The cell element or event target used to identify the row.</li>                
+</div>
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>getSelectedRecords</td>
+<td>
+<div>-</div>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>T[]</span> &#124; <span className='method-return'>null</span></div>
+</td>
+<td className="doc-description">
+Retrieves the data objects of the currently selected rows in the grid.
+Used to access the data of selected rows for processing or display.
+
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>getSelectedRowIndexes</td>
+<td>
+<div>-</div>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>number[]</span></div>
+</td>
+<td className="doc-description">
+Retrieves the indexes of the currently selected rows in the grid.
+Used to determine which rows are currently selected for further processing.
+
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>getVisibleColumns</td>
+<td>
+<div>-</div>
+</td>
+<td>
+<div className="prop-default"><Link to="/data-grid/columnprops" className="link-type"><span className='method-return'>ColumnProps[]</span></Link></div>
+</td>
+<td className="doc-description">
+Retrieves an array of configuration objects for all currently visible columns in the grid.
+Used to access metadata for visible columns for dynamic processing or UI updates.
+
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>goToPage</td>
+<td>
+<li className="doc-params"><p>pageNumber</p> :  <span className="doc-prop-wrapper">number</span></li>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>void</span></div>
+</td>
+<td className="doc-description">
+Navigates to a specific page in the grid’s paginated data.
+Updates the grid to display the data for the specified page number.
+<br></br>
+<b>Params: </b>
+<br></br>
+<div className="doc-param-message">
+<li><b>pageNumber</b>: The page number to navigate to.</li>                
+</div>
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>hideSpinner</td>
+<td>
+<div>-</div>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>void</span></div>
+</td>
+<td className="doc-description">
+Hides the loading spinner overlay previously shown on the grid.
+Used to update the UI after completing asynchronous or time-consuming operations.
+
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>refresh</td>
+<td>
+<div>-</div>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>void</span></div>
+</td>
+<td className="doc-description">
+Refreshes the grid’s data and view to reflect the latest state.
+Updates the grid’s display by re-rendering data based on current settings, such as filters, sorting, pagination or other.
+Used to synchronize the grid’s UI with changes in the data source or configuration.
+
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>removeSortColumn</td>
+<td>
+<li className="doc-params"><p>columnName</p> :  <span className="doc-prop-wrapper">string</span></li>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>void</span></div>
+</td>
+<td className="doc-description">
+Removes sorting from a specified column in the grid.
+Clears the sorting applied to the column identified by its name, reverting it to an unsorted state.
+Used to programmatically remove sorting from a specific column.
+<br></br>
+<b>Params: </b>
+<br></br>
+<div className="doc-param-message">
+<li><b>columnName</b>: The name of the column to remove sorting from (e.g., field name).</li>                
+</div>
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>saveDataChanges</td>
+<td>
+<div>-</div>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'><span className="doc-prop-wrapper">Promise&lt;boolean&gt;</span></span></div>
+</td>
+<td className="doc-description">
+Commits the edited or newly added row to the data source after validating inputs and triggering lifecycle events such as `onDataChangeStart` and `onDataChangeComplete`.
+Typically invoked via the Update toolbar action or Enter key during editing.
+
+
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>search</td>
+<td>
+<li className="doc-params"><p>searchString?</p> :  <span className="doc-prop-wrapper">string</span></li>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>void</span></div>
+</td>
+<td className="doc-description">
+Searches grid records using a specified search string.
+Applies a search across the grid’s data based on the configured search settings, such as fields or operators.
+Used to programmatically filter data using a search term.
+<br></br>
+<b>Params: </b>
+<br></br>
+<div className="doc-param-message">
+<li><b>searchString</b>: Optional. The search term to apply. if omitted, clears the search.</li>                
+</div>
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>selectRow</td>
+<td>
+<li className="doc-params"><p>rowIndex</p> :  <span className="doc-prop-wrapper">number</span></li><li className="doc-params"><p>isToggle?</p> :  <span className="doc-prop-wrapper">boolean</span></li>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>void</span></div>
+</td>
+<td className="doc-description">
+Selects a single row by its index in the grid.
+Updates the grid’s selection state to highlight the specified row, optionally toggling the existing selection.
+Used to programmatically select a row based on its position.
+<br></br>
+<b>Params: </b>
+<br></br>
+<div className="doc-param-message">
+<li><b>rowIndex</b>: The zero-based index of the row to select.</li>          
+</div> <div className="doc-param-message">
+<li><b>isToggle</b>: Optional. Specifies whether to toggle the existing selection.</li>          
+</div>
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>selectRowByRange</td>
+<td>
+<li className="doc-params"><p>startIndex</p> :  <span className="doc-prop-wrapper">number</span></li><li className="doc-params"><p>endIndex?</p> :  <span className="doc-prop-wrapper">number</span></li>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>void</span></div>
+</td>
+<td className="doc-description">
+Selects a range of rows from a start index to an optional end index in the grid.
+Updates the grid’s selection state to highlight all rows within the specified range.
+Used to programmatically select a continuous set of rows.
+<br></br>
+<b>Params: </b>
+<br></br>
+<div className="doc-param-message">
+<li><b>startIndex</b>: The zero-based index of the first row in the range.</li>          
+</div> <div className="doc-param-message">
+<li><b>endIndex</b>: Optional. The zero-based index of the last row in the range.</li>          
+</div>
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>selectRows</td>
+<td>
+<li className="doc-params"><p>rowIndexes</p> :  <span className="doc-prop-wrapper">number[]</span></li>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>void</span></div>
+</td>
+<td className="doc-description">
+Selects multiple rows by their indexes in the grid.
+Updates the grid’s selection state to highlight the specified rows, typically used in multi-selection mode.
+Used to programmatically select a collection of rows.
+<br></br>
+<b>Params: </b>
+<br></br>
+<div className="doc-param-message">
+<li><b>rowIndexes</b>: An array of zero-based row indexes to select.</li>                
+</div>
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>setCellValue</td>
+<td>
+<li className="doc-params"><p>key</p> : <span className="doc-prop-wrapper">string</span> &#124; <span className="doc-prop-wrapper">number</span></li><li className="doc-params"><p>field</p> :  <span className="doc-prop-wrapper">string</span></li><li className="doc-params"><p>value</p> : <Link to="/data-grid/unions#valuetype" className="link-type"><span className="doc-prop-wrapper">ValueType</span></Link> &#124; <span className="doc-prop-wrapper">null</span></li><li className="doc-params"><p>isDataSourceChangeRequired?</p> :  <span className="doc-prop-wrapper">boolean</span></li>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>void</span></div>
+</td>
+<td className="doc-description">
+Updates a specific cell’s value in a row identified by its primary key.
+Modifies the cell value for the specified field in the record matching the provided key, optionally updating the data source.
+Requires a primary key column defined via `columns.isPrimaryKey`.
+
+<br></br>
+<b>Params: </b>
+<br></br>
+<div className="doc-param-message">
+<li><b>key</b>: The primary key value of the record containing the cell.</li>          
+</div> <div className="doc-param-message">
+<li><b>field</b>: The field name of the column to update.</li>          
+</div> <div className="doc-param-message">
+<li><b>value</b>: The new value for the cell.</li>          
+</div> <div className="doc-param-message">
+<li><b>isDataSourceChangeRequired</b>: Optional. If true, updates the underlying data source.</li>          
+</div>
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>setPagerMessage</td>
+<td>
+<li className="doc-params"><p>message?</p> :  <span className="doc-prop-wrapper">string</span></li>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>void</span></div>
+</td>
+<td className="doc-description">
+Updates the text of an external message displayed in the grid.
+Sets or clears a custom message, typically used for notifications or status updates in the grid’s UI.
+<br></br>
+<b>Params: </b>
+<br></br>
+<div className="doc-param-message">
+<li><b>message</b>: Optional. The message text to display.</li>                
+</div>
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>setRowData</td>
+<td>
+<li className="doc-params"><p>key</p> : <span className="doc-prop-wrapper">string</span> &#124; <span className="doc-prop-wrapper">number</span></li><li className="doc-params"><p>data</p> :  <span className="doc-prop-wrapper">T</span></li><li className="doc-params"><p>isDataSourceChangeRequired?</p> :  <span className="doc-prop-wrapper">boolean</span></li>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>void</span></div>
+</td>
+<td className="doc-description">
+Updates and refreshes a specific row’s data based on its primary key value.
+Replaces the row’s data for the record matching the provided key, optionally updating the data source.
+Requires a primary key column defined via `columns.isPrimaryKey`.
+
+<br></br>
+<b>Params: </b>
+<br></br>
+<div className="doc-param-message">
+<li><b>key</b>: The primary key value of the record to update.</li>          
+</div> <div className="doc-param-message">
+<li><b>data</b>: The new data object for the row.</li>          
+</div> <div className="doc-param-message">
+<li><b>isDataSourceChangeRequired</b>: Optional. If true, updates the underlying data source.</li>          
+</div>
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>showSpinner</td>
+<td>
+<div>-</div>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>void</span></div>
+</td>
+<td className="doc-description">
+Displays a loading spinner overlay on the grid to indicate an ongoing operation.
+Used to enhance the user experience during asynchronous or time-consuming operations.
+
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>sortByColumn</td>
+<td>
+<li className="doc-params"><p>columnName</p> :  <span className="doc-prop-wrapper">string</span></li><li className="doc-params"><p>sortDirection</p> : <Link to="/data-grid/enums#sortdirection" className="link-type"><span className="doc-prop-wrapper">SortDirection</span></Link> &#124; <span className="doc-prop-wrapper">string</span></li><li className="doc-params"><p>isMultiSort?</p> :  <span className="doc-prop-wrapper">boolean</span></li>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>void</span></div>
+</td>
+<td className="doc-description">
+Sorts a specified column in the grid with given options.
+Applies sorting to the column identified by its name, using the specified direction and multi-sort behavior.
+Used to programmatically sort grid data by a column.
+<br></br>
+<b>Params: </b>
+<br></br>
+<div className="doc-param-message">
+<li><b>columnName</b>: The name of the column to sort (e.g., field name).</li>          
+</div> <div className="doc-param-message">
+<li><b>sortDirection</b>: The sorting direction ('Ascending' or 'Descending').</li>          
+</div> <div className="doc-param-message">
+<li><b>isMultiSort</b>: Optional. Specifies whether to maintain previously sorted columns.</li>          
+</div>
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>updateRecord</td>
+<td>
+<li className="doc-params"><p>index</p> :  <span className="doc-prop-wrapper">number</span></li><li className="doc-params"><p>data</p> :  <span className="doc-prop-wrapper">T</span></li>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>void</span></div>
+</td>
+<td className="doc-description">
+Updates a specific row in the grid with new data.
+Replaces the data of the row at the specified index with the provided data object.
+Used to programmatically modify existing row data in the grid.
+<br></br>
+<b>Params: </b>
+<br></br>
+<div className="doc-param-message">
+<li><b>index</b>: The zero-based index of the row to update.</li>          
+</div> <div className="doc-param-message">
+<li><b>data</b>: The new data object for the row.</li>          
+</div>
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>validateEditForm</td>
+<td>
+<div>-</div>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>boolean</span></div>
+</td>
+<td className="doc-description">
+Validates all fields in the current edit or add form against their defined rules.
+Checks the input values in the editing form to ensure they meet column validation criteria.
+Used to verify data integrity before saving changes.
+
+</td>
+</tr><tr className='api-row'>
+<td className='prop-name'>validateField</td>
+<td>
+<li className="doc-params"><p>field</p> :  <span className="doc-prop-wrapper">string</span></li>
+</td>
+<td>
+<div className="prop-default"><span className='method-return'>boolean</span></div>
+</td>
+<td className="doc-description">
+Validates a specific field against its defined column validation rules.
+Checks the value of the specified field to ensure it meets the configured validation criteria.
+Used to verify the validity of a single field during editing.
+<br></br>
+<b>Params: </b>
+<br></br>
+<div className="doc-param-message">
+<li><b>field</b>: The name of the field to validate.</li>                
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+## Events
+
+The following table outlines the events for the Data Grid component:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>onCellClick</td>
+<td><div className="doc-prop-type"><div className="doc-prop-wrapper event-type">{`(event: CellFocusEvent<T>) => void`}</div></div></td>
+<td className="doc-description">
+Fires when a grid cell is clicked.
+Provides details about the clicked cell.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>onCellFocus</td>
+<td><div className="doc-prop-type"><div className="doc-prop-wrapper event-type">{`(event: CellFocusEvent<T>) => void`}</div></div></td>
+<td className="doc-description">
+Fires when a grid cell gains focus.
+Provides details about the focused cell.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>onDataChangeCancel</td>
+<td><div className="doc-prop-type"><div className="doc-prop-wrapper event-type">{`(event: FormCancelEvent<T>) => void`}</div></div></td>
+<td className="doc-description">
+Fires when a CRUD operation is cancelled.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>onDataChangeComplete</td>
+<td><div className="doc-prop-type"><div className="doc-prop-wrapper event-type">(event: null | null) => void</div></div></td>
+<td className="doc-description">
+Fires when a create, update, or delete operation is completed.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>onDataChangeRequest</td>
+<td><div className="doc-prop-type"><div className="doc-prop-wrapper event-type">{`(event: DataChangeRequestEvent<T>) => void`}</div></div></td>
+<td className="doc-description">
+Fires when the grid's data source is changed.
+Monitors and responds to updates in the grid's data source.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>onDataChangeStart</td>
+<td><div className="doc-prop-type"><div className="doc-prop-wrapper event-type">(event: null | null) => void</div></div></td>
+<td className="doc-description">
+Fires when a create, update, or delete operation is started.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>onDataLoad</td>
+<td><div className="doc-prop-type"><div className="doc-prop-wrapper event-type">{`( ) => void`}</div></div></td>
+<td className="doc-description">
+Fires after data is successfully bound to the grid.
+Suitable for actions requiring fully loaded data.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>onDataRequest</td>
+<td><div className="doc-prop-type"><div className="doc-prop-wrapper event-type">(event: <Link to="/data-grid/datarequestevent" className="link-type">DataRequestEvent</Link>) => void</div></div></td>
+<td className="doc-description">
+Fires when grid data state changes due to sorting or paging.
+Monitors and responds to changes in grid state.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>onError</td>
+<td><div className="doc-prop-type"><div className="doc-prop-wrapper event-type">{`(event: Error) => void`}</div></div></td>
+<td className="doc-description">
+Fires when grid operations like sorting or filtering fail.
+Provides error details for handling and user feedback.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>onFilter</td>
+<td><div className="doc-prop-type"><div className="doc-prop-wrapper event-type">(event: <Link to="/data-grid/filterevent" className="link-type">FilterEvent</Link>) => void</div></div></td>
+<td className="doc-description">
+Fires after a filtering operation completes on the grid.
+Provides filter state details for post-filter actions.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>onFormRender</td>
+<td><div className="doc-prop-type"><div className="doc-prop-wrapper event-type">{`(event: FormRenderEvent<T>) => void`}</div></div></td>
+<td className="doc-description">
+Fires when the edit or add form is fully loaded and ready for user input.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>onGridRenderComplete</td>
+<td><div className="doc-prop-type"><div className="doc-prop-wrapper event-type">{`( ) => void`}</div></div></td>
+<td className="doc-description">
+Fired when the grid is fully loaded and ready for user interaction.
+Suitable for actions requiring only on grid initially fully loaded data.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>onGridRenderStart</td>
+<td><div className="doc-prop-type"><div className="doc-prop-wrapper event-type">{`( ) => void`}</div></div></td>
+<td className="doc-description">
+Fires at the start of grid initialization before data processing.
+Useful for initial configurations or showing loading indicators.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>onPageChange</td>
+<td><div className="doc-prop-type"><div className="doc-prop-wrapper event-type">(event: <Link to="/data-grid/pageevent" className="link-type">PageEvent</Link>) => void</div></div></td>
+<td className="doc-description">
+Event triggered after a paging operation is completed on the grid.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>onRefresh</td>
+<td><div className="doc-prop-type"><div className="doc-prop-wrapper event-type">{`( ) => void`}</div></div></td>
+<td className="doc-description">
+Fired when the grid data is refreshed or updated.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>onRowAddStart</td>
+<td><div className="doc-prop-type"><div className="doc-prop-wrapper event-type">{`(event: RowAddEvent<T>) => void`}</div></div></td>
+<td className="doc-description">
+Fires when the process of adding a new row starts.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>onRowDeselect</td>
+<td><div className="doc-prop-type"><div className="doc-prop-wrapper event-type">{`(event: RowSelectEvent<T>) => void`}</div></div></td>
+<td className="doc-description">
+Fires after a row is successfully deselected.
+Provides details about the deselected row.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>onRowDoubleClick</td>
+<td><div className="doc-prop-type"><div className="doc-prop-wrapper event-type">{`(event: RecordDoubleClickEvent<T>) => void`}</div></div></td>
+<td className="doc-description">
+Fires when a grid row is clicked.
+Provides details about the clicked row for custom actions.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>onRowEditStart</td>
+<td><div className="doc-prop-type"><div className="doc-prop-wrapper event-type">{`(event: RowEditEvent<T>) => void`}</div></div></td>
+<td className="doc-description">
+Fires when editing begins on a grid record.
+Allows validation or field modification before editing.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>onRowSelect</td>
+<td><div className="doc-prop-type"><div className="doc-prop-wrapper event-type">{`(event: RowSelectEvent<T>) => void`}</div></div></td>
+<td className="doc-description">
+Fires after a row is successfully selected.
+Provides details about the selected row.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>onSearch</td>
+<td><div className="doc-prop-type"><div className="doc-prop-wrapper event-type">(event: <Link to="/data-grid/searchevent" className="link-type">SearchEvent</Link>) => void</div></div></td>
+<td className="doc-description">
+Fires after a searching operation completes on the grid.
+Provides search result details for post-search actions.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>onSort</td>
+<td><div className="doc-prop-type"><div className="doc-prop-wrapper event-type">(event: <Link to="/data-grid/sortevent" className="link-type">SortEvent</Link>) => void</div></div></td>
+<td className="doc-description">
+Fires after a sorting operation completes on the grid.
+Provides sort state details for post-sort actions.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>onToolbarItemClick</td>
+<td><div className="doc-prop-type"><div className="doc-prop-wrapper event-type">(event: <Link to="/data-grid/toolbarclickevent" className="link-type">ToolbarClickEvent</Link>) => void</div></div></td>
+<td className="doc-description">
+Fires when a toolbar item is clicked.
+Enables custom actions for toolbar buttons.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

@@ -1,0 +1,87 @@
+import { Link } from 'react-router'
+
+# SearchSettings
+
+Configures search functionality for the Data Grid component.
+Defines settings for enabling search, specifying search fields, and controlling search behavior.
+Manages how data is filtered based on user search input across grid columns.
+
+## Props
+
+The following table outlines the props for the SearchSettings:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>caseSensitive</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">true</div></td>
+<td className="doc-description">
+Controls case sensitivity for string searches in the grid.
+When true, searches are case-insensitive, treating uppercase and lowercase letters the same. When false, searches require exact case matching.
+Only affects string fields and not numbers, dates, or booleans.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>enabled</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">false</div></td>
+<td className="doc-description">
+Determines whether the search bar is enabled for the grid.
+When set to true, displays the search bar and allows to filter grid data. when false, disables search functionality.
+Affects the visibility and usability of the search UI in the grid.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>fields</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string[]</span></div></td>
+<td><div className="prop-default">[ ]</div></td>
+<td className="doc-description">
+Specifies an array of column field names to include in search operations.
+By default, includes all bounded columns in the grid. An empty array means no fields are searched.
+Allows targeting specific columns for search to optimize performance or relevance.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>ignoreAccent</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">false</div></td>
+<td className="doc-description">
+Enables accent-insensitive searching for string fields.
+When true, diacritic characters (e.g., accents like é, ñ) are ignored, treating them as their base characters.
+Enhances search usability for multilingual datasets.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>operator</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="prop-default">'contains'</div></td>
+<td className="doc-description">
+Specifies the operator used for search operations, such as 'contains', 'startswith', 'endswith', 'equal', or 'notequal'.
+Determines how the search value is matched against column data, affecting search precision.
+Must be compatible with the data types of the searched fields.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>value</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Defines the initial search value to filter grid records at rendering or the current search value.
+Used to pre-apply a search query on grid initialization or to retrieve the active search string.
+Supports dynamic updates to reflect user input in the search bar.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

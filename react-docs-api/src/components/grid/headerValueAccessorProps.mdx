@@ -1,0 +1,47 @@
+import { Link } from 'react-router'
+
+# HeaderValueAccessorProps
+
+Defines event arguments for customizing header cell rendering in the Syncfusion React Data Grid.
+Enables dynamic transformation of header text based on column metadata or application requirements.
+Used to modify or localize header content during rendering.
+
+## Props
+
+The following table outlines the props for the HeaderValueAccessorProps:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>column</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/columnprops" className="link-type"><span className="doc-prop-wrapper">ColumnProps</span></Link></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Contains the column configuration object with metadata such as field name, type, or formatting.
+Provides context for dynamic header rendering, enabling logic based on column properties.
+Used to customize header text or behavior for specific columns.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>headerText</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Specifies the text displayed in the header cell of the grid.
+Allows modification for purposes such as localization, formatting, or custom display logic.
+Reflects the visible header content for the associated column.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

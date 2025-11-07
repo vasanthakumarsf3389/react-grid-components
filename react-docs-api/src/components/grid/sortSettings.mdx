@@ -1,0 +1,67 @@
+import { Link } from 'react-router'
+
+# SortSettings
+
+Configures sorting behavior in the Data Grid component.
+Manages settings for enabling sorting, defining sorted columns, and controlling sort persistence.
+Determines how to interact with column sorting via headers or programmatically.
+
+## Props
+
+The following table outlines the props for the SortSettings:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>allowUnsort</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">true</div></td>
+<td className="doc-description">
+Determines whether clicking a sorted column header can clear its sort state.
+When false, prevents the grid from remove the sorting a column, maintaining the sort order. When true, allows toggling to an unsorted state.
+Affects user interaction with sorted column headers.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>columns</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/sortdescriptor" className="link-type"><span className="doc-prop-wrapper">SortDescriptor[]</span></Link></div></td>
+<td><div className="prop-default">[ ]</div></td>
+<td className="doc-description">
+Contains an array of `SortDescriptor` objects to define initial or active sort conditions.
+Specifies which columns are sorted and in what direction at grid initialization or during runtime.
+Enables pre-sorting data or retrieving the current sort state.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>enabled</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">false</div></td>
+<td className="doc-description">
+Enables or disables sorting functionality for grid columns.
+When true, allows to sort data by clicking column headers, with support for multiple columns using the Ctrl key.
+When false, disables all sorting interactions and programmatic sorting.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>mode</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span> &#124; <Link to="/data-grid/enums#sortmode" className="link-type"><span className="doc-prop-wrapper">SortMode</span></Link></div></td>
+<td><div className="prop-default">'Multiple'</div></td>
+<td className="doc-description">
+Specifies whether sorting is restricted to a single column or allows multiple columns.
+Supports `Single` for sorting one column at a time or `Multiple` for sorting multiple columns simultaneously.
+Influences the grid’s sorting behavior and user experience.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

@@ -1,0 +1,53 @@
+import { Link } from 'react-router'
+
+# RowClassProps
+
+Provides context for customizing row appearance or behavior.
+Includes row type, index, and optional complete row data.
+
+## Props
+
+The following table outlines the props for the RowClassProps:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>data</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">T</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+The complete data object for the row.
+Optional, used for conditional styling based on row values.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>rowIndex</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+The index of the row in the grid.
+Useful for alternating styles or row-specific logic.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>rowType</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span> &#124; <Link to="/data-grid/enums#rowtype" className="link-type"><span className="doc-prop-wrapper">RowType</span></Link></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Type of the row: `Header`, `Content`, or `Aggregate`.
+Useful for applying different styles based on row category.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

@@ -1,0 +1,72 @@
+import { Link } from 'react-router'
+
+# SaveEvent
+
+Event triggered at the start of a save operation.
+It provides access to the current and previous row data,
+and supports cancellation of the save based on validation or business rules.
+
+
+## Props
+
+The following table outlines the props for the SaveEvent:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>action</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span> &#124; <Link to="/data-grid/enums#actiontype" className="link-type"><span className="doc-prop-wrapper">ActionType</span></Link></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Specifies the type of action being performed, such as add, edit, or delete.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>cancel</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">false</div></td>
+<td className="doc-description">
+Flag indicating whether to cancel the save operation.
+Set to true to prevent the row from being saved.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>data</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">T</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Data object containing the latest values for the row being saved.
+Includes all fields that were modified or added during the edit session.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>previousData</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">T</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Data object representing the row's state before the current changes were applied.
+Useful for comparing values or implementing conditional save logic.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>rowIndex</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Index of the row being saved within the grid's data source.
+Useful for identifying the row position during update operations.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

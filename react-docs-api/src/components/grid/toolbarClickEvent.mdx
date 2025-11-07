@@ -1,0 +1,53 @@
+import { Link } from 'react-router'
+
+# ToolbarClickEvent
+
+Defines the event arguments triggered by toolbar click actions in the Data Grid component. Includes details about the clicked item, the originating event, and support for preventing default behavior. Used to process user interactions with toolbar commands and apply custom logic before execution.
+
+## Props
+
+The following table outlines the props for the ToolbarClickEvent:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>cancel</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Indicates whether the default toolbar action should be cancelled. When props.cancel is set to true, the associated command is immediately prevented from executing.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>event</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">Event</span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Contains the original browser event that triggered the toolbar click.
+Provides access to native event properties, such as mouse coordinates or event type, for advanced handling.
+Useful for custom event processing or interaction with the DOM.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>item</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/toolbaritemprops" className="link-type"><span className="doc-prop-wrapper">ToolbarItemProps</span></Link></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Represents the toolbar item that was clicked, containing its unique identifier and display text.
+Provides details about the specific toolbar button or control that triggered the event.
+Enables identification and processing of the clicked item’s properties.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

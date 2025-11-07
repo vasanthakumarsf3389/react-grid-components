@@ -1,0 +1,301 @@
+import { Link } from 'react-router'
+
+# ColumnProps
+
+Defines the properties for configuring a column in the grid, including layout, behavior, and data binding options.
+Specifies comprehensive column settings that control appearance, functionality, and user interaction capabilities.
+Enables customization of sorting, filtering, editing, and display characteristics for individual grid columns.
+
+## Props
+
+The following table outlines the props for the ColumnProps:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>allowEdit</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">true</div></td>
+<td className="doc-description">
+If false, disables editing for the column's cells in edit mode.
+Defaults to true, allowing editing.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>allowFilter</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">true</div></td>
+<td className="doc-description">
+If false, disables filtering for the column, hiding filter bar or menu.
+Defaults to true, enabling filtering.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>allowSearch</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">true</div></td>
+<td className="doc-description">
+If true, enables searching for the column in the grid's search bar.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>allowSort</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">true</div></td>
+<td className="doc-description">
+If false, disables sorting for the column, preventing header click sorting.
+Defaults to true, enabling sorting.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>cellClass</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span> &#124; <span className="doc-prop-wrapper">((props?: CellClassProps<T>) => string)</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Applies a CSS class to individual grid cells either globally or conditionally.
+Accepts a static class name or a callback function that returns a class name based on cell context.
+The callback receives a `CellClassProps` object with the following properties:
+* `cellType` – Identifies the structural role of the cell: `Header`, `Content`, or `Aggregate`. Useful for styling header, data, or summary cells.
+* `column` – The column configuration object associated with the cell.
+* `data` – The full data object for the row containing the cell, enabling conditional styling based on field values.
+* `rowIndex` – The zero-based index of the row.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>clipMode</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/enums#clipmode" className="link-type"><span className="doc-prop-wrapper">ClipMode</span></Link> &#124; <span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="prop-default">ClipMode.Ellipsis | 'Ellipsis'</div></td>
+<td className="doc-description">
+Defines the cell content's overflow mode. The available modes are
+* `Clip` -  Truncates the cell content when it overflows its area.
+* `Ellipsis` -  Displays ellipsis when the cell content overflows its area.
+* `EllipsisWithTooltip` - Applies an ellipsis to overflowing cell content and displays a tooltip on hover for enhanced readability.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>defaultValue</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/unions#valuetype" className="link-type"><span className="doc-prop-wrapper">ValueType</span></Link> &#124; <span className="doc-prop-wrapper">null</span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Default value for the column when adding new records.
+Ensures consistent initial values for new entries.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>disableHtmlEncode</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">true</div></td>
+<td className="doc-description">
+If false, encodes HTML in header and content cells, preventing raw HTML rendering.
+When true, allows raw HTML but requires caution for security.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>displayAsCheckBox</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">false</div></td>
+<td className="doc-description">
+If true, displays boolean values as checkboxes instead of text.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>edit</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/columneditparams" className="link-type"><span className="doc-prop-wrapper">ColumnEditParams</span></Link></div></td>
+<td><div className="prop-default">{ `{}` }</div></td>
+<td className="doc-description">
+Custom edit cell configuration for advanced editing, such as custom input types or validation logic.
+Enhances editing flexibility.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>editTemplate</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper"><span className="doc-prop-wrapper">ComponentType&lt;[<span className="doc-prop-wrapper">EditTemplateProps&lt;T&gt;</span>](./<span className="doc-prop-wrapper">EditTemplateProps&lt;T&gt;</span>)&gt;</span></span> &#124; <span className="doc-prop-wrapper">ReactElement</span> &#124; <span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Template for the column's edit UI, as a string, function, or HTML element ID.
+Customizes the editor during editing.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>field</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="prop-default">''</div></td>
+<td className="doc-description">
+Defines the field name that maps the column to a specific data source property for data binding operations.
+Enables sorting and filtering functionality based on the specified field name within the dataset.
+Strongly recommended to avoid JavaScript reserved words and special characters in the field name for optimal compatibility.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>filter</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/columnfilterparams" className="link-type"><span className="doc-prop-wrapper">ColumnFilterParams</span></Link></div></td>
+<td><div className="prop-default">{ `{}` }</div></td>
+<td className="doc-description">
+ Defines the filter options to customize filtering for the particular column.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>filterTemplate</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper"><span className="doc-prop-wrapper">ComponentType&lt;[FilterTemplateProps](./filterTemplateProps)&gt;</span></span> &#124; <span className="doc-prop-wrapper">ReactElement</span> &#124; <span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Template for the column's filter UI, as a string, function, or HTML element ID.
+Customizes the filter interface.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>format</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span> &#124; <span className="doc-prop-wrapper"><Link to="/base/numberformatoptions" className="link-type"><span className="doc-prop-wrapper">NumberFormatOptions</span></Link></span> &#124; <span className="doc-prop-wrapper"><Link to="/base/dateformatoptions" className="link-type"><span className="doc-prop-wrapper">DateFormatOptions</span></Link></span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Defines the format for cell values (e.g., `C2` for currency or custom `NumberFormatOptions`/`DateFormatOptions`).
+Applied before rendering without altering the original data.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>headerTemplate</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper"><span className="doc-prop-wrapper">ComponentType&lt;[ColumnHeaderTemplateProps](./columnHeaderTemplateProps)&gt;</span></span> &#124; <span className="doc-prop-wrapper">ReactElement</span> &#124; <span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Renders custom content in the header cell using a template string, function, or HTML element ID.
+Supports advanced header customization like icons or buttons.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>headerText</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Sets the text displayed in the column header. Defaults to the `field` name if not set.
+Provides a user-friendly label for the column.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>headerTextAlign</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/enums#textalign" className="link-type"><span className="doc-prop-wrapper">TextAlign</span></Link> &#124; <span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Aligns text specifically in the header cell (e.g., `Left`, `Right`, `Center`).
+Overrides `textAlign` for header-specific styling.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>headerValueAccessor</td>
+<td><div className="doc-prop-type"><div className="doc-prop-wrapper event-type">{`(props?: HeaderValueAccessorProps) => ValueType | T`}</div></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Fires when a header cell begins to render or refresh in the grid.
+Allows transformation of header text for display purposes only.
+Does not affect the underlying data source.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>isPrimaryKey</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">false</div></td>
+<td className="doc-description">
+If true, marks the column as a primary key for unique record identification.
+Critical for editing, adding and deleting operations.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>sortComparer</td>
+<td><div className="doc-prop-type"><div className="doc-prop-wrapper event-type">{`(referenceValue: ValueType, comparerValue: ValueType, referenceRowData?: T, comparerRowData?: T, sortDirection?: string) => number | string`}</div></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Fires when a sorting operation begins on a each grid column.
+Allows overriding the default sorting behavior with custom logic by comparing reference and comparer values.
+Advanced custom sorting can be implemented using complete row data and the current sort direction context.
+* `referenceValue` - The value from the reference row to compare. Typically the current row being sorted.
+* `comparerValue` - The value from the comparer row to compare against. Used to determine sort order.
+* `referenceRowData` - Optional. Complete data object of the reference row. Useful for advanced sorting logic.
+* `comparerRowData` - Optional. Complete data object of the comparer row. Useful for advanced sorting logic.
+* `sortDirection` - Optional. Current sort direction: 'Ascending', 'Descending', or ''. Helps determine sort logic flow.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>template</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper"><span className="doc-prop-wrapper">ComponentType&lt;[<span className="doc-prop-wrapper">ColumnTemplateProps&lt;T&gt;</span>](./<span className="doc-prop-wrapper">ColumnTemplateProps&lt;T&gt;</span>)&gt;</span></span> &#124; <span className="doc-prop-wrapper">ReactElement</span> &#124; <span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Renders custom content in data cells using a template string, function, or HTML element ID.
+Enables complex or dynamic cell layouts.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>templateSettings</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/templateparams" className="link-type"><span className="doc-prop-wrapper">TemplateParams</span></Link></div></td>
+<td><div className="prop-default">{ `{}` }</div></td>
+<td className="doc-description">
+Configures the `aria-label` behavior for cells rendered using column templates.
+Improves accessibility by providing screen readers with meaningful labels when templates are used in grid columns.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>textAlign</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/enums#textalign" className="link-type"><span className="doc-prop-wrapper">TextAlign</span></Link> &#124; <span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="prop-default">TextAlign.Left | 'Left'</div></td>
+<td className="doc-description">
+Aligns text in header and content cells (e.g., `Left`, `Right`, `Center`).
+Enhances visual consistency across the column.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>type</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/enums#columntype" className="link-type"><span className="doc-prop-wrapper">ColumnType</span></Link> &#124; <span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Specifies the column's data type (e.g., `string`, `number`, `date`).
+Influences sorting, filtering, and formatting behavior.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>validationRules</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/columnvalidationparams" className="link-type"><span className="doc-prop-wrapper">ColumnValidationParams</span></Link></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Validation rules for editing (e.g., `required`, `minLength`).
+Ensures valid input during create or update operations.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>valueAccessor</td>
+<td><div className="doc-prop-type"><div className="doc-prop-wrapper event-type">{`(props?: ValueAccessorProps<T>) => ValueType | T`}</div></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Fires when a data cell begins to render or refresh in the grid.
+Allows transformation of cell values for display purposes only.
+Does not affect the underlying data source.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>visible</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">true</div></td>
+<td className="doc-description">
+If false, hides the column. Defaults to true for visibility.
+Useful for conditional display based on user roles or state.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>width</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span> &#124; <span className="doc-prop-wrapper">number</span></div></td>
+<td><div className="prop-default">''</div></td>
+<td className="doc-description">
+Defines the column width in pixels (e.g., 100) or percentage (e.g., '20%').
+Controls the column's size in the grid layout.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

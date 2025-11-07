@@ -1,0 +1,54 @@
+import { Link } from 'react-router'
+
+# ColumnTemplateProps
+
+Represents the contextual properties passed to column template functions in the Syncfusion React Data Grid.
+Enables dynamic rendering of custom cell content by providing access to row data, column metadata, and row index.
+Commonly used in template-based columns to implement flexible and user-defined cell rendering logic.
+
+## Props
+
+The following table outlines the props for the ColumnTemplateProps:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>column</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/columnprops" className="link-type"><span className="doc-prop-wrapper">ColumnProps</span></Link></div></td>
+<td><div className="prop-default">{ `{}` }</div></td>
+<td className="doc-description">
+The column configuration object containing metadata such as field name, data type, and formatting options.
+Facilitates context-aware rendering by enabling templates to adapt based on column-specific attributes.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>data</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">T</span></div></td>
+<td><div className="prop-default">{ `{}` }</div></td>
+<td className="doc-description">
+The complete data object for the row associated with the current cell.
+Grants access to all fields in the row, allowing template logic to render or manipulate cell content based on row-level data.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>rowIndex</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+The zero-based index of the row within the grid.
+Useful for implementing conditional rendering or styling logic based on the row’s position.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

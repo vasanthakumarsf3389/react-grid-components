@@ -1,0 +1,46 @@
+import { Link } from 'react-router'
+
+# SortDescriptor
+
+Defines the configuration for a sort descriptor in the Data Grid component.
+Specifies the column `field` and `direction` for sorting operations.
+Used to describe individual column sorting rules within the grid.
+
+## Props
+
+The following table outlines the props for the SortDescriptor:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>direction</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/enums#sortdirection" className="link-type"><span className="doc-prop-wrapper">SortDirection</span></Link> &#124; <span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="prop-default">SortDirection.Ascending | 'Ascending'</div></td>
+<td className="doc-description">
+Specifies the `direction` of the sort operation for the column.
+Supports values like ascending or descending, typically defined by the SortDirection enum.
+Controls whether the column data is sorted in ascending or descending order.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>field</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Identifies the column `field` in the data source to apply sorting operations.
+Determines which column’s data is sorted during the operation.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

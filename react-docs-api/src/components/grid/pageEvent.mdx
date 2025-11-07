@@ -1,0 +1,56 @@
+import { Link } from 'react-router'
+
+# PageEvent
+
+Represents the event triggered when a page change operation completes in the Data Grid component.
+Provides details about the completed navigation, including page transitions and record count.
+Used to handle post-navigation logic or UI updates in the pager component.
+
+## Props
+
+The following table outlines the props for the PageEvent:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>currentPage</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span> &#124; <span className="doc-prop-wrapper">number</span></div></td>
+<td><div className="prop-default">1</div></td>
+<td className="doc-description">
+Specifies the page number after the navigation action is completed.
+Indicates the current page now displayed in the grid.
+Used to update the grid’s data and UI state in the pager component.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>previousPage</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span> &#124; <span className="doc-prop-wrapper">number</span></div></td>
+<td><div className="prop-default">1</div></td>
+<td className="doc-description">
+Specifies the page number before the navigation action was completed.
+Provides context about the previous state for comparison or logging.
+Useful for tracking page transitions after navigation.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>totalRecordsCount</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">number</span></div></td>
+<td><div className="prop-default">0</div></td>
+<td className="doc-description">
+Contains the total number of records in the grid’s data source.
+Used to calculate the total number of pages and update pagination information.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

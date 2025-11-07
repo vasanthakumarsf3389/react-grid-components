@@ -1,0 +1,29 @@
+# Project-specific directories
+.storybook/
+samples/
+spec/
+
+# Logs and reports
+*.log
+
+# TypeScript files
+**/*.ts
+!**/*.d.ts
+**/*.tsx
+
+# Build and dependencies
+node_modules/
+coverage/
+*.tgz
+package-lock.json
+specification_doc/
+demos/
+
+# Configuration and setup files
+Jenkinsfile
+gulpfile.js
+config.json
+babel.config.js
+jest.config.js
+jest.setup.js
+tsconfig.json

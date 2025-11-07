@@ -1,0 +1,52 @@
+import { Link } from 'react-router'
+
+# ColumnEditParams
+
+Configuration interface for column-level edit settings in the grid.
+Defines the type of input component to render during editing and allows
+passing component-specific configuration parameters.
+
+
+## Props
+
+The following table outlines the props for the ColumnEditParams:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>params</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">Partial&lt;TextBoxProps &amp; NumericTextBoxProps &amp; CheckboxProps &amp; DatePickerProps &amp; DropDownListProps&gt;</span></div></td>
+<td><div className="">-</div></td>
+<td className="doc-description">
+Configuration parameters passed to the edit component.
+These parameters vary depending on the selected edit type and may include
+properties such as placeholder text, formatting options,
+and dropdown data sources.
+Supports partial props from multiple component types including:
+`TextBoxProps`, `NumericTextBoxProps`, `CheckboxProps`, `DatePickerProps`, and `DropDownListProps`.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>type</td>
+<td><div className="doc-prop-type"><Link to="/data-grid/enums#edittype" className="link-type"><span className="doc-prop-wrapper">EditType</span></Link> &#124; <span className="doc-prop-wrapper">string</span></div></td>
+<td><div className="prop-default">EditType.TextBox | 'StringEdit'</div></td>
+<td className="doc-description">
+Specifies the type of edit component to be rendered for the column.
+Determines the input control used during editing, such as a textbox, dropdown,
+date picker, or checkbox. Custom string identifiers may also be used for
+custom edit components.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>

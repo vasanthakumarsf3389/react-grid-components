@@ -1,0 +1,112 @@
+import { Link } from 'react-router'
+
+# EditSettings
+
+Represents the configuration options for enabling and customizing editing behavior in a grid component.
+This interface provides control over record-level operations such as adding, editing, and deleting,
+as well as customization of edit modes, confirmation dialogs, and integration of custom templates.
+
+
+## Props
+
+The following table outlines the props for the EditSettings:
+
+<div className='table-container'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr className='api-row'>
+<td className='prop-name'>allowAdd</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">false</div></td>
+<td className="doc-description">
+Determines whether new records can be added to the grid.
+When this property is set to true, new rows can be inserted either through programmatic methods
+or by using toolbar 'Add' action. To enable this functionality, at least one column must be defined
+as a primary key using the isPrimaryKey property in the column configuration.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>allowDelete</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">false</div></td>
+<td className="doc-description">
+Determines whether records can be deleted from the grid.
+When this property is enabled, rows can be removed either programmatically or through toolbar 'Delete' action.
+Deletion operations require that at least one column is configured as a primary key.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>allowEdit</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">false</div></td>
+<td className="doc-description">
+Determines whether existing records in the grid can be edited.
+When this property is set to true, users can modify cell values in existing rows either through
+programmatic updates or via toolbar 'Edit' interaction. Editing requires that at least one column
+is marked as a primary key using the isPrimaryKey property.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>confirmOnDelete</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">false</div></td>
+<td className="doc-description">
+Controls whether a confirmation dialog is displayed before deleting a record.
+When enabled, users are prompted to confirm the deletion action to prevent accidental data loss.
+If disabled, records are deleted immediately without confirmation.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>confirmOnEdit</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">true</div></td>
+<td className="doc-description">
+Controls whether a confirmation dialog is displayed when saving or discarding changes.
+When enabled, the grid prompts users to confirm actions such as saving edits, cancelling changes,
+or navigating away from an edited row. If disabled, these actions proceed without confirmation.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>editOnDoubleClick</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">boolean</span></div></td>
+<td><div className="prop-default">true</div></td>
+<td className="doc-description">
+Indicates whether double-clicking a row should activate edit mode in the Data Grid.
+When set to true, users can initiate editing by double-clicking a row.
+If set to false, double-click interactions will not trigger edit mode.
+This property is useful for controlling interaction behavior in editable grids.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>newRowPosition</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">string</span> &#124; <Link to="/data-grid/enums#newrowposition" className="link-type"><span className="doc-prop-wrapper">NewRowPosition</span></Link></div></td>
+<td><div className="prop-default">'Top' | NewRowPosition.Top</div></td>
+<td className="doc-description">
+Specifies the position at which a new row is inserted into the grid.
+Supported values include:
+- Top: Inserts the new row at the beginning of the grid.
+- Bottom: Inserts the new row at the end of the grid.
+</td>
+</tr>
+<tr className='api-row'>
+<td className='prop-name'>template</td>
+<td><div className="doc-prop-type"><span className="doc-prop-wrapper">ComponentType&lt;[<span className="doc-prop-wrapper">EditFormTemplate&lt;T&gt;</span>](./<span className="doc-prop-wrapper">EditFormTemplate&lt;T&gt;</span>)&gt;</span></div></td>
+<td><div className="prop-default">null</div></td>
+<td className="doc-description">
+Specifies a custom React component to be used as the edit template for grid rows.
+This component replaces the default editing interface and receives the current row data as props.
+It can be used to implement advanced form layouts, validation logic, or third-party integrations.
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>
