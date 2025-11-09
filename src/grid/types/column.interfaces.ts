@@ -51,7 +51,7 @@ export interface ColumnProps<T = unknown> {
     headerText?: string;
 
     /**
-     * Defines the column width in pixels (e.g., 100) or percentage (e.g., '20%').
+     * Defines the column width in pixels (e.g., 100 or '100').
      * Controls the column's size in the grid layout.
      *
      * @default ''

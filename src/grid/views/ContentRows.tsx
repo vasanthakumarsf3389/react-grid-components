@@ -16,7 +16,8 @@ import {
     useEffect,
     SetStateAction,
     Dispatch,
-    ComponentType
+    ComponentType,
+    useState
 } from 'react';
 import {
     ContentRowsRef,
@@ -139,8 +140,9 @@ const ContentRowsBase: <T>(props: Partial<IContentRowsBase> & RefAttributes<Cont
                 useRef<HTMLTableRowElement[] | HTMLCollectionOf<HTMLTableRowElement>>([]);
             const addInlineFormRef: RefObject<InlineEditFormRef<T>> = useRef<InlineEditFormRef<T>>(null);
             const editInlineFormRef: RefObject<InlineEditFormRef<T>> = useRef<InlineEditFormRef<T>>(null);
-            const cachedRowObjects: RefObject<Map<number | string, IRow<ColumnProps<T>> & { reactElement: JSX.Element }>> = useRef<(Map<number | string, IRow<ColumnProps<T>> & { reactElement: JSX.Element }>)>(new Map());
+            const cachedRowObjects: RefObject<Map<number | string, IRow<ColumnProps<T>>>> = useRef<(Map<number | string, IRow<ColumnProps<T>>>)>(new Map()); // & { reactElement: JSX.Element }
             const totalRenderedRowHeight: RefObject<number> = useRef<number>(0);
+            const [_requireMoreVirtualRowsForceRefresh, setRequireMoreVirtualRowsForceRefresh] = useState<Object>({})
             
 
             // const [_scrollDirection, setScrollDirection] = useState<"up" | "down">();
@@ -259,9 +261,10 @@ const ContentRowsBase: <T>(props: Partial<IContentRowsBase> & RefAttributes<Cont
                 addInlineRowFormRef: addInlineFormRef,
                 editInlineRowFormRef: editInlineFormRef,
                 cachedRowObjects,
-                totalRenderedRowHeight
+                totalRenderedRowHeight,
+                setRequireMoreVirtualRowsForceRefresh
             }), [getRows, getRowsObject, getRowByIndex, getRowObjectFromUID, cachedRowObjects,
-                currentViewData, addInlineFormRef.current, editInlineFormRef.current, totalRenderedRowHeight]);
+                currentViewData, addInlineFormRef.current, editInlineFormRef.current, totalRenderedRowHeight, setRequireMoreVirtualRowsForceRefresh]);
 
             /**
              * Memoized empty row component to display when no data is available
@@ -372,6 +375,12 @@ const ContentRowsBase: <T>(props: Partial<IContentRowsBase> & RefAttributes<Cont
                 cachedRowObjects.current.clear();
             }, [currentViewData, getRowHeight]);
 
+            // useEffect(() => {
+            //     if (contentSectionRef.current.clientHeight < contentSectionRef.current.closest('.sf-grid-content').clientHeight) {
+            //         setRequireMoreVirtualRowsForceRefresh({});
+            //     }
+            // }, [currentViewData, getRowHeight]);
+
             const processRowData: (dataRowIndex: number, ariaRowIndex: number, data: T, rows: JSX.Element[], rowOptions: IRow<ColumnProps<T>>[],
                 indent?: number, currentDataRowIndex?: number,
                 parentUid?: string) => void = (dataRowIndex: number, ariaRowIndex: number, data: T, rows: JSX.Element[], rowOptions: IRow<ColumnProps<T>>[],
@@ -379,8 +388,12 @@ const ContentRowsBase: <T>(props: Partial<IContentRowsBase> & RefAttributes<Cont
 
                 const row: T = data;
                 const options: IRow<ColumnProps<T>> = {};
-                options.key = getUid('grid-row');
                 options.uid = `${'grid-row-' + dataRowIndex}`
+                const isVisible: boolean = Array.from(rowsObjectRef.current).some(
+                    (r: IRow<ColumnProps<T>>) => r.uid === options.uid
+                );
+                // options.key = getUid('grid-row');
+                options.key = isVisible ? cachedRowObjects.current.get(options.uid).key : getUid('grid-row');
                 options.parentUid = parentUid;
                 options.data = row;
                 options.rowIndex = currentDataRowIndex ? currentDataRowIndex : dataRowIndex;
@@ -394,10 +407,6 @@ const ContentRowsBase: <T>(props: Partial<IContentRowsBase> & RefAttributes<Cont
                     options.cells = generateCell();
                 }
 
-                
-                const isVisible: boolean = Array.from(rowsObjectRef.current).some(
-                    (r: IRow<ColumnProps<T>>) => r.uid === options.uid
-                );
                 options.height = !isVisible && getRowHeight ? getRowHeight(options) : (rowsObjectRef.current[ariaRowIndex]?.height || rowHeight);
                 // Store the options object for getRowsObject
                 rowOptions.push({ ...options });
@@ -421,6 +430,7 @@ const ContentRowsBase: <T>(props: Partial<IContentRowsBase> & RefAttributes<Cont
                         aria-rowindex={ariaRowIndex + 1}
                         data-uid={options.uid}
                         style={{ height: `${options.height || rowHeight}px` }}
+                        isAlreadyRenderedVirtualRow={isVisible}
                     >
                         {(columnsDirective.props as ColumnsChildren<T>).children}
                     </RowBase>
@@ -452,7 +462,7 @@ const ContentRowsBase: <T>(props: Partial<IContentRowsBase> & RefAttributes<Cont
                     } else if (cachedRowObjects.current.get(rowOptions[ariaRowIndex]?.uid).height !== rowOptions[ariaRowIndex]?.height) {
                         totalRenderedRowHeight.current = (totalRenderedRowHeight.current - cachedRowObjects.current.get(rowOptions[ariaRowIndex]?.uid).height) + rowOptions[ariaRowIndex]?.height;
                     }
-                    cachedRowObjects.current.set(rowOptions[ariaRowIndex].uid, { ...rowOptions[ariaRowIndex], reactElement: rows[ariaRowIndex] });
+                    cachedRowObjects.current.set(rowOptions[ariaRowIndex].uid, { ...rowOptions[ariaRowIndex] }); //, reactElement: rows[ariaRowIndex]
                     // if (renderedRowHeight > parseUnit(height)) {
                     if (renderedRowHeight > contentSectionRef.current.closest('.sf-grid-content').clientHeight) {
                         buffer++;
@@ -471,7 +481,7 @@ const ContentRowsBase: <T>(props: Partial<IContentRowsBase> & RefAttributes<Cont
 
                 rowsObjectRef.current = rowOptions;
                 return rows;
-            }, [columnsDirective, currentViewData, storeRowRef, rowHeight, enableAltRow, offsetY, getRowHeight]); // offsetY
+            }, [columnsDirective, currentViewData, storeRowRef, rowHeight, enableAltRow, offsetY, getRowHeight, _requireMoreVirtualRowsForceRefresh]); // offsetY
 
             useEffect(() => {
                 return () => {

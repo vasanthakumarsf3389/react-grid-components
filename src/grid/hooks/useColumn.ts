@@ -5,7 +5,8 @@ import { ColumnProps, IColumnBase } from '../types/column.interfaces';
 import { AggregateColumnProps, AggregateData } from '../types/aggregate.interfaces';
 import { useGridComputedProvider } from '../contexts';
 import { setStringFormatter, getObject, getUid, headerValueAccessor as defaultHeaderValueAccessor,
-    valueAccessor as defaultValueAccessor, isDateOrNumber } from '../utils';
+    valueAccessor as defaultValueAccessor, isDateOrNumber, 
+    parseUnit} from '../utils';
 /**
  * CSS class names used in the Column component
  */
@@ -33,7 +34,7 @@ export const defaultColumnProps: <T>(props: Partial<IColumnBase<T>>) => Partial<
             edit: {type: EditType.TextBox},
             filter: { type: 'FilterBar', filterBarType: FilterBarType.TextBox },
             ...props,
-            width: !isNullOrUndefined(props.width) ? formatUnit(props.width) : '100px',
+            width: !isNullOrUndefined(props.width) ? (parseUnit(props.width) + 'px') : '100px', // only support pixels.
             valueAccessor: props.valueAccessor ?? defaultValueAccessor<T>,
             headerValueAccessor: props.headerValueAccessor ?? defaultHeaderValueAccessor,
             type: props.type === 'none' ? null : (props.type ? (typeof (props.type) === 'string' ? props.type.toLowerCase() : undefined) : props.type),

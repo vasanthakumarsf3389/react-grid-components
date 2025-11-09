@@ -361,8 +361,8 @@ export const useGridComputedProps: <T, >(props: Partial<IGridBase<T>>, gridRef?:
      */
     const styles: CSSProperties = useMemo<CSSProperties>(() => ({
         width: formatUnit(width),
-        height: '100%'
-    }), [width]);
+        height: formatUnit(height)
+    }), [width, height]);
 
     /**
      * Gets a Column by column name.

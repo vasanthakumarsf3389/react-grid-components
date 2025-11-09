@@ -57,7 +57,7 @@ const ContentTableBase: <T>(props: Partial<IContentTableBase> & RefAttributes<Co
              * Contains column definitions for the table
              */
             const colGroupContent: JSX.Element = useMemo(() => {
-                console.log('content colGroupContent => ', scrollModule?.virtualColumnInfo.startIndex, scrollModule?.virtualColumnInfo.endIndex);
+                // console.log('content colGroupContent => ', scrollModule?.virtualColumnInfo.startIndex, scrollModule?.virtualColumnInfo.endIndex);
 
                 let visibleCols: JSX.Element[] = [];
 

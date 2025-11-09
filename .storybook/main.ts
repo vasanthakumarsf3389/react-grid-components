@@ -14,15 +14,6 @@ const config: StorybookConfig = {
   },
   typescript: {
     reactDocgen: "react-docgen-typescript"
-  },
-  viteFinal: (config) => {
-    config.optimizeDeps = config.optimizeDeps || {};
-    config.optimizeDeps.include = [
-      ...(config.optimizeDeps.include || []),
-      "@storybook/addon-docs",
-      "@storybook/addon-docs/blocks"
-    ];
-    return config;
   }
 };
 export default config;

@@ -145,13 +145,27 @@ const RenderBase: <T>(_props: Partial<IRenderBase> & RefAttributes<RenderRef<T>>
 
         ), [totalRecordsCount, pageSettings]);
 
+        // const headerPanelHeight: string = useMemo(() => {
+        //     const toolbarHeight: number = toolbarModule?.getToolbar()?.clientHeight ?? 0;
+        //     const contentHeight: number = contentPanelRef.current?.contentPanelRef?.clientHeight ?? 0;
+        //     const footerHeight: number = footerPanelRef.current?.footerPanelRef?.clientHeight ?? 0;
+        //     const pagerHeight: number = pagerObjectRef.current?.element?.clientHeight ?? 0;
+        //     const totalHeight: string = `calc(${privateRenderAPI.contentStyles.height} - ${toolbarHeight}px - ${contentHeight}px - ${footerHeight}px - ${pagerHeight}px)`;
+        //     return totalHeight;
+        // }, [pagerObjectRef.current?.element?.clientHeight]);
 
         // Memoize header panel to prevent unnecessary re-renders
-        const headerPanel: JSX.Element = useMemo(() => (
-            <HeaderPanelBase
+        const headerPanel: JSX.Element = useMemo(() => {
+            // const toolbarHeight: number = toolbarModule?.getToolbar()?.clientHeight ?? 0;
+            // const contentHeight: number = contentPanelRef.current?.contentPanelRef?.clientHeight ?? 0;
+            // const footerHeight: number = footerPanelRef.current?.footerPanelRef?.clientHeight ?? 0;
+            // const pagerHeight: number = pagerObjectRef.current?.element?.clientHeight ?? 0;
+
+            // const totalHeight: string = `calc(${privateRenderAPI.contentStyles.height} - ${toolbarHeight}px - ${contentHeight}px - ${footerHeight}px - ${pagerHeight}px)`;
+            return (<HeaderPanelBase
                 ref={headerPanelRef}
                 panelAttributes={{
-                    style: headerPadding,
+                    style: {...headerPadding},//, height: totalHeight, height: headerPanelHeight , height: 'fit-content'
                     className: CSS_CLASS_NAMES.GRID_HEADER
                 }}
                 scrollContentAttributes={{
@@ -160,7 +174,7 @@ const RenderBase: <T>(_props: Partial<IRenderBase> & RefAttributes<RenderRef<T>>
                     onScroll: onHeaderScroll
                 }}
             />
-        ), [headerPadding, headerContentBorder, onHeaderScroll]);
+        )}, [headerPadding, headerContentBorder, onHeaderScroll]); //, headerPanelHeight
 
         useMemo(() => {
             // // const averageRowHeight: number = (contentPanelRef.current?.totalRenderedRowHeight.current / contentPanelRef.current?.cachedRowObjects.current.size);
@@ -176,20 +190,28 @@ const RenderBase: <T>(_props: Partial<IRenderBase> & RefAttributes<RenderRef<T>>
             contentPanelRef.current?.contentScrollRef.scrollTop,
         ]);
         // Memoize content panel to prevent unnecessary re-renders
-        const contentPanel: JSX.Element = useMemo(() => (
-            <ContentPanelBase<T>
+        const contentPanel: JSX.Element = useMemo(() => {
+            const toolbarHeight: number = toolbarModule?.getToolbar()?.clientHeight ?? 0;
+            const headerHeight: number = headerPanelRef.current?.headerPanelRef?.clientHeight ?? 0;
+            const footerHeight: number = footerPanelRef.current?.footerPanelRef?.clientHeight ?? 0;
+            const pagerHeight: number = pagerObjectRef.current?.element?.clientHeight ?? 0;
+
+            const totalHeight: string = `calc(${privateRenderAPI.contentStyles.height} - ${toolbarHeight}px - ${headerHeight}px - ${footerHeight}px - ${pagerHeight}px)`;
+
+            return (<ContentPanelBase<T>
                 ref={contentPanelRef}
                 setHeaderPadding={setPadding}
                 panelAttributes={{
                     className: `${CSS_CLASS_NAMES.GRID_CONTENT} ${textWrapSettings?.enabled &&
                         textWrapSettings?.wrapMode === WrapMode.Content ? 'sf-wrap' : ''}`.trim(),
-                    style: {
-                        height: `calc(${privateRenderAPI.contentStyles.height} -
-                    ${toolbarModule?.getToolbar() ? (toolbarModule.getToolbar()?.clientHeight + 'px - ') : ''}
-                    ${(headerPanelRef.current?.headerPanelRef.clientHeight + 'px - ')}
-                    ${footerPanelRef.current ? (footerPanelRef.current.footerPanelRef.clientHeight + 'px - ') : ''}
-                    ${pagerObjectRef.current ? (pagerObjectRef.current.element.clientHeight + 'px') : ''})`
-                    }
+                        style: { height: totalHeight }
+                    // style: {
+                    //     height: `calc(${privateRenderAPI.contentStyles.height}
+                    // ${toolbarModule?.getToolbar() ? ' - ' + (toolbarModule.getToolbar().clientHeight + 'px') : ''}
+                    // ${' - ' + (headerPanelRef.current?.headerPanelRef.clientHeight + 'px')}
+                    // ${footerPanelRef.current ? ' - ' + (footerPanelRef.current.footerPanelRef.clientHeight + 'px') : ''}
+                    // ${pagerObjectRef.current ? ' - ' + (pagerObjectRef.current.element.clientHeight + 'px') : ''})`
+                    // }
                 }}
                 scrollContentAttributes={{
                     className: CSS_CLASS_NAMES.CONTENT,
@@ -199,7 +221,7 @@ const RenderBase: <T>(_props: Partial<IRenderBase> & RefAttributes<RenderRef<T>>
                     tabIndex: -1
                 }}
             />
-        ), [setPadding, privateRenderAPI.contentStyles, privateRenderAPI.isContentBusy, onContentScroll]);
+        )}, [setPadding, privateRenderAPI.contentStyles, privateRenderAPI.isContentBusy, onContentScroll]);
 
         const footerPanel: JSX.Element = useMemo(() => {
             if (!columnsDirective || !currentViewData || currentViewData.length === 0) {

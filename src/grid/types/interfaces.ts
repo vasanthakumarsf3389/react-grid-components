@@ -560,6 +560,7 @@ export interface IRowBase<T = unknown> extends Omit<HTMLAttributes<HTMLTableRowE
      * column cells of the row
      */
     column?: ColumnProps<T>;
+    isAlreadyRenderedVirtualRow?: boolean;
 }
 
 /**
@@ -815,6 +816,7 @@ export interface ContentRowsRef<T = unknown> {
     getRowObjectFromUID(uid: string): IRow<ColumnProps<T>>;
     cachedRowObjects: RefObject<Map<number | string, IRow<ColumnProps<T>>>>;
     totalRenderedRowHeight: RefObject<number>;
+    setRequireMoreVirtualRowsForceRefresh?: Dispatch<SetStateAction<Object>>;
 }
 
 /**

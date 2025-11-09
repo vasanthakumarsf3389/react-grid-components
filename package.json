@@ -38,12 +38,10 @@
     "@syncfusion/react-inputs": "*",
     "@syncfusion/react-navigations": "*",
     "@syncfusion/react-notifications": "*",
-    "@syncfusion/react-popups": "*",
-    "@syncfusion/react-pager": "*"
+    "@syncfusion/react-pager": "*",
+    "@syncfusion/react-popups": "*"
   },
   "devDependencies": {
-    "@syncfusion/react-cldr-data": "*",
-    "@syncfusion/react-locale": "*",
     "@babel/preset-env": "7.25.0",
     "@storybook/addon-essentials": "8.4.7",
     "@storybook/addon-interactions": "8.4.7",
@@ -53,6 +51,8 @@
     "@storybook/react-vite": "8.4.7",
     "@storybook/test": "8.4.7",
     "@syncfusion/react-build-test": "*",
+    "@syncfusion/react-cldr-data": "*",
+    "@syncfusion/react-locale": "*",
     "@testing-library/jest-dom": "6.6.3",
     "@testing-library/react": "16.1.0",
     "@types/jest": "29.5.14",
@@ -66,7 +66,6 @@
     "jest": "29.7.0",
     "jest-environment-jsdom": "29.7.0",
     "node-fetch": "2.6.12",
-    "patch-package": "^8.0.1",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "typescript": "5.7.2"

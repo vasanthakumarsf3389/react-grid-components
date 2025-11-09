@@ -62,6 +62,7 @@ const RowBase: <T>(props: IRowBase<T> & RefAttributes<RowRef>) => ReactElement =
             children,
             tableScrollerPadding,
             aggregateRow,
+            isAlreadyRenderedVirtualRow,
             ...attr
         } = props;
         const { headerRowDepth, isInitialBeforePaint, editModule, uiColumns, isInitialLoad, totalVirtualColumnWidth, offsetX
@@ -76,6 +77,9 @@ const RowBase: <T>(props: IRowBase<T> & RefAttributes<RowRef>) => ReactElement =
         const editInlineFormRef: RefObject<InlineEditFormRef<T>> = useRef<InlineEditFormRef<T>>(null);
         const [syncFormState, setSyncFormState] = useState(editInlineFormRef.current?.formState);
         const [rowObject, setRowObject] = useState<IRow<ColumnProps<T>>>(row);
+        const cachedCellObjects: RefObject<Map<number | string, IColumnBase<T> & { reactElement: JSX.Element }>> = useRef<(Map<number | string, IColumnBase<T> & { reactElement: JSX.Element }>)>(new Map());
+        let isOffsetXChanged: boolean = false;
+        // const previousRowClassRef = useRef<string | undefined>(undefined);
         /**
          * Returns the cell options objects
          *
@@ -222,6 +226,12 @@ const RowBase: <T>(props: IRowBase<T> & RefAttributes<RowRef>) => ReactElement =
         //     return isNaN(startIndex) ? 0 : startIndex;
         // }, [columns, totalVirtualColumnWidth, columnBuffer, enableRtl, offsetX]);
 
+        useMemo(() => {
+            isOffsetXChanged = true;
+        }, [offsetX]);
+        useMemo(() => {
+            cachedCellObjects.current.clear();
+        }, [children, rowObject, rowType])
         /**
          * Process children to create column elements with proper props
          */
@@ -231,9 +241,9 @@ const RowBase: <T>(props: IRowBase<T> & RefAttributes<RowRef>) => ReactElement =
             const elements: JSX.Element[] = [];
 
             // const from: number = startColumnIndex;
-            const from: number = scrollModule?.virtualColumnInfo.startIndex;
+            const from: number = scrollModule?.virtualColumnInfo.startIndex ?? 0;
             const to: number = childrenArray.length;
-            console.log('from column => ', from, ', to column => ', to);
+            // console.log('from column => ', from, ', to column => ', to);
             // for (let index: number = 0; index < childrenArray.length; index++) {
             for (let index: number = from, buffer = 0, renderedColumnWidth = 0; index < to && buffer <= (from !== 0 && index !== (to - 1) ? columnBuffer * 2 : columnBuffer); index++) {
                 const child: ReactElement<IColumnBase<T>> = childrenArray[index as number];
@@ -301,30 +311,38 @@ const RowBase: <T>(props: IRowBase<T> & RefAttributes<RowRef>) => ReactElement =
                 }
 
                 // Build column props
-                const columnProps: IColumnBase<T> = {
+                const columnProps: IColumnBase<T> & React.Attributes = {
                     row: rowObject,
-                    cell: cellOption
+                    cell: cellOption,
+                    // key: rowType === RenderType.Filter ? `${child.props.field || 'col'}-${rowObject?.rowIndex + 1 || 'filter'}` :
+                    //     `${child.props.field || 'col'}-${rowObject?.rowIndex + '-' + (rowType === RenderType.Header ? 'Header' : 'Content')}`
                 };
 
                 // Store cell options
                 cellOptions.push(cellOption);
 
                 if (isVisible) {
-                    if (rowType === RenderType.Filter) {
+                    const isAlreadyRendered: boolean = Array.from(cellsRef.current).some(
+                        (r: ICell<ColumnProps<T>>) => r.column.field === cellOption.column.field && rowObject.uid === cachedCellObjects.current.get(cellOption.column.field)?.row.uid
+                    );
+                    if (isAlreadyRendered && isOffsetXChanged) {
+                        elements.push(cachedCellObjects.current.get(cellOption.column.field).reactElement);
+                    } else if (rowType === RenderType.Filter) {
                         elements.push(
                             <FilterBase
-                                key={`${child.props.field || 'col'}-${row?.rowIndex + 1 || 'filter'}`}
+                                key={`${child.props.field || 'col'}-${rowObject?.rowIndex + 1 || 'filter'}`}
                                 {...columnProps}
                             />
                         );
                     } else {
                         elements.push(
                             <ColumnBase<T>
-                                key={`${child.props.field || 'col'}-${row?.rowIndex || 'Header'}`}
+                                key={`${child.props.field || 'col'}-${rowObject?.rowIndex + '-' + (rowType === RenderType.Header ? 'Header' : 'Content')}`}
                                 {...columnProps}
                             />
                         );
                     }
+                    cachedCellObjects.current.set(cellOption.column.field, { ...columnProps, reactElement: elements[elements.length - 1] });
                     renderedColumnWidth += parseUnit(cellOption.column.width);
                     if (renderedColumnWidth > parseUnit(headerScrollRef?.clientWidth)) {
                         buffer++;
@@ -334,7 +352,7 @@ const RowBase: <T>(props: IRowBase<T> & RefAttributes<RowRef>) => ReactElement =
                     // }
                 }
             }
-            if (scrollModule) {
+            if (scrollModule && rowObject?.uid !== 'empty-row-uid') {
                 scrollModule.virtualColumnInfo.endIndex = cellOptions[cellOptions.length - 1] && to > cellOptions[cellOptions.length - 1].index + 1 ? cellOptions[cellOptions.length - 1].index + 1 : to;
                 // setVirtualColGroupElements(ColElements.length ? ColElements.slice(scrollModule?.virtualColumnInfo.startIndex, scrollModule?.virtualColumnInfo.endIndex) : null);
             }
@@ -364,24 +382,36 @@ const RowBase: <T>(props: IRowBase<T> & RefAttributes<RowRef>) => ReactElement =
         }, [rowTemplate, rowObject?.data, rowType]);
 
         const customRowClass: string | undefined = useMemo(() => {
+            // if (isAlreadyRenderedVirtualRow) {
+            //     return previousRowClassRef.current;
+            // }
             if (rowType === RenderType.Content && rowObject?.uid !== 'empty-row-uid') {
                 return !isNullOrUndefined(rowClass) ? (typeof rowClass === 'function' ?
                     rowClass({rowType: RowType.Content, data: rowObject.data, rowIndex: rowObject.rowIndex}) : rowClass) : undefined;
+                // return previousRowClassRef.current;
             }
             return undefined;
         }, [rowClass, inlineEditForm, rowObject]);
         const customNoRecordRowClass: string | undefined = useMemo(() => {
             if (isInitialBeforePaint.current) { return undefined; }
+            // if (isAlreadyRenderedVirtualRow) {
+            //     return previousRowClassRef.current;
+            // }
             if (rowType === RenderType.Content && !isInitialLoad && rowObject?.uid === 'empty-row-uid') {
                 return !isNullOrUndefined(rowClass) ?
                     (typeof rowClass === 'function' ? rowClass({rowType: RowType.Content, rowIndex: 0}) : rowClass) : undefined;
+                // return previousRowClassRef.current;
             }
             return undefined;
         }, [rowClass, isInitialLoad, rowObject, isInitialBeforePaint.current]);
         const customAggregateRowClass: string | undefined = useMemo(() => {
             if (isInitialBeforePaint.current) { return undefined; }
+            // if (isAlreadyRenderedVirtualRow) {
+            //     return previousRowClassRef.current;
+            // }
             return rowType === RenderType.Summary && !isNullOrUndefined(rowClass) ? (typeof rowClass === 'function' ?
                 rowClass({rowType: RowType.Aggregate, data: rowObject.data, rowIndex: rowObject.rowIndex}) : rowClass) : undefined;
+            // return previousRowClassRef.current;
         }, [rowClass, rowObject, isInitialBeforePaint.current]);
         return (
             <>

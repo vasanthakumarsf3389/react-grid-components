@@ -1430,7 +1430,7 @@ export const useFocusStrategy: (
 
         // Use aggregate if available, otherwise use content
         if (aggregateRowCount > 0 && columns?.length > 0 && gridRef.current.allowKeyboard) {
-            const aggregateTable: HTMLTableElement | null = gridRef.current.getFooterTable();
+            const aggregateTable: HTMLTableElement | null = gridRef.current?.getFooterTable();
             if (aggregateTable && aggregateTable.rows.length > 0) {
                 const lastFocusableActiveCellIndex: number[] = lastFocusableAggregateCellIndex;
                 // Use the last focusable cell index from the matrix

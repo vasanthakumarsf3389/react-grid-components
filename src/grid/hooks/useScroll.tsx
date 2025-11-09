@@ -265,7 +265,7 @@ export const useScroll: <T>(contentPanelRef: ContentPanelRef<T>) => UseScrollRes
         // const scrollX: number = enableRtl ? (target.scrollWidth - target.clientWidth - target.scrollLeft) : target.scrollLeft;
         const viewPortColumnStartIndex: number = Math.floor(scrollX / (averageColumnWidth === 0 ? 1 : averageColumnWidth));
         const startColumnIndex: number = viewPortColumnStartIndex <= columnBuffer ? 0 : viewPortColumnStartIndex - columnBuffer;
-        setOffsetX(enableRtl || grid?.element.classList.contains('sf-rtl') ? -(columnOffsets[startColumnIndex]) : (columnOffsets[startColumnIndex]));
+        setOffsetX((enableRtl || grid?.element.classList.contains('sf-rtl') ? -(columnOffsets[startColumnIndex]) : (columnOffsets[startColumnIndex])) ?? 0);
         // setOffsetX(enableRtl || grid?.element.classList.contains('sf-rtl') ? -(startColumnIndex * averageColumnWidth) : (startColumnIndex * averageColumnWidth));
         // setOffsetX(startColumnIndex * averageColumnWidth);
         virtualColumnInfo.current.startIndex = isNaN(startColumnIndex) ? 0 : startColumnIndex;

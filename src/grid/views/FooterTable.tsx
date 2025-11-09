@@ -57,7 +57,7 @@ const FooterTableBase: ForwardRefExoticComponent<Partial<IFooterTableBase> & Ref
              * Contains column definitions for the table
              */
             const colGroupContent: JSX.Element = useMemo(() => {
-                console.log('footer colGroupContent => ', scrollModule?.virtualColumnInfo.startIndex, scrollModule?.virtualColumnInfo.endIndex);
+                // console.log('footer colGroupContent => ', scrollModule?.virtualColumnInfo.startIndex, scrollModule?.virtualColumnInfo.endIndex);
 
                 let visibleCols: JSX.Element[] = [];
 

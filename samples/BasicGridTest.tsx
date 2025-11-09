@@ -401,7 +401,8 @@ export const GridBaseTest: React.FC<GridBaseTestProps> = ({
   };
   const uidRef = useRef(1);
   return (
-    <div style={{ marginTop: '80px' }}>
+    // style={{ marginTop: '80px' }}
+    <div style={{height: '97vh'}}>
       <div style={{ marginBottom: '10px' }}>
         <Button onClick={() => setFlag(true)} className='e-primary' style={{ marginRight: '10px' }}>
           Render Grid

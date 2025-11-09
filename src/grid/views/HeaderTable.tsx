@@ -56,7 +56,7 @@ const HeaderTableBase: ForwardRefExoticComponent<Partial<IHeaderTableBase> & Ref
              * Contains column definitions for the table
              */
             const colGroupContent: JSX.Element = useMemo(() => {
-                console.log('header colGroupContent => ', scrollModule?.virtualColumnInfo.startIndex, scrollModule?.virtualColumnInfo.endIndex);
+                // console.log('header colGroupContent => ', scrollModule?.virtualColumnInfo.startIndex, scrollModule?.virtualColumnInfo.endIndex);
 
                 let visibleCols: JSX.Element[] = [];
 

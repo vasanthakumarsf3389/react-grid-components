@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Grid, Column, Columns, ColumnProps, CellRenderEvent, HeaderCellRenderEvent, GridRef, RowSelectEvent, ColumnTemplateProps, GridLine, DataRequestEvent, FilterSettings, SortSettings, PageSettings, RowSelectingEvent, RowRenderEvent, AggregateColumn, AggregateRow, Aggregates, PageEvent, ValueType, EditSettings, SortEvent, FilterEvent, SearchEvent, AggregateColumnProps, SearchSettings, TextAlign, ClipMode, FilterBarType, ActionType, RowInfo, EditType, AggregateType } from '../src/index';
+import { Grid, Column, Columns, ColumnProps, CellRenderEvent, HeaderCellRenderEvent, GridRef, RowSelectEvent, ColumnTemplateProps, GridLine, DataRequestEvent, FilterSettings, SortSettings, PageSettings, RowSelectingEvent, RowRenderEvent, AggregateColumn, AggregateRow, Aggregates, PageEvent, ValueType, EditSettings, SortEvent, FilterEvent, SearchEvent, AggregateColumnProps, SearchSettings, TextAlign, ClipMode, FilterBarType, ActionType, RowInfo, EditType, AggregateType, CellType } from '../src/index';
 import { ChangeEventArgs, DropDownList } from '@syncfusion/react-dropdowns';
 // import { DataManager, DataUtil } from '@syncfusion/react-data';
 import { complexData, customerData, DressList, empData, employeeData, employeeeData, employeeInformation, employeeRecord, generateDynamicData, getTradeData, gridData, hotelBookingData, initialFoodOrderDetails, libraryData, nullData, orderData, orderDetails, productData, restaurantData, salesDetails, studentData, supplierContractData, support, tasksData } from './data';
@@ -3847,7 +3847,7 @@ export const RowTemplate: React.FC = () => {
   ), []);
 }
 export const TestSample: React.FC = () => {
-  const NUM_ROWS = 100;
+  // const NUM_ROWS = 100;
   const NUM_COLS = 100;
   const gridRef = useRef(null);
   // State for uniform row heights
@@ -3858,6 +3858,7 @@ export const TestSample: React.FC = () => {
   const [uniformCols, _setUniformCols] = useState(true);
   const [enableDynamicRowHeight, setEnableDynamicRowHeight] = useState(false);
   const [enableRtl, setEnableRtl] = useState(false);
+  const [NUM_ROWS, setNUM_ROWS] = useState(100000);
 
   // // Row Height Configuration
   // const nonUniformRowHeight = (rowData: any, _idx: number) => {
@@ -3877,14 +3878,27 @@ export const TestSample: React.FC = () => {
       // width: uniformCols ? 120 : 80 + (i % 4) * 30, // 🆕 Non-uniform widths
       width: uniformCols
             ? `100%`
-            : `${Math.min(basePercentage + (i % totalCols) * 5, 100)}%` // Prevent exceeding 100% // Adjust the multiplier as needed
-    }))};
+            : `${Math.min(basePercentage + (i % totalCols) * 5, 100)}%`, // Prevent exceeding 100% // Adjust the multiplier as needed
+      cellClass: NUM_ROWS === 100 ? (args) => {
+        if (args.cellType === CellType.Content) {
+          console.log('dataCellClass =>', args);
+        }
+        // else if (args.cellType === CellType.Header) {
+        //   console.log('headerCellClass =>', args);
+        // }
+      } : undefined
+    } as unknown as ColumnProps))};
   const makeAggregates = (): AggregateColumnProps[] =>
     Array.from({ length: NUM_COLS }).map((_, i) => ({
       field: `col${i}`,
       type: AggregateType.Count,
       width: uniformCols ? 120 : 80 + (i % 4) * 30, // 🆕 Non-uniform widths
-    } as AggregateColumnProps));
+      // cellClass: (args) => {
+      //   if (args.cellType === CellType.Aggregate) {
+      //     console.log('aggregateCellClass =>', args);
+      //   }
+      // }
+    } as unknown as AggregateColumnProps));
 
   const differentHeights = [40, 80, 120, 200];
   // Sample data generator
@@ -3906,9 +3920,9 @@ export const TestSample: React.FC = () => {
 
 
   // Recompute columns/data based on state
-  const columns = useMemo(() => makeColumns(), [uniformCols]);
+  const columns = useMemo(() => makeColumns(), [uniformCols, NUM_ROWS]);
   const aggregates = makeAggregates();
-  const data = useMemo(() => makeData(NUM_ROWS, columns), []);
+  const data = useMemo(() => makeData(NUM_ROWS, columns), [NUM_ROWS]);
   console.log('columns', columns);
   // const gridRef = useRef<GridRef<DynamicDataItem>>(null);
   // const [data, _setData] = useState(generateDynamicData(100));
@@ -3925,6 +3939,14 @@ export const TestSample: React.FC = () => {
   return (
     // <div style={{ height: '100%' }}>
     <div style={{ height: '96vh' }}>
+      <select defaultValue={'1L'} id="rowCount" onChange={(event) => {
+        const value = event.target.value;
+        setNUM_ROWS(value === '1L' ? 100000 : 100);
+      }}>
+        <option value="100">100</option>
+        <option value="1L">1L</option>
+      </select>
+
       <button onClick={() => {
         setEnableDynamicRowHeight(!enableDynamicRowHeight);
         // requestAnimationFrame(() => {
@@ -3947,6 +3969,7 @@ export const TestSample: React.FC = () => {
         ref={gridRef}
         gridLines='Both'
         dataSource={data}
+        rowClass={NUM_ROWS === 100 ? (args) => { console.log('rowClass => ', args); return ''} : undefined}
         columns={columns}
         sortSettings={useMemo(() => ({enabled: true}), [])}
         filterSettings={useMemo(() => ({enabled: true}), [])}

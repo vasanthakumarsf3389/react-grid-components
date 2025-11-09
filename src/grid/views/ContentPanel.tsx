@@ -10,7 +10,8 @@ import {
     RefObject,
     JSX,
     ReactElement,
-    useState
+    useState,
+    // useEffect
     // HTMLAttributes
 } from 'react';
 import { ContentTableBase } from './index';
@@ -81,7 +82,11 @@ const ContentPanelBase: <T>(props: Partial<IContentPanelBase> & RefAttributes<Co
             }, [currentViewData, contentTableRef.current?.totalRenderedRowHeight.current, contentTableRef.current?.cachedRowObjects.current.size]);
             // const [offsetX, setOffsetX] = useState<number>(0);
             // const [offsetY, setOffsetY] = useState<number>(0);
-
+            // useEffect(() => {
+            //     if (contentTableRef.current.contentSectionRef.clientHeight < contentPanelRef.current.clientHeight) {
+            //         contentTableRef.current.setRequireMoreVirtualRowsForceRefresh({});
+            //     }
+            // }, [virtualHeight]);
             /**
              * Expose internal elements and methods through the forwarded ref
              * Only define properties specific to ContentPanel and forward ContentTable properties
@@ -103,6 +108,11 @@ const ContentPanelBase: <T>(props: Partial<IContentPanelBase> & RefAttributes<Co
                     ref={(ref: ContentTableRef<T>) => {
                         contentTableRef.current = ref;
                         setColumnClientWidth(ref?.columnClientWidth);
+                        // if (contentTableRef.current?.contentSectionRef.clientHeight < contentPanelRef.current?.clientHeight) {
+                        //     requestAnimationFrame(() => {
+                        //         contentTableRef.current?.setRequireMoreVirtualRowsForceRefresh({});
+                        //     });
+                        // }
                     }}
                     className={CSS_CONTENT_TABLE}
                     role="presentation"
@@ -113,7 +123,7 @@ const ContentPanelBase: <T>(props: Partial<IContentPanelBase> & RefAttributes<Co
 
             const virtualWrapperStyle: CSSProperties = useMemo(() => ({
                 ...ABSOLUTE_FILL,
-                minHeight: formatUnit(height), // virtualHeight ||
+                maxHeight: formatUnit(height), // virtualHeight ||
                 transform: `translate3d(${offsetX || 0}px, ${offsetY || 0}px, 0)`,
                 // transform: `translate(0px, ${offsetY || 0}px)`,
                 // 'min-width': contentTableRef.current?.getContentTable?.().scrollWidth || contentScrollRef.current?.clientWidth || undefined
