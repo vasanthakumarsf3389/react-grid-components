@@ -272,13 +272,6 @@ export interface IRow<T> {
      */
     rowIndex?: number;
 
-    // /**
-    //  * Index of the row.
-    //  *
-    //  * @default 0
-    //  */
-    // ariaRowIndex?: number;
-
     /**
      * Indentation level for hierarchical rows.
      *
@@ -325,6 +318,8 @@ export interface Scroll {
     setPadding?: () => void;
     virtualRowInfo: VirtualRowInfo;
     virtualColumnInfo: VirtualColumnInfo;
+    lastVirtualPageNumber: number;
+    // virtualPageChange: () => void;
 }
 
 /**
@@ -366,6 +361,18 @@ export interface MutableGridBase<T = unknown> {
     currentViewData?: T[];
 
     /**
+     * Sets the virtual cached current view data
+     *
+     * @param {Map<number, T>} data - The data to set
+     */
+    setVirtualCachedViewData?: Dispatch<SetStateAction<Map<number, T>>>;
+
+    /**
+     * Current virtual cached view data
+     */
+    virtualCachedViewData?: Map<number, T>;
+
+    /**
      * Header row depth for stacked headers
      */
     headerRowDepth?: number;
@@ -374,8 +381,6 @@ export interface MutableGridBase<T = unknown> {
      * Column elements for the grid
      */
     colElements?: JSX.Element[];
-    // virtualColGroupElements?: JSX.Element[];
-    // setVirtualColGroupElements?: Dispatch<SetStateAction<JSX.Element[]>>;
     isInitialLoad?: boolean;
 
     /**
@@ -448,8 +453,7 @@ export interface MutableGridBase<T = unknown> {
     offsetY?: number;
     setOffsetX?: Dispatch<SetStateAction<number>>;
     setOffsetY?: Dispatch<SetStateAction<number>>;
-    // startColumnIndex?: number;
-    // setStartColumnIndex?: Dispatch<SetStateAction<number>>;
+    // isNoColumnRemoteData?: boolean;
 }
 
 /**
@@ -799,7 +803,6 @@ export interface ContentRowsRef<T = unknown> {
      * @returns {IRow<ColumnProps>[]} The row options objects with element references
      */
     getRowsObject(): IRow<ColumnProps<T>>[];
-    // getRowsObject(): MapIterator<IRow<ColumnProps<T>>>;
 
     /**
      * Gets the row by index
@@ -1224,6 +1227,10 @@ export interface VirtualInfo {
  */
 export interface VirtualRowInfo extends VirtualInfo {
     offsetY: number;
+    virtualModeStartIndex: number;
+    requiredRowsRange: number[];
+    currentPages: number[];
+    previousPages: number[];
 }
 
 /**

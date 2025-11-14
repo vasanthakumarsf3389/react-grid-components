@@ -49,7 +49,7 @@ export const InlineEditForm: <T>(props: InlineEditFormProps<T> & RefAttributes<I
         const formRef: React.RefObject<IFormValidator> = useRef<IFormValidator>(null);
         const editCellRefs: React.RefObject<{ [field in keyof T]?: EditCellRef }> = useRef<{ [field in keyof T]?: EditCellRef }>({});
         const { rowHeight, id, getVisibleColumns, serviceLocator, editModule, contentPanelRef, contentTableRef,
-            height, scrollModule, disableDOMVirtualization } = useGridComputedProvider<T>();
+            height, scrollModule, virtualizationSettings } = useGridComputedProvider<T>();
         const { colElements: ColElements, cssClass, offsetX } = useGridMutableProvider<T>();
         const formatter: IValueFormatter = serviceLocator?.getService<IValueFormatter>('valueFormatter');
 
@@ -716,7 +716,7 @@ export const InlineEditForm: <T>(props: InlineEditFormProps<T> & RefAttributes<I
             let visibleCols: JSX.Element[] = [];
 
             if (ColElements.length) {
-                if (disableDOMVirtualization) {
+                if (!virtualizationSettings.enableRow && !virtualizationSettings.enableColumn) {
                     visibleCols = ColElements;
                 } else {
                     const startIndex: number = scrollModule?.virtualColumnInfo?.startIndex ?? 0;
@@ -745,19 +745,10 @@ export const InlineEditForm: <T>(props: InlineEditFormProps<T> & RefAttributes<I
             ColElements,
             id,
             offsetX,
-            disableDOMVirtualization,
+            virtualizationSettings.enableColumn,
             scrollModule?.virtualColumnInfo?.startIndex,
             scrollModule?.virtualColumnInfo?.endIndex,
-            // forceRerender, totalWidth.current
         ]);
-        // const colGroupContent: JSX.Element = useMemo<JSX.Element>(() => (
-        //     <colgroup
-        //         key={`${id}-${isAddOperation ? 'add' : 'edit'}-colgroup`}
-        //         id={`${id}-${isAddOperation ? 'add' : 'edit'}-colgroup`}
-        //     >
-        //         {ColElements.length ? (disableDOMVirtualization ? ColElements : ColElements.slice(scrollModule?.virtualColumnInfo.startIndex, scrollModule?.virtualColumnInfo.endIndex)) : null}
-        //     </colgroup>
-        // ), [ColElements, id, isAddOperation, offsetX]);
 
         return rowUid ? (
             <tr

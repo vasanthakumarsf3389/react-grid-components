@@ -2,7 +2,7 @@ import { forwardRef, ForwardRefExoticComponent, RefAttributes, useImperativeHand
 import { FooterTableBase } from './FooterTable';
 import { useGridComputedProvider, useGridMutableProvider } from '../contexts';
 import {
-    FooterPanelRef, FooterTableRef, IFooterPanelBase, 
+    FooterPanelRef, FooterTableRef, IFooterPanelBase
 } from '../types';
 
 // Constant CSS class
@@ -19,13 +19,6 @@ const DEFAULT_TABLE_STYLE: CSSProperties = {
     borderCollapse: 'separate',
     borderSpacing: '0.25px'
 };
-
-// const ABSOLUTE_FILL: CSSProperties = {
-//     position: 'absolute',
-//     top: 0,
-//     left: 0,
-//     right: 0
-// };
 
 /**
  * FooterPanelBase component renders the static area for the grid footer.
@@ -44,7 +37,7 @@ const FooterPanelBase: ForwardRefExoticComponent<Partial<IFooterPanelBase> & Ref
     memo(forwardRef<FooterPanelRef, Partial<IFooterPanelBase>>(
         (props: Partial<IFooterPanelBase>, ref: RefObject<FooterPanelRef>) => {
             const { panelAttributes, scrollContentAttributes, tableScrollerPadding } = props;
-            const { id, disableDOMVirtualization } = useGridComputedProvider();
+            const { id, virtualizationSettings } = useGridComputedProvider();
             const { offsetX, totalVirtualColumnWidth } = useGridMutableProvider();
 
             // Refs for DOM elements and child components
@@ -66,18 +59,13 @@ const FooterPanelBase: ForwardRefExoticComponent<Partial<IFooterPanelBase> & Ref
             }), [footerPanelRef.current, footerScrollRef.current, footerTableRef.current]);
 
             const virtualWrapperStyle: CSSProperties = useMemo(() => ({
-                // ...ABSOLUTE_FILL,
                 transform: `translate3d(${offsetX || 0}px, 0px, 0)`,
-                // transform: `translate(0px, ${offsetY || 0}px)`,
-                // width: footerTableRef.current?.getFooterTable?.().scrollWidth || footerScrollRef.current?.clientWidth || undefined
                 width: columnClientWidth
             }), [offsetX, footerScrollRef.current?.clientWidth, columnClientWidth]);
 
             const virtualTrackStyle: CSSProperties = useMemo(() => ({
                 position: 'relative',
-                // height: '100%',
                 width: totalVirtualColumnWidth || undefined
-                // width: columnClientWidth
             }), [totalVirtualColumnWidth, columnClientWidth]);
             /**
              * Memoized footer table component to prevent unnecessary re-renders
@@ -105,7 +93,7 @@ const FooterPanelBase: ForwardRefExoticComponent<Partial<IFooterPanelBase> & Ref
                         ref={footerScrollRef}
                         {...scrollContentAttributes}
                     >
-                        {disableDOMVirtualization ? (
+                        { !virtualizationSettings.enableRow && !virtualizationSettings.enableColumn ? (
                             footerTable
                         ) : (
                             <>
@@ -115,7 +103,6 @@ const FooterPanelBase: ForwardRefExoticComponent<Partial<IFooterPanelBase> & Ref
                                 </div>
                             </>
                         )}
-                        {/* {footerTable} */}
                     </div>
                 </div>
             );

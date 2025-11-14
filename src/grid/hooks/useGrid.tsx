@@ -37,7 +37,9 @@ import {
     DataChangeRequestEvent,
     PendingState,
     FilterPredicates,
-    ValueType
+    ValueType,
+    Theme,
+    ThemeDefaults
 } from '../types';
 import { selectionModule, SelectionSettings } from '../types/selection.interfaces';
 import { SortDescriptor, SortSettings, SortModule } from '../types/sort.interfaces';
@@ -58,6 +60,7 @@ import {
 import { useData } from '../models';
 import { iterateArrayOrObject } from '../utils';
 import { ITooltip } from '@syncfusion/react-popups';
+import { ScrollMode, VirtualizationSettings } from '../types';
 
 /**
  * Default localization strings for the grid
@@ -137,16 +140,23 @@ export const useGridComputedProps: <T, >(props: Partial<IGridBase<T>>, gridRef?:
     }, [localeObj, valueFormatterService]);
     const dataSource: DataManager | DataResult = useMemo(() => {
         if (props.dataSource instanceof DataManager) {
+            if (props.scrollMode === ScrollMode.Virtual) {
+                props.dataSource.dataSource.enableCache = props.virtualizationSettings?.enableCache ?? true;
+                // props.dataSource['isEnableCache'] = props.virtualizationSettings?.enableCache ?? true;
+            }
             return props.dataSource;
         }
         else if (Array.isArray(props.dataSource)) {
-            return new DataManager(props.dataSource);
+            return new DataManager({
+                json: props.dataSource,
+                ...(props.scrollMode === ScrollMode.Virtual ? {enableCache: props.virtualizationSettings?.enableCache} : {})
+            });
         }
         else if (props.dataSource && props.dataSource.result) {
             return props.dataSource;
         }
         return new DataManager([]);
-    }, [props.dataSource]);
+    }, [props.dataSource, props.virtualizationSettings?.enableCache, props.scrollMode]);
 
     const query: Query = useMemo(() => props.query instanceof Query ? props.query : new Query(), [props.query]);
     // Trigger load event on initial render
@@ -162,8 +172,10 @@ export const useGridComputedProps: <T, >(props: Partial<IGridBase<T>>, gridRef?:
 
     const dataState: RefObject<PendingState> = useRef({isPending: false, resolver: undefined, isEdit: false});
 
-    const { columns: preparedColumns, children, headerRowDepth, colElements, uiColumns, totalVirtualColumnWidth, columnOffsets } =
-        useColumns<T>({ ...props }, gridRef, dataState, isInitialBeforePaint);
+    const [currentViewData, setCurrentViewData] = useState<T[]>([]);
+    const [virtualCachedViewData, setVirtualCachedViewData] = useState<Map<number, T>>(new Map());
+    const { columns: preparedColumns, children, headerRowDepth, colElements, uiColumns, totalVirtualColumnWidth, columnOffsets } = //, isNoColumnRemoteData
+        useColumns<T>({ ...props }, gridRef, dataState, isInitialBeforePaint, currentViewData);
 
     // Initialize search settings based on props or use default values
     const defaultSearchSettings: SearchSettings = {
@@ -233,10 +245,48 @@ export const useGridComputedProps: <T, >(props: Partial<IGridBase<T>>, gridRef?:
         }
     }, [props.pageSettings?.enabled]);
 
+    const theme: Theme = useMemo(() => {
+        return props.theme || Theme.Material;
+    }, [props.theme]);
+    const rowHeight: number | null = useMemo(() =>
+        props.rowHeight || ThemeDefaults[theme].rowHeight, [props.rowHeight, theme]);
+    const getRowHeight: ((props: Partial<RowInfo<T>>) => number) = useMemo(() => props.getRowHeight ?? null, [props.getRowHeight]);
+    const virtualizationSettings: VirtualizationSettings = useMemo(() => {
+        // return {
+        //     rows: {
+        //         enable: true,
+        //         bufferCount: props.virtualizationSettings?.rows?.preventMaxCount ? 500 : 5,
+        //         preventMaxCount: false,
+        //         // enableCache: true,
+        //     },
+        //     columns: {
+        //         enable: true,
+        //         bufferCount: 5
+        //     }
+        // }
+        return {
+            enableRow: true,
+            enableColumn: true,
+            rowBuffer: props.virtualizationSettings?.preventMaxRenderedRows ? 500 : 5,
+            columnBuffer: 5,
+            // enableCache: true,
+            preventMaxRenderedRows: false,
+            enableCache: true,
+            ... props.virtualizationSettings
+        }
+    }, [props.virtualizationSettings]);
+    const scrollMode: ScrollMode = useMemo(() => {
+        return props.scrollMode || ScrollMode.Auto;
+    }, [props.scrollMode]);
+    const [offsetX, setOffsetX] = useState<number>(0);
+    const [offsetY, setOffsetY] = useState<number>(0);
+    // const [startColumnIndex, setStartColumnIndex] = useState<number>(0);
+    // const [virtualColGroupElements, setVirtualColGroupElements] = useState(colElements);
+
     // Initialize page settings based on props or use default values
     const defaultPageSettings: PageSettings = {
         enabled: props.pageSettings?.enabled || false,
-        pageSize: props.pageSettings?.pageSize || 12,
+        pageSize: props.pageSettings?.pageSize || (props.scrollMode === ScrollMode.Virtual ? 50 : 12),
         pageCount: props.pageSettings?.pageCount || 0,
         currentPage: currentPage,
         template: props.pageSettings?.template || null,
@@ -282,27 +332,13 @@ export const useGridComputedProps: <T, >(props: Partial<IGridBase<T>>, gridRef?:
         props.enableHtmlSanitizer || false, [props.enableHtmlSanitizer]);
     const enableStickyHeader: boolean = useMemo(() =>
         props.enableStickyHeader || false, [props.enableStickyHeader]);
-    const rowHeight: number | null = useMemo(() =>
-        props.rowHeight || null, [props.rowHeight]);
-    const disableDOMVirtualization: boolean = useMemo(() =>
-        props.disableDOMVirtualization || height === 'auto' || false, [props.disableDOMVirtualization, height]);
-    const rowBuffer: number = useMemo(() =>
-        (props.rowBuffer ?? disableDOMVirtualization ? 100 : 5), [props.rowBuffer, disableDOMVirtualization]);
-    const columnBuffer: number = useMemo(() =>
-        (props.columnBuffer ?? disableDOMVirtualization ? 10 : 5), [props.columnBuffer, disableDOMVirtualization]);
-    const [offsetX, setOffsetX] = useState<number>(0);
-    const [offsetY, setOffsetY] = useState<number>(0);
-    // const [startColumnIndex, setStartColumnIndex] = useState<number>(0);
-    // const [virtualColGroupElements, setVirtualColGroupElements] = useState(colElements);
-    const getRowHeight: ((props: Partial<RowInfo<T>>) => number) = useMemo(() => props.getRowHeight ?? null, [props.getRowHeight]);
+
     const enableAltRow: boolean = useMemo(() =>
         props.enableAltRow ?? true, [props.enableAltRow]);
     const emptyRecordTemplate: string | Function | ReactElement = useMemo(() =>
         props.emptyRecordTemplate || null, [props.emptyRecordTemplate]);
     const rowTemplate: string | Function | ReactElement = useMemo(() =>
         props.rowTemplate || null, [props.rowTemplate]);
-
-    const [currentViewData, setCurrentViewData] = useState<T[]>([]);
 
     const [responseData, setResponseData] = useState<Object>({});
 
@@ -1447,10 +1483,10 @@ export const useGridComputedProps: <T, >(props: Partial<IGridBase<T>>, gridRef?:
         aggregates,
         editSettings: props.editSettings,
         allowKeyboard,
-        disableDOMVirtualization,
-        rowBuffer,
-        columnBuffer,
-        getRowHeight
+        getRowHeight,
+        virtualizationSettings,
+        scrollMode,
+        theme
     } as IGrid<T>), [
         getVisibleColumns,
         getColumnByUid,
@@ -1489,10 +1525,10 @@ export const useGridComputedProps: <T, >(props: Partial<IGridBase<T>>, gridRef?:
         rowTemplate,
         aggregates,
         allowKeyboard,
-        disableDOMVirtualization,
-        rowBuffer,
-        columnBuffer,
         getRowHeight,
+        virtualizationSettings,
+        scrollMode,
+        theme,
         props
     ]);
 
@@ -1501,6 +1537,8 @@ export const useGridComputedProps: <T, >(props: Partial<IGridBase<T>>, gridRef?:
      */
     const protectedAPI: Partial<MutableGridBase<T>> = useMemo(() => ({
         currentViewData,
+        virtualCachedViewData,
+        setVirtualCachedViewData,
         columnsDirective,
         headerRowDepth,
         colElements,
@@ -1533,10 +1571,12 @@ export const useGridComputedProps: <T, >(props: Partial<IGridBase<T>>, gridRef?:
         // setStartColumnIndex,
         totalVirtualColumnWidth,
         columnOffsets
-    }), [currentViewData, columnsDirective, headerRowDepth, colElements, isInitialLoad, focusModule, selectionModule, getParentElement,
-        sortModule, searchModule, filterModule, editModule, sortSettings, searchSettings, evaluateTooltipStatus, uiColumns,
+        // isNoColumnRemoteData
+    }), [currentViewData, virtualCachedViewData, columnsDirective, headerRowDepth, colElements, isInitialLoad, focusModule, selectionModule, getParentElement,
+        sortModule, searchModule, filterModule, editModule, sortSettings, searchSettings, evaluateTooltipStatus, uiColumns, setVirtualCachedViewData,
         currentPage, totalRecordsCount, gridAction, isInitialBeforePaint, cssClass, responseData, setResponseData, offsetX,
         offsetY, setOffsetX, setOffsetY, totalVirtualColumnWidth, columnOffsets
+        // , isNoColumnRemoteData
         // , virtualColGroupElements, setVirtualColGroupElements,
         // startColumnIndex, setStartColumnIndex
     ]);

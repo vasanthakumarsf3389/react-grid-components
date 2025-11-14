@@ -750,3 +750,16 @@ export enum KeyboardKeys {
     CTRL_HOME = 'Home',
     CTRL_END = 'End'
 }
+export enum ScrollMode {
+    Virtual = 'Virtual',
+    Infinite = 'Infinite',
+    Auto = 'Auto'
+}
+export enum Theme {
+    Material = 'Material'
+}
+
+/** @private */
+export const ThemeDefaults: Record<Theme, { rowHeight: number }> = {
+    [Theme.Material]: { rowHeight: 50 },
+};

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Grid, Column, Columns, ColumnProps, CellRenderEvent, HeaderCellRenderEvent, GridRef, RowSelectEvent, ColumnTemplateProps, GridLine, DataRequestEvent, FilterSettings, SortSettings, PageSettings, RowSelectingEvent, RowRenderEvent, AggregateColumn, AggregateRow, Aggregates, PageEvent, ValueType, EditSettings, SortEvent, FilterEvent, SearchEvent, AggregateColumnProps, SearchSettings, TextAlign, ClipMode, FilterBarType, ActionType, RowInfo, EditType, AggregateType, CellType } from '../src/index';
+import { Grid, Column, Columns, ColumnProps, CellRenderEvent, HeaderCellRenderEvent, GridRef, RowSelectEvent, ColumnTemplateProps, GridLine, DataRequestEvent, FilterSettings, SortSettings, PageSettings, RowSelectingEvent, RowRenderEvent, AggregateColumn, AggregateRow, Aggregates, PageEvent, ValueType, EditSettings, SortEvent, FilterEvent, SearchEvent, AggregateColumnProps, SearchSettings, TextAlign, ClipMode, FilterBarType, ActionType, RowInfo, EditType, AggregateType, CellType, ScrollMode } from '../src/index';
 import { ChangeEventArgs, DropDownList } from '@syncfusion/react-dropdowns';
 // import { DataManager, DataUtil } from '@syncfusion/react-data';
 import { complexData, customerData, DressList, empData, employeeData, employeeeData, employeeInformation, employeeRecord, generateDynamicData, getTradeData, gridData, hotelBookingData, initialFoodOrderDetails, libraryData, nullData, orderData, orderDetails, productData, restaurantData, salesDetails, studentData, supplierContractData, support, tasksData } from './data';
@@ -1870,7 +1870,7 @@ import * as arAllData from '@syncfusion/react-cldr-data/main/ar/all.json';
 import * as zhAllData from '@syncfusion/react-cldr-data/main/zh/all.json';
 import * as numberingSystemData from '@syncfusion/react-cldr-data/supplemental/numberingSystems.json';
 import * as currencyData from '@syncfusion/react-cldr-data/supplemental/currencyData.json';
-import { DataManager, ODataV4Adaptor } from '@syncfusion/react-data';
+import { DataManager, ODataV4Adaptor, Query, UrlAdaptor } from '@syncfusion/react-data';
 import * as React from 'react';
 
 
@@ -3946,11 +3946,13 @@ export const TestSample: React.FC = () => {
     // <div style={{ height: '100%' }}>
     <div style={{ height: '96vh' }}>
       <button onClick={() => setIsRender(!isRender)}>{isRender ? 'Destroy' : 'Render'} Data Grid</button>
+      <label htmlFor="rowCount">Select Row Count:</label>
       <select defaultValue={'1L'} id="rowCount" onChange={(event) => {
         const value = event.target.value;
-        setNUM_ROWS(value === '1L' ? 100000 : 100);
+        setNUM_ROWS(value === '1L' ? 100000 : (value === '10K' ? 10000 : 1000));
       }}>
-        <option value="100">100</option>
+        <option value="1K">1K</option>
+        <option value="10K">10K</option>
         <option value="1L">1L</option>
       </select>
       <button onClick={() => {
@@ -4030,6 +4032,74 @@ export const TestSample: React.FC = () => {
           </Grid>
         </Provider>
       }
+    </div>
+  );
+}
+
+export const VirtualScrollingSample: React.FC = () => {
+  const gridRef = useRef<GridRef>(null);
+  const [isRender, setIsRender] = useState(false);
+  const [enableRtl, setEnableRtl] = useState(false);
+  const [dataCount, setDataCount] = useState(100000);
+  const hostUrl: string = 'https://ej2services.syncfusion.com/react/hotfix/';
+  const data: DataManager = useMemo(() => new DataManager({ url: hostUrl + 'api/UrlDataSource', adaptor: new UrlAdaptor  }), []);
+  const query = useMemo(() => new Query().addParams('dataCount', '' + dataCount), [dataCount]);
+  return (
+    <div>
+      <button onClick={() => setIsRender(!isRender)}>{isRender ? 'Destroy' : 'Render'} Data Grid</button>
+      <label htmlFor="rowCount">Select Row Count:</label>
+      <select defaultValue={'1L'} id="rowCount" onChange={(event) => {
+        const value = event.target.value;
+        setDataCount(value === '1L' ? 100000 : (value === '10K' ? 10000 : 1000));
+      }}>
+        <option value="1K">1K</option>
+        <option value="10K">10K</option>
+        <option value="1L">1L</option>
+      </select>
+      <button onClick={() => {
+        setEnableRtl(!enableRtl);
+      }}>RTL {enableRtl ? 'Enabled' : 'Disabled'}</button>
+      {isRender &&
+        <Provider
+          // dir={'rtl'}
+          dir={enableRtl ? 'rtl' : 'ltr'}
+        >
+          <Grid id="overviewgrid"
+            ref={gridRef}
+            dataSource={data}
+            // loadingIndcator={{ indicatorType: 'Shimmer' }}
+            query={query}
+            enableHover={false}
+            scrollMode={ScrollMode.Virtual}
+            pageSettings={{ enabled: true }}
+            // rowHeight={38}
+            height='96vh'
+          // ref={(g) => { gridInstance = g }}
+          // actionComplete={onComplete.bind(this)}
+          // load={onLoad.bind(this)}
+          // dataBound={onDataBound.bind(this)}
+          // filterSettings={gridFilter}
+          // allowFiltering={true}
+          // allowSorting={true}
+          // allowSelection={true}
+          // selectionSettings={select}
+          >
+            <Columns>
+              {/* <Column type='checkbox' width='60'></Column> */}
+              <Column field='EmployeeID' visible={false} headerText='Employee ID' isPrimaryKey={true} width='130'></Column>
+              <Column field='Employees' headerText='Employee Name' width='230' clipMode='EllipsisWithTooltip' />
+              <Column field='Designation' headerText='Designation' width='170' clipMode='EllipsisWithTooltip' />
+              <Column field='Mail' headerText='Mail' width='230'></Column>
+              <Column field='Location' headerText='Location' width='140'></Column>
+              <Column field='Status' headerText='Status' width='130'></Column>
+              <Column field='Trustworthiness' headerText='Trustworthiness' width='160'></Column>
+              <Column field='Rating' headerText='Rating' width='220' />
+              <Column field='Software' headerText='Software Proficiency' width='180' format='C2' />
+              <Column field='CurrentSalary' headerText='Current Salary' width='160' format='C2'></Column>
+              <Column field='Address' headerText='Address' width='240' clipMode="EllipsisWithTooltip" ></Column>
+            </Columns>
+          </Grid>
+        </Provider>}
     </div>
   );
 }

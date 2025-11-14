@@ -4,7 +4,7 @@ import { DataManager, DataResult, DataUtil, Predicate, Query } from '@syncfusion
 import { Button } from '@syncfusion/react-buttons';
 // import { L10n, loadCldr, setCulture } from '@syncfusion/react-base';
 import './sample.css';
-import { AggregateColumnProps, ClipMode, DataRequestEvent, DataChangeRequestEvent, ColumnEditParams, EditType, getObject, Grid, GridLine, GridRef, RowInfo, TextAlign, ToolbarItems, WrapMode, ColumnTemplateProps, ValueAccessorProps, RowClassProps, ValueType, CellClassProps, CellType, RowType, FilterBarType, AggregateData, CustomAggregateData, PageEvent, FilterEvent, SortEvent, FormRenderEvent, SaveEvent, DeleteEvent, SelectionMode, RowAddEvent, RowEditEvent, SearchSettings } from '../src/index';
+import { AggregateColumnProps, ClipMode, DataRequestEvent, DataChangeRequestEvent, ColumnEditParams, EditType, getObject, Grid, GridLine, GridRef, RowInfo, TextAlign, ToolbarItems, WrapMode, ColumnTemplateProps, ValueAccessorProps, RowClassProps, ValueType, CellClassProps, CellType, RowType, FilterBarType, AggregateData, CustomAggregateData, PageEvent, FilterEvent, SortEvent, FormRenderEvent, SaveEvent, DeleteEvent, SelectionMode, RowAddEvent, RowEditEvent, SearchSettings, ScrollMode, VirtualizationSettings } from '../src/index';
 import { AggregateColumn, AggregateRow, Aggregates, Column, EditTemplateProps } from '../src/index';
 import { Columns } from '../src/index';
 import { CustomBindingData, DynamicDataItem } from './data';
@@ -29,6 +29,8 @@ L10n.load({
 export interface GridBaseTestProps {
   locale?: string,
   dataSource: DynamicDataItem[] | DataManager | DataResult;
+  scrollMode?: ScrollMode;
+  virtualizationSettings?: VirtualizationSettings;
   enableHover: boolean;
   allowSearching?: boolean;
   disableDOMVirtualization?: boolean;
@@ -98,6 +100,8 @@ export interface GridBaseTestProps {
 export const GridBaseTest: React.FC<GridBaseTestProps> = ({
   locale,
   dataSource,
+  scrollMode,
+  virtualizationSettings,
   enableHover,
   allowSearching,
   disableDOMVirtualization,
@@ -543,10 +547,11 @@ export const GridBaseTest: React.FC<GridBaseTestProps> = ({
               className='custom-grid-class'
               dataSource={data}
               allowKeyboard={allowKeyboard}
-              disableDOMVirtualization={disableDOMVirtualization}
-              rowClass={rowClass}
+              // disableDOMVirtualization={disableDOMVirtualization}
+              // rowClass={rowClass}
               // dataSource={editableData}
               toolbar={toolbar}
+              scrollMode={scrollMode}
               // emptyRecordTemplate={() => <>Hi React!</>}
               // dataSource={data}
               // enableRtl={enableRtl}
@@ -705,20 +710,20 @@ export const GridBaseTest: React.FC<GridBaseTestProps> = ({
                   args.saveDataChanges();
                 }, 0);
               }}
-              onDataLoad={() => {
-                console.log('dataBound triggered! gridRef => ', gridRef.current);
-                if (showPerformanceMetrics) {
-                  edTime.current = performance.now();
-                  diff.current = parseInt((edTime.current - stTime.current).toFixed(0));
-                  const perfElement = document.getElementById('performanceTime');
-                  if (perfElement) {
-                    perfElement.innerHTML = `Time Taken for Initial Load: <b>${diff.current}ms</b>`;
-                  }
-                  stTime.current = 0;
-                  edTime.current = 0;
-                  diff.current = 0;
-                }
-              }}
+              // onDataLoad={() => {
+              //   console.log('dataBound triggered! gridRef => ', gridRef.current);
+              //   if (showPerformanceMetrics) {
+              //     edTime.current = performance.now();
+              //     diff.current = parseInt((edTime.current - stTime.current).toFixed(0));
+              //     const perfElement = document.getElementById('performanceTime');
+              //     if (perfElement) {
+              //       perfElement.innerHTML = `Time Taken for Initial Load: <b>${diff.current}ms</b>`;
+              //     }
+              //     stTime.current = 0;
+              //     edTime.current = 0;
+              //     diff.current = 0;
+              //   }
+              // }}
               // onRowSelecting={(args) => {
               //   console.log('RowSelecting row', args);
               // }}
@@ -789,7 +794,7 @@ export const GridBaseTest: React.FC<GridBaseTestProps> = ({
                     textAlign="Right"
                     visible={showOrderDate}
                     clipMode={orderDateEllipsisClipMode}
-                    cellClass={cellClass}
+                    // cellClass={cellClass}
                     // cellClass={}
                   />
                   <Column
@@ -801,7 +806,7 @@ export const GridBaseTest: React.FC<GridBaseTestProps> = ({
                     width={freightWidth}
                     format={freightFormat}
                     textAlign="Right"
-                    cellClass={cellClass}
+                    // cellClass={cellClass}
                     visible={showFreight}
                     sortComparer={sortComparer}
                     // edit={{ type: _freightEditType}}

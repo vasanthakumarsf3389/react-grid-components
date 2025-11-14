@@ -69,8 +69,8 @@ const RowBase: <T>(props: IRowBase<T> & RefAttributes<RowRef>) => ReactElement =
             // , startColumnIndex, setVirtualColGroupElements, colElements: ColElements
         } = useGridMutableProvider<T>();
         const { onRowRender, onAggregateRowRender, serviceLocator, rowClass,
-            // enableRtl,
-            columnBuffer, sortSettings, rowHeight, editSettings, columns, rowTemplate, headerScrollRef, disableDOMVirtualization, scrollModule } = useGridComputedProvider<T>();
+            sortSettings, rowHeight, editSettings, columns, rowTemplate, headerScrollRef,
+            scrollModule, virtualizationSettings } = useGridComputedProvider<T>();
         const rowRef: RefObject<HTMLTableRowElement> = useRef<HTMLTableRowElement>(null);
         const cellsRef: RefObject<ICell<ColumnProps<T>>[]> = useRef<ICell<ColumnProps<T>>[]>([]);
         const localization: IL10n = serviceLocator?.getService<IL10n>('localization');
@@ -171,8 +171,7 @@ const RowBase: <T>(props: IRowBase<T> & RefAttributes<RowRef>) => ReactElement =
          */
         useEffect(() => {
             if (isInitialBeforePaint.current) {
-                if ((rowType === RenderType.Header || rowType === RenderType.Filter) && !disableDOMVirtualization && totalVirtualColumnWidth > parseUnit(headerScrollRef?.clientWidth)) {
-                    // setForceColumnsReRender((prev: boolean) => !prev);
+                if ((rowType === RenderType.Header || rowType === RenderType.Filter) && virtualizationSettings.enableColumn && totalVirtualColumnWidth > parseUnit(headerScrollRef?.clientWidth)) {
                     setRowObject((prev: IRow<ColumnProps<T>>) => ({...prev}));
                 }
                 return;
@@ -214,24 +213,17 @@ const RowBase: <T>(props: IRowBase<T> & RefAttributes<RowRef>) => ReactElement =
             handleAggregateRowDataBound();
         }, [handleAggregateRowDataBound, rowObject, isInitialBeforePaint.current]);
 
-        // const startIndex: number = useMemo(() => {
-        //     const averageColumnWidth: number = (totalVirtualColumnWidth / (columns.length === 0 ? 1 : columns.length));
-        //     const scrollX: number = getNormalizedScrollLeft(headerScrollRef, enableRtl)
-        //     const viewPortStartIndex: number = Math.floor(scrollX / (averageColumnWidth === 0 ? 1 : averageColumnWidth));
-        //     const startIndex: number = viewPortStartIndex <= columnBuffer ? 0 : viewPortStartIndex - columnBuffer;
-        //     // console.log('column startIndex => ', startIndex);
-        //     if (scrollModule) {
-        //         scrollModule.virtualColumnInfo.startIndex = isNaN(startIndex) ? 0 : startIndex;
-        //     }
-        //     return isNaN(startIndex) ? 0 : startIndex;
-        // }, [columns, totalVirtualColumnWidth, columnBuffer, enableRtl, offsetX]);
-
         useMemo(() => {
             isOffsetXChanged = true;
         }, [offsetX]);
         useMemo(() => {
             cachedCellObjects.current.clear();
-        }, [children, rowObject, rowType])
+        }, [children, rowObject, rowType]);
+        useEffect(() => {
+            return () => {
+                cachedCellObjects.current.clear();
+            }
+        }, []);
         /**
          * Process children to create column elements with proper props
          */
@@ -240,12 +232,9 @@ const RowBase: <T>(props: IRowBase<T> & RefAttributes<RowRef>) => ReactElement =
             const cellOptions: ICell<IColumnBase<T>>[] = [];
             const elements: JSX.Element[] = [];
 
-            // const from: number = startColumnIndex;
             const from: number = scrollModule?.virtualColumnInfo.startIndex ?? 0;
             const to: number = childrenArray.length;
-            // console.log('from column => ', from, ', to column => ', to);
-            // for (let index: number = 0; index < childrenArray.length; index++) {
-            for (let index: number = from, buffer = 0, renderedColumnWidth = 0; index < to && buffer <= (from !== 0 && index !== (to - 1) ? columnBuffer * 2 : columnBuffer); index++) {
+            for (let index: number = from, buffer = 0, renderedColumnWidth = 0; index < to && buffer <= (from !== 0 && index !== (to - 1) ? virtualizationSettings.columnBuffer * 2 : virtualizationSettings.columnBuffer); index++) {
                 const child: ReactElement<IColumnBase<T>> = childrenArray[index as number];
 
                 // Determine cell class based on row type and position
@@ -313,9 +302,7 @@ const RowBase: <T>(props: IRowBase<T> & RefAttributes<RowRef>) => ReactElement =
                 // Build column props
                 const columnProps: IColumnBase<T> & React.Attributes = {
                     row: rowObject,
-                    cell: cellOption,
-                    // key: rowType === RenderType.Filter ? `${child.props.field || 'col'}-${rowObject?.rowIndex + 1 || 'filter'}` :
-                    //     `${child.props.field || 'col'}-${rowObject?.rowIndex + '-' + (rowType === RenderType.Header ? 'Header' : 'Content')}`
+                    cell: cellOption
                 };
 
                 // Store cell options
@@ -323,21 +310,21 @@ const RowBase: <T>(props: IRowBase<T> & RefAttributes<RowRef>) => ReactElement =
 
                 if (isVisible) {
                     const isAlreadyRendered: boolean = Array.from(cellsRef.current).some(
-                        (r: ICell<ColumnProps<T>>) => r.column.field === cellOption.column.field && rowObject.uid === cachedCellObjects.current.get(cellOption.column.field)?.row.uid
+                        (r: ICell<ColumnProps<T>>) => r.column.field === cellOption.column.field && rowObject?.uid && rowObject?.uid === cachedCellObjects.current.get(cellOption.column.field)?.row?.uid
                     );
                     if (isAlreadyRendered && isOffsetXChanged) {
-                        elements.push(cachedCellObjects.current.get(cellOption.column.field).reactElement);
+                        elements.push(cachedCellObjects.current.get(cellOption.column.field)?.reactElement);
                     } else if (rowType === RenderType.Filter) {
                         elements.push(
                             <FilterBase
-                                key={`${child.props.field || 'col'}-${rowObject?.rowIndex + 1 || 'filter'}`}
+                                key={`${child.props.field || 'col'}-${rowObject?.rowIndex + '-' + cellOption.index + '-' + 1 + '-' + 'filter'}`}
                                 {...columnProps}
                             />
                         );
                     } else {
                         elements.push(
                             <ColumnBase<T>
-                                key={`${child.props.field || 'col'}-${rowObject?.rowIndex + '-' + (rowType === RenderType.Header ? 'Header' : 'Content')}`}
+                                key={`${child.props.field || 'col'}-${rowObject?.rowIndex + '-' + cellOption.index + '-' + (rowType === RenderType.Header ? 'Header' : 'Content')}`}
                                 {...columnProps}
                             />
                         );
@@ -347,24 +334,16 @@ const RowBase: <T>(props: IRowBase<T> & RefAttributes<RowRef>) => ReactElement =
                     if (renderedColumnWidth > parseUnit(headerScrollRef?.clientWidth)) {
                         buffer++;
                     }
-                    // if (scrollModule) {
-                    //     scrollModule.virtualColumnInfo.endIndex = index + 1;
-                    // }
                 }
             }
             if (scrollModule && rowObject?.uid !== 'empty-row-uid') {
                 scrollModule.virtualColumnInfo.endIndex = cellOptions[cellOptions.length - 1] && to > cellOptions[cellOptions.length - 1].index + 1 ? cellOptions[cellOptions.length - 1].index + 1 : to;
-                // setVirtualColGroupElements(ColElements.length ? ColElements.slice(scrollModule?.virtualColumnInfo.startIndex, scrollModule?.virtualColumnInfo.endIndex) : null);
             }
             // Update the ref with cell options
             cellsRef.current = cellOptions;
 
             return elements;
-        }, [children, rowObject, rowType,
-            // startColumnIndex,
-            // startIndex
-            offsetX
-        ]);
+        }, [children, rowObject, rowType, offsetX]);
 
         /**
          * Row template

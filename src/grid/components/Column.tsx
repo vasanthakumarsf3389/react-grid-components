@@ -59,7 +59,8 @@ const ColumnBase: <T>(props: Partial<IColumnBase<T>>) => JSX.Element = memo(<T, 
         visibleClass,
         alignHeaderClass,
         alignClass,
-        formattedValue
+        formattedValue,
+        isMaskCell
     } = privateAPI;
 
     const { ...column } = publicAPI;
@@ -298,7 +299,7 @@ const ColumnBase: <T>(props: Partial<IColumnBase<T>>) => JSX.Element = memo(<T, 
         classNames.push(!isNullOrUndefined(cellClass) ? (typeof cellClass === 'function' ?
             cellClass({data: props.row.data, rowIndex: props.row.rowIndex, column, cellType: CellType.Content}) : cellClass) : '');
 
-        const content: string | JSX.Element = !isNullOrUndefined(props.cell.column.template) ? formattedValue as ReactElement
+        const content: string | JSX.Element = !isNullOrUndefined(props.cell.column.template) || isMaskCell ? formattedValue as ReactElement
             : sanitizeContent(formattedValue as string);
         classNames.push(content === '' || isNullOrUndefined(content) ? 'sf-empty-cell' : '');
         // Remove duplicates and join

@@ -10,15 +10,14 @@ import {
     RefObject,
     JSX,
     ReactElement,
-    useState,
-    // useEffect
-    // HTMLAttributes
+    useState
 } from 'react';
 import { ContentTableBase } from './index';
 import {
     ContentPanelRef,
     IContentPanelBase,
-    ContentTableRef
+    ContentTableRef,
+    ScrollMode
 } from '../types';
 import {
     useGridComputedProvider,
@@ -63,10 +62,8 @@ const ContentPanelBase: <T>(props: Partial<IContentPanelBase> & RefAttributes<Co
     memo(forwardRef<ContentPanelRef, Partial<IContentPanelBase>>(
         <T, >(props: Partial<IContentPanelBase>, ref: RefObject<ContentPanelRef<T>>) => {
             const { panelAttributes, scrollContentAttributes } = props;
-            const { id, height, disableDOMVirtualization
-                // , enableRtl
-            } = useGridComputedProvider<T>();
-            const { currentViewData, offsetY, offsetX, totalVirtualColumnWidth } = useGridMutableProvider<T>();
+            const { id, height, virtualizationSettings, scrollMode } = useGridComputedProvider<T>();
+            const { currentViewData, offsetY, offsetX, totalVirtualColumnWidth, dataModule, totalRecordsCount } = useGridMutableProvider<T>();
             const [columnClientWidth, setColumnClientWidth] = useState<number>(0);
 
             // Refs for DOM elements and child components
@@ -75,18 +72,12 @@ const ContentPanelBase: <T>(props: Partial<IContentPanelBase> & RefAttributes<Co
             const contentTableRef: RefObject<ContentTableRef<T>> = useRef<ContentTableRef<T>>(null);
 
             const virtualHeight: number = useMemo(() => {
-                const totalRows = currentViewData?.length || 0;
+                const totalRows = (scrollMode === ScrollMode.Virtual ? totalRecordsCount : currentViewData?.length) || 0; // && dataModule.isRemote()
                 const averageRowHeight: number = (contentTableRef.current?.totalRenderedRowHeight.current / contentTableRef.current?.cachedRowObjects.current.size);
                 const totalH: number = totalRows * (isNaN(averageRowHeight) ? 1 : averageRowHeight);
                 return totalH;
-            }, [currentViewData, contentTableRef.current?.totalRenderedRowHeight.current, contentTableRef.current?.cachedRowObjects.current.size]);
-            // const [offsetX, setOffsetX] = useState<number>(0);
-            // const [offsetY, setOffsetY] = useState<number>(0);
-            // useEffect(() => {
-            //     if (contentTableRef.current.contentSectionRef.clientHeight < contentPanelRef.current.clientHeight) {
-            //         contentTableRef.current.setRequireMoreVirtualRowsForceRefresh({});
-            //     }
-            // }, [virtualHeight]);
+            }, [currentViewData, contentTableRef.current?.totalRenderedRowHeight.current, contentTableRef.current?.cachedRowObjects.current.size, scrollMode, dataModule, totalRecordsCount]);
+
             /**
              * Expose internal elements and methods through the forwarded ref
              * Only define properties specific to ContentPanel and forward ContentTable properties
@@ -108,11 +99,6 @@ const ContentPanelBase: <T>(props: Partial<IContentPanelBase> & RefAttributes<Co
                     ref={(ref: ContentTableRef<T>) => {
                         contentTableRef.current = ref;
                         setColumnClientWidth(ref?.columnClientWidth);
-                        // if (contentTableRef.current?.contentSectionRef.clientHeight < contentPanelRef.current?.clientHeight) {
-                        //     requestAnimationFrame(() => {
-                        //         contentTableRef.current?.setRequireMoreVirtualRowsForceRefresh({});
-                        //     });
-                        // }
                     }}
                     className={CSS_CONTENT_TABLE}
                     role="presentation"
@@ -123,21 +109,16 @@ const ContentPanelBase: <T>(props: Partial<IContentPanelBase> & RefAttributes<Co
 
             const virtualWrapperStyle: CSSProperties = useMemo(() => ({
                 ...ABSOLUTE_FILL,
-                maxHeight: formatUnit(height), // virtualHeight ||
+                maxHeight: formatUnit(height),
                 transform: `translate3d(${offsetX || 0}px, ${offsetY || 0}px, 0)`,
-                // transform: `translate(0px, ${offsetY || 0}px)`,
-                // 'min-width': contentTableRef.current?.getContentTable?.().scrollWidth || contentScrollRef.current?.clientWidth || undefined
                 width: columnClientWidth
-            }), [height, offsetY, offsetX, contentScrollRef.current?.clientWidth, columnClientWidth]); // , virtualHeight
+            }), [height, offsetY, offsetX, contentScrollRef.current?.clientWidth, columnClientWidth]);
 
             const virtualTrackStyle: CSSProperties = useMemo(() => ({
                 position: 'relative',
                 height: virtualHeight || formatUnit(height),
                 width: totalVirtualColumnWidth || undefined
-                // width: columnClientWidth
             }), [virtualHeight, totalVirtualColumnWidth, height, columnClientWidth]);
-
-            // const attr: HTMLAttributes<HTMLDivElement> = useMemo(() => ({...scrollContentAttributes}), [enableRtl]);
 
             return (
                 <div
@@ -147,11 +128,9 @@ const ContentPanelBase: <T>(props: Partial<IContentPanelBase> & RefAttributes<Co
                     <div
                         ref={contentScrollRef}
                         {...scrollContentAttributes}
-                        style={{ ...scrollContentAttributes?.style }}
-                        // {...attr}
-                        // style={{ ...attr?.style }}
+                        // style={{ ...scrollContentAttributes?.style }}
                     >
-                        {disableDOMVirtualization ? (
+                        { !virtualizationSettings.enableRow && !virtualizationSettings.enableColumn ? (
                             contentTable
                         ) : (
                             <>
@@ -175,9 +154,8 @@ const ContentPanelBase: <T>(props: Partial<IContentPanelBase> & RefAttributes<Co
 
         // Deep comparison of style objects
         const stylesEqual: boolean = JSON.stringify(prevStyle) === JSON.stringify(nextStyle);
-        // const scrollEventEqual: boolean = JSON.stringify(prevProps.scrollContentAttributes?.onScroll) === JSON.stringify(nextProps.scrollContentAttributes?.onScroll);
 
-        return stylesEqual && isBusyEqual; // && scrollEventEqual;
+        return stylesEqual && isBusyEqual;
     }) as <T>(props: Partial<IContentPanelBase> & RefAttributes<ContentPanelRef<T>>) => ReactElement;
 
 /**

@@ -47,6 +47,7 @@ const HeaderRowsBase: (props: Partial<IHeaderRowsBase> & RefAttributes<HeaderRow
     memo(forwardRef<HeaderRowsRef, Partial<IHeaderRowsBase>>(
         <T, >(props: Partial<IHeaderRowsBase>, ref: RefObject<HeaderRowsRef>) => {
             const { columnsDirective, headerRowDepth, offsetX
+                // , isNoColumnRemoteData
                 // , startColumnIndex
             } = useGridMutableProvider<T>();
             const { filterSettings, rowClass } = useGridComputedProvider<T>();
@@ -148,7 +149,7 @@ const HeaderRowsBase: (props: Partial<IHeaderRowsBase> & RefAttributes<HeaderRow
                 // Store the row options in the ref for access via getRowsObject
                 rowsObjectRef.current = rowOptions;
                 return rows;
-            }, [columnsDirective, textWrapSettings?.enabled, textWrapSettings, rowHeight, filterSettings?.enabled, rowClass]);
+            }, [columnsDirective, textWrapSettings?.enabled, textWrapSettings, rowHeight, filterSettings?.enabled, rowClass]); //, isNoColumnRemoteData
 
             useEffect(() => {
                 return () => {

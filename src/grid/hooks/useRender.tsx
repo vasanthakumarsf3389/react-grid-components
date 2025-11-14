@@ -32,7 +32,7 @@ import {
 import { defaultColumnProps } from '../hooks';
 import { Columns, RenderBase, Aggregates } from '../views';
 import { addLastRowBorder, compareSelectedProperties, getObject, parseUnit, setFormatter } from '../utils';
-import { ActionType, FilterEvent, PageEvent, SearchEvent, SortEvent } from '../types';
+import { ActionType, FilterEvent, PageEvent, ScrollMode, SearchEvent, SortEvent } from '../types';
 
 /**
  * CSS class names used in the component
@@ -51,9 +51,9 @@ const CSS_CLASS_NAMES: Record<string, string> = {
 export const useRender: <T>() => UseRenderResult<T> = <T, >(): UseRenderResult<T> => {
     const grid: Partial<GridRef<T>> & Partial<MutableGridSetter<T>> = useGridComputedProvider<T>();
     const { setCurrentViewData, setInitialLoad, setTotalRecordsCount, aggregates, pageSettings,
-        height, contentPanelRef, contentTableRef, sortSettings } = grid;
+        height, contentPanelRef, contentTableRef, sortSettings, scrollMode, scrollModule, virtualizationSettings } = grid;
     const { currentViewData, currentPage, gridAction, uiColumns, isInitialLoad,
-        setResponseData, dataModule, totalRecordsCount } = useGridMutableProvider<T>();
+        setResponseData, dataModule, totalRecordsCount, setVirtualCachedViewData } = useGridMutableProvider<T>();
 
     const [isLayoutRendered, setIsLayoutRendered] = useState<boolean>(false);
     const [isContentBusy, setIsContentBusy] = useState<boolean>(true);
@@ -72,10 +72,6 @@ export const useRender: <T>() => UseRenderResult<T> = <T, >(): UseRenderResult<T
         height: formatUnit(grid.height as string | number),
         overflowY: grid.height === 'auto' ? 'auto' : 'scroll'
     }), [grid.height]);
-
-    // // Virtualization configuration (default enabled, can be disabled via API)
-    // const virtualizationEnabled: boolean = useMemo(() => !grid.disableDOMVirtualization, [grid.disableDOMVirtualization]);
-    // const rowBuffer: number = useMemo(() => (grid.rowBuffer ?? 5), [grid.rowBuffer]);
 
     const updateColumnTypes: (data: Object) => void = useCallback((data: Object) => {
         let value: string | number | boolean | Object;
@@ -162,13 +158,65 @@ export const useRender: <T>() => UseRenderResult<T> = <T, >(): UseRenderResult<T
             grid.onDataLoadStart(data);
         }
         grid.clearSelection();
-        setCurrentViewData(data.result as T[]);
-        // cachedRowObjects.current.clear();
+
+        /**
+         * Data manager success handler:
+         * Updates virtual cache and current view data based on active pages.
+         */
+        if (scrollMode === ScrollMode.Virtual && scrollModule?.virtualRowInfo?.currentPages.length > 1) { // && !virtualizationSettings.enableCache
+            const activePages = scrollModule.virtualRowInfo.currentPages; // e.g., [2, 3]
+            const pageSize = pageSettings.pageSize;
+
+            setVirtualCachedViewData((prevMap: Map<number, T>) => {
+                const newMap = new Map<number, T>();
+                const newViewData: T[] = [];
+
+                // Retain data for active pages and build newViewData
+                for (const page of activePages) {
+                    const startKey = (page - 1) * pageSize;
+                    const endKey = startKey + pageSize;
+                    for (let key = startKey; key < endKey; key++) {
+                        if (prevMap.has(key)) {
+                            const item = prevMap.get(key)!;
+                            newMap.set(key, item);
+                            newViewData.push(item);
+                        }
+                    }
+                }
+
+                // Add new data for current page
+                const startKey: number = (pageSettings.currentPage - 1) * pageSize;
+                for (let i: number = 0; i < data.result.length; i++) {
+                    const item: T = data.result[i] as T;
+                    newMap.set(startKey + i, item);
+                    newViewData.push(item);
+                }
+
+                // Update currentViewData in the same loop
+                setCurrentViewData(newViewData);
+
+                return newMap;
+            });
+
+        } else {
+            if (scrollMode === ScrollMode.Virtual) {
+                // Single page virtual mode: reset everything
+                setVirtualCachedViewData(() => {
+                    const newMap = new Map<number, T>();
+                    const startKey = (pageSettings.currentPage - 1) * pageSettings.pageSize;
+                    for (let i = 0; i < data.result.length; i++) {
+                        newMap.set(startKey + i, data.result[i] as T);
+                    }
+                    return newMap;
+                });
+            }
+            setCurrentViewData(data.result as T[]);
+        }
         if (!isColTypeDef.current && data.result.length > 0) {
             updateColumnTypes(data.result[0]);
         }
         setIsLayoutRendered(true);
-    }, [grid.onDataLoadStart, setCurrentViewData, gridAction]);
+    }, [grid.onDataLoadStart, setCurrentViewData, gridAction, virtualizationSettings]);
 
     /**
      * Handle data retrieval failure
@@ -277,6 +325,8 @@ export const useRender: <T>() => UseRenderResult<T> = <T, >(): UseRenderResult<T
             }
             const actionCompleteEvent: CustomEvent = new CustomEvent('actionComplete');
             grid.element.dispatchEvent(actionCompleteEvent);
+            const virtualScrollActionCompleteEvent: CustomEvent = new CustomEvent('virtualScrollSequencialRequest');
+            grid.element.dispatchEvent(virtualScrollActionCompleteEvent);
             setIsContentBusy(false);
             setInitialLoad(false);
         }
@@ -620,32 +670,32 @@ function isColumnObject(child: ColumnProps | ReactNode): child is ColumnProps {
  * @returns {Partial<IGridBase>} Updated grid properties with processed columns
  */
 export const useColumns: <T>(props: Partial<IGridBase<T>>, gridRef: RefObject<GridRef<T>>, dataState?: RefObject<PendingState>,
-    isInitialBeforePaint?: RefObject<boolean>) =>
-Partial<IGridBase<T>> & { uiColumns: ColumnProps<T>[], totalVirtualColumnWidth: number, columnOffsets: {[key: number]: number} } =
+    isInitialBeforePaint?: RefObject<boolean>, currentViewData?: T[]) =>
+Partial<IGridBase<T>> & { uiColumns: ColumnProps<T>[], totalVirtualColumnWidth: number, columnOffsets: {[key: number]: number} } = //, isNoColumnRemoteData: boolean
     <T, >(props: Partial<IGridBase<T>>, gridRef: RefObject<GridRef<T>>, dataState?: RefObject<PendingState>,
-        isInitialBeforePaint?: RefObject<boolean>): Partial<IGridBase<T>> & { uiColumns: ColumnProps<T>[], totalVirtualColumnWidth: number, columnOffsets: {[key: number]: number} } => {
+        isInitialBeforePaint?: RefObject<boolean>, currentViewData?: T[]): Partial<IGridBase<T>> & { uiColumns: ColumnProps<T>[], totalVirtualColumnWidth: number, columnOffsets: {[key: number]: number} } => { //, isNoColumnRemoteData: boolean
         const prevPrepareColumns: RefObject<PrepareColumns<T>> = useRef({} as PrepareColumns<T>);
         const isNoColumnRemoteData: boolean = useMemo(() => {
-            return !props.columns && !props.children && props.dataSource instanceof DataManager && props.dataSource.dataSource.url
-                && Array.isArray(gridRef.current?.currentViewData) && gridRef.current?.currentViewData?.length > 0;
-        }, [props.children, props.columns, props.dataSource, gridRef.current?.currentViewData]);
+            return !props.columns && !prevPrepareColumns.current?.columns?.length && props.dataSource instanceof DataManager && props.dataSource.dataSource.url
+                && Array.isArray(currentViewData) && currentViewData?.length > 0;
+        }, [props.children, props.columns, props.dataSource, currentViewData]);
         let isDataSourceChanged: boolean = false;
         useMemo(() => isDataSourceChanged = true, [props.dataSource]);
         const { children, depth: headerRowDepth, columns, colGroup, uiColumns, totalVirtualColumnWidth, columnOffsets } = useMemo(() => {
-            if (dataState.current.isPending) {
+            if (dataState.current.isPending) { // || isNoColumnGenerated
                 return prevPrepareColumns.current;
             }
             const result: PrepareColumns<T> = prepareColumns<T>(
                 props.columns as ColumnProps<T>[] ??
-                props.children ??
+                (!isNoColumnRemoteData ? props.children : null) ??
                 ((Array.isArray(props.dataSource) && (props.dataSource as Object[]).length > 0)
                     ? Object.keys((props.dataSource as Object[])[0])
                         .map((key: string) => ({
                             field: key,
                             headerText: key
                         }))
-                    : ((Array.isArray(gridRef.current?.currentViewData) && gridRef.current?.currentViewData?.length > 0)
-                        ? Object.keys(gridRef.current?.currentViewData[0])
+                    : ((Array.isArray(currentViewData) && currentViewData?.length > 0)
+                        ? Object.keys(currentViewData[0])
                             .map((key: string) => ({
                                 field: key,
                                 headerText: key

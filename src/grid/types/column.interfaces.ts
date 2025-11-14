@@ -54,7 +54,7 @@ export interface ColumnProps<T = unknown> {
      * Defines the column width in pixels (e.g., 100 or '100').
      * Controls the column's size in the grid layout.
      *
-     * @default ''
+     * @default '100px'
      */
     width?: string | number;
 

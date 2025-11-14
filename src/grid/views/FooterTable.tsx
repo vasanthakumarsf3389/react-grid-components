@@ -39,12 +39,8 @@ const FooterTableBase: ForwardRefExoticComponent<Partial<IFooterTableBase> & Ref
         (props: Partial<IFooterTableBase>, ref: RefObject<FooterTableRef>) => {
             const { tableScrollerPadding, ...rest } = props;
             // Access grid context providers
-            const { colElements: ColElements, offsetX
-                // , virtualColGroupElements
-            } = useGridMutableProvider();
-            const { id, scrollModule
-                , disableDOMVirtualization
-            } = useGridComputedProvider();
+            const { colElements: ColElements, offsetX } = useGridMutableProvider();
+            const { id, scrollModule, virtualizationSettings } = useGridComputedProvider();
 
             // Refs for DOM elements and child components
             const footerTableRef: RefObject<HTMLTableElement> = useRef<HTMLTableElement>(null);
@@ -57,12 +53,10 @@ const FooterTableBase: ForwardRefExoticComponent<Partial<IFooterTableBase> & Ref
              * Contains column definitions for the table
              */
             const colGroupContent: JSX.Element = useMemo(() => {
-                // console.log('footer colGroupContent => ', scrollModule?.virtualColumnInfo.startIndex, scrollModule?.virtualColumnInfo.endIndex);
-
                 let visibleCols: JSX.Element[] = [];
 
                 if (ColElements.length) {
-                    if (disableDOMVirtualization) {
+                    if (!virtualizationSettings.enableRow && !virtualizationSettings.enableColumn) {
                         visibleCols = ColElements;
                     } else {
                         const startIndex: number = scrollModule?.virtualColumnInfo?.startIndex ?? 0;
@@ -91,22 +85,11 @@ const FooterTableBase: ForwardRefExoticComponent<Partial<IFooterTableBase> & Ref
                 ColElements,
                 id,
                 offsetX,
-                disableDOMVirtualization,
+                virtualizationSettings.enableColumn,
                 scrollModule?.virtualColumnInfo?.startIndex,
                 scrollModule?.virtualColumnInfo?.endIndex,
                 forceRerender, totalWidth.current
             ]);
-            // const colGroupContent: JSX.Element = useMemo<JSX.Element>(() => {
-            //     console.log('footer colGroupContent => ', scrollModule?.virtualColumnInfo.startIndex, scrollModule?.virtualColumnInfo.endIndex);
-            //     return (
-            //     <colgroup
-            //         key={`summarycontent-${id}-colgroup`}
-            //         id={`summarycontent-${id}-colgroup`}
-            //     >
-            //         {/* {virtualColGroupElements?.length ? virtualColGroupElements : null} */}
-            //         {ColElements.length ? (disableDOMVirtualization ? ColElements : ColElements.slice(scrollModule?.virtualColumnInfo.startIndex, scrollModule?.virtualColumnInfo.endIndex)) : null}
-            //     </colgroup>
-            // )}, [ColElements, id, offsetX, virtualColGroupElements, scrollModule?.virtualColumnInfo.startIndex, scrollModule?.virtualColumnInfo.endIndex, forceRerender]);
 
             /**
              * Expose internal elements and methods through the forwarded ref

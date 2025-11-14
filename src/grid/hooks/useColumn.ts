@@ -1,6 +1,7 @@
 import { ComponentType, createElement, isValidElement, ReactElement, useMemo } from 'react';
 import { DateFormatOptions, IL10n, formatUnit, isNullOrUndefined, NumberFormatOptions } from '@syncfusion/react-base';
-import { IValueFormatter, CellTypes, IRow, EditType, ValueType, FilterBarType } from '../types';
+import { Skeleton, Variants } from '@syncfusion/react-notifications';
+import { IValueFormatter, CellTypes, IRow, EditType, ValueType, FilterBarType, ScrollMode } from '../types';
 import { ColumnProps, IColumnBase } from '../types/column.interfaces';
 import { AggregateColumnProps, AggregateData } from '../types/aggregate.interfaces';
 import { useGridComputedProvider } from '../contexts';
@@ -67,6 +68,7 @@ export const useColumn: <T>(props: Partial<IColumnBase<T>>) => {
         alignHeaderClass: string;
         visibleClass: string;
         formattedValue: string | Object | ReactElement;
+        isMaskCell: boolean;
     };
 } = <T>(props: Partial<IColumnBase<T>>): {
     publicAPI: Partial<ColumnProps<T>>;
@@ -77,6 +79,7 @@ export const useColumn: <T>(props: Partial<IColumnBase<T>>) => {
         alignHeaderClass: string;
         visibleClass: string;
         formattedValue: string | Object | ReactElement;
+        isMaskCell: boolean;
     };
 } => {
     const {
@@ -105,7 +108,7 @@ export const useColumn: <T>(props: Partial<IColumnBase<T>>) => {
         headerTextAlign,
         ...rest
     } = column;
-    const { serviceLocator } = useGridComputedProvider();
+    const { serviceLocator, scrollMode } = useGridComputedProvider();
     const formatter: IValueFormatter = serviceLocator?.getService<IValueFormatter>('valueFormatter');
     const localization: IL10n = serviceLocator?.getService<IL10n>('localization');
     /**
@@ -194,6 +197,9 @@ export const useColumn: <T>(props: Partial<IColumnBase<T>>) => {
         return (cellType === CellTypes.Data && field && row && row.isDataRow) ?
             getObject(field, row.data) : undefined;
     }, [cellType, field, row]);
+    const isMaskCell: boolean = useMemo(() => {
+        return cellType === CellTypes.Data && field && row && row.isDataRow && isNullOrUndefined(row.data) && (scrollMode === ScrollMode.Virtual || scrollMode === ScrollMode.Infinite);
+    }, [cellType, field, row, scrollMode]);
     /**
      * Retrieves the aggregate value from the data based on column information
      *
@@ -260,7 +266,11 @@ export const useColumn: <T>(props: Partial<IColumnBase<T>>) => {
                 formattedVal = !isNaN(dateValue?.getTime?.()) ? dateValue : formattedVal;
             }
             return formatValue(formattedVal);
-        } else {
+        }
+        else if (isMaskCell) {
+            return createElement(Skeleton, { variant: Variants.Text, height: '10px', width: '100%' });
+        }
+        else {
             return formattedVal as string;
         }
     }, [
@@ -270,6 +280,7 @@ export const useColumn: <T>(props: Partial<IColumnBase<T>>) => {
         cellType,
         template,
         headerTemplate,
+        isMaskCell,
         headerText,
         type,
         valueAccessor,
@@ -279,7 +290,7 @@ export const useColumn: <T>(props: Partial<IColumnBase<T>>) => {
     /**
      * Private API for internal component use
      *
-     * @type {{ cellType: CellTypes, row: IRow<IColumnBase>, alignClass: string, alignHeaderClass: string, visibleClass: string, formattedValue: string | ReactElement }}
+     * @type {{ cellType: CellTypes, row: IRow<IColumnBase>, alignClass: string, alignHeaderClass: string, visibleClass: string, formattedValue: string | ReactElement, isMaskCell: boolean }}
      */
     const privateAPI: {
         cellType: CellTypes;
@@ -288,14 +299,16 @@ export const useColumn: <T>(props: Partial<IColumnBase<T>>) => {
         alignHeaderClass: string;
         visibleClass: string;
         formattedValue: string | Object | ReactElement;
+        isMaskCell: boolean;
     } = useMemo(() => ({
         cellType,
         row,
         alignClass,
         alignHeaderClass,
         visibleClass,
-        formattedValue
-    }), [cellType, row, alignClass, alignHeaderClass, visibleClass, formattedValue]);
+        formattedValue,
+        isMaskCell
+    }), [cellType, row, alignClass, alignHeaderClass, visibleClass, formattedValue, isMaskCell]);
     /**
      * Public API exposed to parent components
      *

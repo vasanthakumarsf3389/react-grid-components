@@ -1,4 +1,4 @@
-import { SupportTicket } from "./TestSamples";
+import { SupportTicket } from "./TestSample";
 
 /* eslint-disable */
 let stringData = JSON.stringify([

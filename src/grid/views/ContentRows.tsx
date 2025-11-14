@@ -25,7 +25,10 @@ import {
     IContentRowsBase,
     IRow,
     RowRef,
-    CellTypes, RenderType
+    CellTypes, RenderType,
+    ScrollMode
+    // ActionType,
+    // PagerArgsInfo
 } from '../types';
 import { ColumnProps, ColumnTemplateProps, IColumnBase } from '../types/column.interfaces';
 import { EditFormTemplate, InlineEditFormRef } from '../types/edit.interfaces';
@@ -33,6 +36,7 @@ import { useGridComputedProvider, useGridMutableProvider } from '../contexts';
 import { ColumnBase, RowBase } from '../components';
 import { IL10n, isNullOrUndefined } from '@syncfusion/react-base';
 import { getUid
+    // , parseUnit
     // , parseUnit
 } from '../utils';
 import { InlineEditForm } from './index';
@@ -120,89 +124,22 @@ RenderEmptyRow.displayName = 'RenderEmptyRow';
 const ContentRowsBase: <T>(props: Partial<IContentRowsBase> & RefAttributes<ContentRowsRef<T>>) => ReactElement =
     memo(forwardRef<ContentRowsRef, Partial<IContentRowsBase>>(
         <T, >(_props: Partial<IContentRowsBase>, ref: RefObject<ContentRowsRef<T>>) => {
-            const { columnsDirective, currentViewData, editModule, uiColumns,
-                // setOffsetY,
-                offsetY } = useGridMutableProvider<T>();
-            const { rowHeight, enableAltRow, columns, rowTemplate, rowBuffer, getRowHeight, scrollModule
-                // , height
-                // , contentScrollRef
-                // , contentTableRef
-            } = useGridComputedProvider<T>();
+            const { columnsDirective, currentViewData, virtualCachedViewData, editModule, uiColumns, offsetY } = useGridMutableProvider<T>();
+            const { rowHeight, enableAltRow, columns, rowTemplate, getRowHeight, scrollModule, virtualizationSettings, scrollMode, pageSettings
+                // , setCurrentPage, setGridAction
+             } = useGridComputedProvider<T>();
 
             // Refs for DOM elements and child components
             const contentSectionRef: RefObject<HTMLTableSectionElement> = useRef<HTMLTableSectionElement>(null);
             const rowsObjectRef: RefObject<IRow<ColumnProps<T>>[]> = useRef<IRow<ColumnProps<T>>[]>([]);
-            // const visibleRowObjects: RefObject<Map<number | string, IRow<ColumnProps<T>>>> = useRef<(Map<number | string, IRow<ColumnProps<T>>>)>(new Map());
-            // const visibleRowObjects: RefObject<Set<IRow<ColumnProps<T>>>> = useRef<(Set<IRow<ColumnProps<T>>>)>(new Set());
-            // const [scrollTop, setScrollTop] = useState<number>(0);
-            // const [viewportHeight, setViewportHeight] = useState<number>(0);
             const rowElementRefs: RefObject<HTMLTableRowElement[] | HTMLCollectionOf<HTMLTableRowElement>> =
                 useRef<HTMLTableRowElement[] | HTMLCollectionOf<HTMLTableRowElement>>([]);
             const addInlineFormRef: RefObject<InlineEditFormRef<T>> = useRef<InlineEditFormRef<T>>(null);
             const editInlineFormRef: RefObject<InlineEditFormRef<T>> = useRef<InlineEditFormRef<T>>(null);
-            const cachedRowObjects: RefObject<Map<number | string, IRow<ColumnProps<T>>>> = useRef<(Map<number | string, IRow<ColumnProps<T>>>)>(new Map()); // & { reactElement: JSX.Element }
+            const cachedRowObjects: RefObject<Map<number | string, IRow<ColumnProps<T>>>> = useRef<(Map<number | string, IRow<ColumnProps<T>>>)>(new Map());
             const totalRenderedRowHeight: RefObject<number> = useRef<number>(0);
             const [_requireMoreVirtualRowsForceRefresh, setRequireMoreVirtualRowsForceRefresh] = useState<Object>({})
-            
 
-            // const [_scrollDirection, setScrollDirection] = useState<"up" | "down">();
-            // const [offsetY, setOffsetY] = useState<number>(0);
-            // const [startIndex, setStartIndex] = useState<number>(scrollModule?.virtualRowInfo?.startIndex);
-            
-            // const startIndex = useMemo(() => {
-            //     const averageRowHeight = (totalRenderedRowHeight.current / (cachedRowObjects.current.size === 0 ? 1 : cachedRowObjects.current.size));
-            //     const viewPortStartIndex = Math.floor((contentScrollRef?.scrollTop ?? 0) / (averageRowHeight === 0 ? 1 : averageRowHeight));
-            //     const startIndex = viewPortStartIndex <= rowBuffer ? 0 : viewPortStartIndex - rowBuffer;
-            //     return startIndex;
-            // }, [offsetY]);
-
-            // useEffect(() => {
-            //     if (!contentScrollRef || !contentTableRef) { return () => {}; }
-
-            //     const measure = () => {
-            //         // translateY offset is 0 here; ContentRows currently handles vertical windowing
-            //         const averageRowHeight: number = (totalRenderedRowHeight.current / (cachedRowObjects.current.size === 0 ? 1 : cachedRowObjects.current.size));
-            //         const viewPortStartIndex: number = Math.floor(contentScrollRef.scrollTop / (averageRowHeight === 0 ? 1 : averageRowHeight));
-            //         const startIndex: number = viewPortStartIndex <= rowBuffer ? 0 : viewPortStartIndex - rowBuffer;
-            //         // // setOffsetY(startIndex * averageRowHeight);
-            //         // setStartIndex(startIndex);
-            //         setOffsetY(startIndex * averageRowHeight);
-            //         // _props.setOffsetY((prev: number) => {
-            //         //     setScrollDirection(prev < 0 ? 'down' : 'up');
-            //         //     return 0;
-            //         // });
-            //     };
-
-            //     measure();
-            //     // const ro = new (window as any).ResizeObserver?.(measure);
-            //     // if (ro) {
-            //     //     ro.observe(contentScrollRef);
-            //     //     ro.observe(contentTableRef);
-            //     // }
-            //     let rafId: number = null;
-            //     const onScroll = (event: Event) => {
-            //         // batch with rAF to avoid layout thrash while preserving logic
-            //         if (rafId != null) { cancelAnimationFrame(rafId); }
-            //         rafId = requestAnimationFrame(() => {
-            //             const averageRowHeight: number = (totalRenderedRowHeight.current / (cachedRowObjects.current.size === 0 ? 1 : cachedRowObjects.current.size));
-            //             const viewPortStartIndex: number = Math.floor((event.target as HTMLDivElement).scrollTop / (averageRowHeight === 0 ? 1 : averageRowHeight));
-            //             const startIndex: number = viewPortStartIndex <= rowBuffer ? 0 : viewPortStartIndex - rowBuffer;
-            //             // setStartIndex(startIndex);
-            //             setOffsetY(startIndex * averageRowHeight);
-            //         });
-            //     };
-            //     contentScrollRef.addEventListener('scroll', onScroll, { passive: true } as AddEventListenerOptions);
-            //     // window.addEventListener('resize', measure);
-
-            //     return () => {
-            //         contentScrollRef.removeEventListener('scroll', onScroll as EventListener);
-            //         if (rafId != null) { cancelAnimationFrame(rafId); rafId = null; }
-            //         // window.removeEventListener('resize', measure);
-            //         // if (ro) {
-            //         //     ro.disconnect?.();
-            //         // }
-            //     };
-            // }, [currentViewData, rowHeight, contentScrollRef, contentTableRef]);
             /**
              * Returns the collection of content row elements
              *
@@ -218,7 +155,6 @@ const ContentRowsBase: <T>(props: Partial<IContentRowsBase> & RefAttributes<Cont
              * @returns {IRow<ColumnProps>[]} Array of row options objects with element references
              */
             const getRowsObject: () => IRow<ColumnProps<T>>[] = useCallback(() => rowsObjectRef.current, [rowsObjectRef.current]);
-            // const getRowsObject: () => MapIterator<IRow<ColumnProps<T>>> = useCallback(() => visibleRowObjects.current.values(), [visibleRowObjects.current]);
 
             /**
              * Gets a row by index.
@@ -370,16 +306,44 @@ const ContentRowsBase: <T>(props: Partial<IContentRowsBase> & RefAttributes<Cont
             }, [columns]);
 
             useMemo(() => {
-                totalRenderedRowHeight.current = 0;
-                rowsObjectRef.current = [];
-                cachedRowObjects.current.clear();
-            }, [currentViewData, getRowHeight]);
+                if (scrollMode === ScrollMode.Virtual) {
+                    // if (virtualizationSettings.enableCache) {return;}
+                    const previousPages = scrollModule?.virtualRowInfo?.previousPages ?? [];
+                    const currentPages = scrollModule?.virtualRowInfo?.currentPages ?? [];
 
-            // useEffect(() => {
-            //     if (contentSectionRef.current.clientHeight < contentSectionRef.current.closest('.sf-grid-content').clientHeight) {
-            //         setRequireMoreVirtualRowsForceRefresh({});
-            //     }
-            // }, [currentViewData, getRowHeight]);
+                    // Find removed pages
+                    const removedPages = previousPages.filter(page => !currentPages.includes(page));
+
+                    if (removedPages.length > 0) {
+                        const pageSize = pageSettings.pageSize;
+
+                        // Collect all keys to remove in one pass
+                        const keysToRemove = new Set<string>();
+                        for (const page of removedPages) {
+                            const startIndex = (page - 1) * pageSize;
+                            const endIndex = startIndex + pageSize;
+                            for (let i = startIndex; i < endIndex; i++) {
+                                keysToRemove.add(`grid-row-${i}`);
+                            }
+                        }
+
+                        // Clear cachedRowObjects in one pass
+                        keysToRemove.forEach(key => cachedRowObjects.current.delete(key));
+
+                        // Filter rowsObjectRef in one pass
+                        rowsObjectRef.current = rowsObjectRef.current.filter(row => !keysToRemove.has(row.key));
+
+                        // Adjust totalRenderedRowHeight only if needed
+                        totalRenderedRowHeight.current = Array.from(cachedRowObjects.current.values())
+                            .reduce((sum, row) => sum + (row.height ?? 0), 0);
+                    }
+                } else {
+                    // Non-virtual or single-page mode: full reset
+                    totalRenderedRowHeight.current = 0;
+                    rowsObjectRef.current = [];
+                    cachedRowObjects.current.clear();
+                }
+            }, [currentViewData, pageSettings, getRowHeight, virtualizationSettings]);
 
             const processRowData: (dataRowIndex: number, ariaRowIndex: number, data: T, rows: JSX.Element[], rowOptions: IRow<ColumnProps<T>>[],
                 indent?: number, currentDataRowIndex?: number,
@@ -390,14 +354,13 @@ const ContentRowsBase: <T>(props: Partial<IContentRowsBase> & RefAttributes<Cont
                 const options: IRow<ColumnProps<T>> = {};
                 options.uid = `${'grid-row-' + dataRowIndex}`
                 const isVisible: boolean = Array.from(rowsObjectRef.current).some(
-                    (r: IRow<ColumnProps<T>>) => r.uid === options.uid
+                    (r: IRow<ColumnProps<T>>) => r.uid === options.uid && r.data
                 );
                 // options.key = getUid('grid-row');
                 options.key = isVisible ? cachedRowObjects.current.get(options.uid).key : getUid('grid-row');
                 options.parentUid = parentUid;
                 options.data = row;
                 options.rowIndex = currentDataRowIndex ? currentDataRowIndex : dataRowIndex;
-                // options.ariaRowIndex = ariaRowIndex;
                 options.isDataRow = true;
                 options.isCaptionRow = false;
                 options.indent = indent;
@@ -407,7 +370,7 @@ const ContentRowsBase: <T>(props: Partial<IContentRowsBase> & RefAttributes<Cont
                     options.cells = generateCell();
                 }
 
-                options.height = !isVisible && getRowHeight ? getRowHeight(options) : (rowsObjectRef.current[ariaRowIndex]?.height || rowHeight);
+                options.height = !isVisible && getRowHeight ? getRowHeight(options) : (cachedRowObjects.current.get(options.uid)?.height || rowHeight);
                 // Store the options object for getRowsObject
                 rowOptions.push({ ...options });
 
@@ -441,7 +404,7 @@ const ContentRowsBase: <T>(props: Partial<IContentRowsBase> & RefAttributes<Cont
              * Memoized data rows to prevent unnecessary re-renders
              */
             const dataRows: JSX.Element[] = useMemo(() => {
-                if (!columnsDirective || !currentViewData || currentViewData.length === 0) {
+                if ((!columnsDirective || !currentViewData || currentViewData.length === 0) && (scrollMode === ScrollMode.Auto || !contentSectionRef.current?.closest('.sf-grid-content'))) {
                     rowsObjectRef.current = [];
                     return [];
                 }
@@ -450,38 +413,34 @@ const ContentRowsBase: <T>(props: Partial<IContentRowsBase> & RefAttributes<Cont
                 const rows: JSX.Element[] = [];
                 const rowOptions: IRow<ColumnProps<T>>[] = [];
 
+                const contentHeight: number = contentSectionRef.current?.closest('.sf-grid-content')?.clientHeight;
                 const from: number = offsetY ? scrollModule?.virtualRowInfo?.startIndex : offsetY;
-                // const from: number = startIndex;
-                const to: number = scrollModule?.virtualRowInfo?.endIndex;
-                // const visibleRowObjects: Map<number | string, IRow<ColumnProps<T>>> = new Map();
-                for (let dataRowIndex: number = from, ariaRowIndex = 0, buffer = 0, renderedRowHeight = 0; dataRowIndex < to && buffer <= (from !== 0 && dataRowIndex !== (to - 1) ? rowBuffer * 2 : rowBuffer); dataRowIndex++, ariaRowIndex++) {
-                    processRowData(dataRowIndex, ariaRowIndex, currentViewData[parseInt(dataRowIndex.toString(), 10)], rows, rowOptions);
+                const to: number = scrollModule?.virtualRowInfo?.endIndex ? scrollModule?.virtualRowInfo?.endIndex : Math.ceil(contentHeight / rowHeight);
+                scrollModule.virtualRowInfo.requiredRowsRange = [];
+                for (let dataRowIndex: number = from, ariaRowIndex = 0, buffer = 0, renderedRowHeight = 0; dataRowIndex < to && buffer <= (from !== 0 && dataRowIndex !== (to - 1) ? virtualizationSettings.rowBuffer * 2 : virtualizationSettings.rowBuffer); dataRowIndex++, ariaRowIndex++) {
+                    processRowData(dataRowIndex, ariaRowIndex, (scrollMode === ScrollMode.Virtual ? virtualCachedViewData.get(dataRowIndex) : currentViewData[parseInt(dataRowIndex.toString(), 10)]), rows, rowOptions);
                     renderedRowHeight += rowOptions[ariaRowIndex]?.height;
                     if (!cachedRowObjects.current.has(rowOptions[ariaRowIndex]?.uid)) {
                         totalRenderedRowHeight.current += rowOptions[ariaRowIndex]?.height;
                     } else if (cachedRowObjects.current.get(rowOptions[ariaRowIndex]?.uid).height !== rowOptions[ariaRowIndex]?.height) {
                         totalRenderedRowHeight.current = (totalRenderedRowHeight.current - cachedRowObjects.current.get(rowOptions[ariaRowIndex]?.uid).height) + rowOptions[ariaRowIndex]?.height;
                     }
-                    cachedRowObjects.current.set(rowOptions[ariaRowIndex].uid, { ...rowOptions[ariaRowIndex] }); //, reactElement: rows[ariaRowIndex]
-                    // if (renderedRowHeight > parseUnit(height)) {
-                    if (renderedRowHeight > contentSectionRef.current.closest('.sf-grid-content').clientHeight) {
+                    cachedRowObjects.current.set(rowOptions[ariaRowIndex].uid, { ...rowOptions[ariaRowIndex] });
+                    if (renderedRowHeight > contentHeight) {
                         buffer++;
                     }
+                    if (scrollMode === ScrollMode.Virtual && !rowOptions[ariaRowIndex]?.data) {
+                        if (scrollModule.virtualRowInfo.requiredRowsRange.length) {
+                            scrollModule.virtualRowInfo.requiredRowsRange[1] = dataRowIndex;
+                        } else {
+                            scrollModule.virtualRowInfo.requiredRowsRange.push(dataRowIndex);
+                        }
+                    }
                 }
-                // if (_scrollDirection === 'down') {
-                //     scrollModule.virtualRowInfo.startIndex = rowOptions[rowOptions.length - 1].index;
-                // } else {
-                // }
-
-                // const averageRowHeight: number = (totalRenderedRowHeight.current / (cachedRowObjects.current.size === 0 ? 1 : cachedRowObjects.current.size));
-                // const viewPortStartIndex: number = Math.floor(contentScrollRef.scrollTop / (averageRowHeight === 0 ? 1 : averageRowHeight));
-                // // console.log('viewPortStartIndex => ', viewPortStartIndex);
-                // scrollModule.virtualRowInfo.startIndex = viewPortStartIndex <= rowBuffer ? 0 : viewPortStartIndex - rowBuffer;
-                // visibleRowObjects.current.clear();
 
                 rowsObjectRef.current = rowOptions;
                 return rows;
-            }, [columnsDirective, currentViewData, storeRowRef, rowHeight, enableAltRow, offsetY, getRowHeight, _requireMoreVirtualRowsForceRefresh]); // offsetY
+            }, [columnsDirective, currentViewData, storeRowRef, rowHeight, enableAltRow, offsetY, getRowHeight, _requireMoreVirtualRowsForceRefresh]);
 
             useEffect(() => {
                 return () => {

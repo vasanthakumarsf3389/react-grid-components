@@ -3,6 +3,7 @@ import { Browser, isNullOrUndefined } from '@syncfusion/react-base';
 import { useGridComputedProvider, useGridMutableProvider } from '../contexts';
 import { IGrid } from '../types/grid.interfaces';
 import { MutableGridSetter, UseScrollResult, ScrollElements, ScrollCss, VirtualRowInfo, VirtualColumnInfo, ContentPanelRef } from '../types/interfaces';
+import { ActionType, PagerArgsInfo, ScrollMode } from '../types';
 // import { getNormalizedScrollLeft } from '../utils';
 
 /**
@@ -13,10 +14,9 @@ import { MutableGridSetter, UseScrollResult, ScrollElements, ScrollCss, VirtualR
  */
 export const useScroll: <T>(contentPanelRef: ContentPanelRef<T>) => UseScrollResult<T> = <T, >(contentPanelRef: ContentPanelRef<T>): UseScrollResult<T> => {
     const grid: Partial<IGrid<T>> & Partial<MutableGridSetter<T>> = useGridComputedProvider<T>();
-    const { height, enableRtl, enableStickyHeader, columns, disableDOMVirtualization, columnBuffer, rowBuffer, rowHeight } = grid;
-    const { getParentElement, currentViewData, totalVirtualColumnWidth, setOffsetX, setOffsetY, columnOffsets
-        // , setStartColumnIndex
-    } = useGridMutableProvider<T>();
+    const { height, enableRtl, enableStickyHeader, columns, rowHeight, virtualizationSettings, pageSettings, setCurrentPage, setGridAction, scrollMode } = grid;
+    const { getParentElement, currentViewData, totalVirtualColumnWidth, setOffsetX, totalRecordsCount,
+        setOffsetY, columnOffsets } = useGridMutableProvider<T>();
     const [scrollStyles, setScrollStyles] = useState<{ headerPadding: CSSProperties; headerContentBorder: CSSProperties; }>({
         headerPadding: {},
         headerContentBorder: {}
@@ -29,16 +29,27 @@ export const useScroll: <T>(contentPanelRef: ContentPanelRef<T>) => UseScrollRes
         footerScrollElement: null
     });
 
+    const lastVirtualPageNumber: number = useMemo(() => {
+        return Math.ceil(totalRecordsCount/pageSettings.pageSize);
+    }, [totalRecordsCount, pageSettings]);
+
     const virtualRowInfo: RefObject<VirtualRowInfo> = useRef<VirtualRowInfo>({
         offsetY: 0,
         startIndex: 0,
-        endIndex: currentViewData?.length
+        endIndex: currentViewData?.length,
+        virtualModeStartIndex: 0,
+        requiredRowsRange: [],
+        currentPages: [pageSettings.currentPage],
+        previousPages: []
     });
     const virtualColumnInfo: RefObject<VirtualColumnInfo> = useRef<VirtualColumnInfo>({
         offsetX: 0,
         startIndex: 0,
         endIndex: columns?.length - 1
     });
+    const ticking = useRef(false);
+    const scrollStopTimerRef = useRef<number | null>(null);
+    const last = useRef({ left: 0, top: 0, startRow: -1, startCol: -1, offsetX: NaN, offsetY: NaN });
 
     /**
      * Determine CSS properties based on RTL/LTR mode
@@ -237,6 +248,32 @@ export const useScroll: <T>(contentPanelRef: ContentPanelRef<T>) => UseScrollRes
         elementsRef.current.footerScrollElement = element;
     }, []);
 
+    const processPagesSequentially = useCallback((pages: number[], args: PagerArgsInfo) => {
+        let index = 0;
+
+        const requestNextPage = () => {
+            if (index >= pages.length) return; // Done
+            const pageNo = pages[index];
+            args.currentPage = pageNo;
+            console.log('request pageNo => ', pageNo);
+            setCurrentPage(pageNo);
+            setGridAction(args);
+
+            // Wait for actionComplete event before continuing
+            const onActionComplete = () => {
+                grid.element.removeEventListener('virtualScrollSequencialRequest', onActionComplete);
+                index++;
+                requestAnimationFrame(() => {
+                    requestNextPage(); // Trigger next page
+                });
+            };
+
+            grid.element.addEventListener('virtualScrollSequencialRequest', onActionComplete);
+        };
+
+        requestNextPage(); // Start first request
+    }, [grid.element]);
+
     /**
      * Handle content scroll events and synchronize header scroll position
      * Optimized for immediate synchronization to prevent gridline misalignment
@@ -249,34 +286,132 @@ export const useScroll: <T>(contentPanelRef: ContentPanelRef<T>) => UseScrollRes
         const target: HTMLDivElement = args.target as HTMLDivElement;
         const left: number = target.scrollLeft;
         const top: number = target.scrollTop;
-        if (!disableDOMVirtualization) {
-            virtualRowInfo.current.offsetY = top;
-            virtualColumnInfo.current.offsetX = left;
-        }
 
         // IMMEDIATE synchronization - no requestAnimationFrame delay to prevent gridline misalignment
         if (headerScrollElement) { headerScrollElement.scrollLeft = left; }
         if (footerScrollElement) { footerScrollElement.scrollLeft = left; }
 
-        // Compute start index and offsetX deterministically (same logic), minus console noise
-        const averageColumnWidth: number = (totalVirtualColumnWidth / (columns.length === 0 ? 1 : columns.length));
-        // const scrollX: number = getNormalizedScrollLeft(target, enableRtl);
-        const scrollX: number = Math.abs(target.scrollLeft);
-        // const scrollX: number = enableRtl ? (target.scrollWidth - target.clientWidth - target.scrollLeft) : target.scrollLeft;
-        const viewPortColumnStartIndex: number = Math.floor(scrollX / (averageColumnWidth === 0 ? 1 : averageColumnWidth));
-        const startColumnIndex: number = viewPortColumnStartIndex <= columnBuffer ? 0 : viewPortColumnStartIndex - columnBuffer;
-        setOffsetX((enableRtl || grid?.element.classList.contains('sf-rtl') ? -(columnOffsets[startColumnIndex]) : (columnOffsets[startColumnIndex])) ?? 0);
-        // setOffsetX(enableRtl || grid?.element.classList.contains('sf-rtl') ? -(startColumnIndex * averageColumnWidth) : (startColumnIndex * averageColumnWidth));
-        // setOffsetX(startColumnIndex * averageColumnWidth);
-        virtualColumnInfo.current.startIndex = isNaN(startColumnIndex) ? 0 : startColumnIndex;
-        const averageRowHeight = (contentPanelRef.totalRenderedRowHeight.current / (contentPanelRef.cachedRowObjects.current.size === 0 ? 1 : contentPanelRef.cachedRowObjects.current.size));
-        const viewPortStartIndex = Math.floor(contentPanelRef.contentScrollRef.scrollTop / (averageRowHeight === 0 ? 1 : averageRowHeight));
-        const startIndex = viewPortStartIndex <= rowBuffer ? 0 : viewPortStartIndex - rowBuffer;
-        // // setOffsetY(startIndex * averageRowHeight);
-        // setStartIndex(startIndex);
-        virtualRowInfo.current.startIndex = isNaN(startIndex) ? 0 : startIndex;
-        setOffsetY(startIndex * averageRowHeight);
-    }, [columns, totalVirtualColumnWidth, columnBuffer, rowBuffer, rowHeight, enableRtl, disableDOMVirtualization, contentPanelRef]);
+        if (!virtualizationSettings.enableRow && !virtualizationSettings.enableColumn) return;
+
+        // 2) Stash coords; batch work to next frame
+        last.current.left = left;
+        last.current.top = top;
+        if (ticking.current) return;
+        ticking.current = true;
+
+        requestAnimationFrame(() => {
+            if (virtualizationSettings.enableColumn) {
+                // Horizontal window
+                // Compute start index and offsetX deterministically (same logic), minus console noise
+                const averageColumnWidth: number = (totalVirtualColumnWidth / (columns.length === 0 ? 1 : columns.length));
+                const scrollX: number = Math.abs(last.current.left);
+                const viewPortColumnStartIndex: number = Math.floor(scrollX / (averageColumnWidth === 0 ? 1 : averageColumnWidth));
+                const startColumnIndex: number = viewPortColumnStartIndex <= virtualizationSettings.columnBuffer ? 0 : viewPortColumnStartIndex - virtualizationSettings.columnBuffer;
+                // Compute nextOffsetX from your columnOffsets
+                const nextOffsetX: number = (enableRtl || grid?.element.classList.contains('sf-rtl'))
+                    ? -(columnOffsets[startColumnIndex] ?? 0)
+                    : (columnOffsets[startColumnIndex] ?? 0);
+                // 3) Update only when values really change
+                if (startColumnIndex !== last.current.startCol) {
+                    virtualColumnInfo.current.startIndex = isNaN(startColumnIndex) ? 0 : startColumnIndex;
+                    last.current.startCol = startColumnIndex;
+                    if (nextOffsetX !== last.current.offsetX) {
+                        setOffsetX(nextOffsetX);
+                        last.current.offsetX = nextOffsetX;
+                    }
+                }
+            }
+            if (virtualizationSettings.enableRow) {
+                // Vertical window
+                const averageRowHeight = (contentPanelRef.totalRenderedRowHeight.current / (contentPanelRef.cachedRowObjects.current.size === 0 ? 1 : contentPanelRef.cachedRowObjects.current.size));
+                const viewPortStartIndex = Math.floor(last.current.top / (averageRowHeight === 0 ? 1 : averageRowHeight));
+                const startIndex = viewPortStartIndex <= virtualizationSettings.rowBuffer ? 0 : viewPortStartIndex - virtualizationSettings.rowBuffer;
+                const nextOffsetY = startIndex * averageRowHeight;
+                if (startIndex !== last.current.startRow) {
+                    // const diff: number = virtualRowInfo.current.endIndex - virtualRowInfo.current.startIndex;
+                    // virtualRowInfo.current.isAppendOrInsert = startIndex > last.current.startRow ? 'append' : 'insert';
+                    virtualRowInfo.current.startIndex = isNaN(startIndex) ? 0 : startIndex;
+                    last.current.startRow = startIndex;
+                    if (nextOffsetY !== last.current.offsetY) {
+                        setOffsetY(nextOffsetY);
+                        last.current.offsetY = nextOffsetY;
+
+                        /**
+                         * Handles virtual scrolling data updates and page state changes.
+                         * Combines cache pruning, view data update, and sequential page state updates.
+                         */
+                        if (scrollMode === ScrollMode.Virtual) {
+                            if (scrollStopTimerRef.current) {
+                                clearTimeout(scrollStopTimerRef.current);
+                            }
+
+                            scrollStopTimerRef.current = window.setTimeout(() => {
+                                const [startRow, endRow] = virtualRowInfo.current.requiredRowsRange;
+                                if (isNullOrUndefined(startRow) && isNullOrUndefined(endRow)) { return; }
+                                const pageSize = pageSettings.pageSize;
+
+                                // Calculate start and end pages based on row range
+                                const startPage = Math.floor(((startRow ?? endRow) - (virtualizationSettings.rowBuffer)) / pageSize) + 1;
+                                const endPage = Math.floor(((endRow ?? startRow) + (virtualizationSettings.rowBuffer)) / pageSize) + 1;
+
+                                // Prepare pager arguments
+                                const args: PagerArgsInfo = {
+                                    cancel: false,
+                                    currentPage: pageSettings.currentPage,
+                                    previousPage: pageSettings.currentPage,
+                                    requestType: ActionType.Paging,
+                                    type: 'pageChanging'
+                                };
+
+                                // Determine pages to load
+                                let newPages: number[] = [];
+                                if (startPage === endPage) {
+                                    // Single page scenario
+                                    newPages = [startPage];
+                                    args.currentPage = startPage;
+                                    // virtualRowInfo.current.isAppendOrInsert = undefined;
+                                } else {
+                                    // Multiple pages scenario
+                                    for (let pageNo = startPage; pageNo <= endPage; pageNo++) {
+                                        newPages.push(pageNo);
+                                    }
+                                    // Direction-aware append/insert
+                                    // virtualRowInfo.current.isAppendOrInsert = startPage > pageSettings.currentPage ? 'append' : 'insert';
+                                    args.currentPage = endPage; // Last page for reference
+                                }
+
+                                const currentPagesString: string = JSON.stringify(virtualRowInfo.current.currentPages);
+                                const newPagesString: string = JSON.stringify(newPages);
+                                if (currentPagesString === newPagesString) { return; }
+
+                                virtualRowInfo.current.previousPages = [...virtualRowInfo.current.currentPages];
+
+                                // Update currentPages list
+                                virtualRowInfo.current.currentPages = newPages;
+                                console.log('currentLoadedViewPages => ', virtualRowInfo.current.currentPages);
+
+                                const requestNewPages: number[] = [...newPages.filter((page: number) => !virtualRowInfo.current.previousPages.includes(page))];
+                                /**
+                                 * Sequentially update currentPage for combined page view.
+                                 * Multiple requestAnimationFrame calls are intentional for UX consistency.
+                                 */
+                                processPagesSequentially(requestNewPages, args);
+                                // for (const pageNo of requestNewPages) {
+                                //     requestAnimationFrame(() => {
+                                //         args.currentPage = pageNo;
+                                //         console.log('request pageNo => ', pageNo);
+                                //         setCurrentPage(pageNo);
+                                //         setGridAction(args);
+                                //     });
+                                // }
+                            }, 150); // Debounce delay
+                        }
+                    }
+                }
+            }
+            ticking.current = false;
+        });
+    }, [columns, totalVirtualColumnWidth, rowHeight, enableRtl, virtualizationSettings, contentPanelRef, pageSettings, totalRecordsCount, currentViewData]);
 
     /**
      * Handle header scroll events and synchronize content scroll position
@@ -293,14 +428,6 @@ export const useScroll: <T>(contentPanelRef: ContentPanelRef<T>) => UseScrollRes
 
         // IMMEDIATE synchronization - no requestAnimationFrame delay to prevent gridline misalignment
         contentScrollElement.scrollLeft = left;
-
-        // const averageColumnWidth: number = (totalVirtualColumnWidth / (columns.length === 0 ? 1 : columns.length));
-        // const scrollX: number = getNormalizedScrollLeft(target, enableRtl)
-        // const viewPortStartIndex: number = Math.floor(scrollX / (averageColumnWidth === 0 ? 1 : averageColumnWidth));
-        // const startIndex: number = viewPortStartIndex <= columnBuffer ? 0 : viewPortStartIndex - columnBuffer;
-        // virtualColumnInfo.current.startIndex = startIndex;
-        // console.log('column header startIndex => ', startIndex);
-        // setOffsetX(startIndex * averageColumnWidth);
     }, []);
 
     /**
@@ -347,8 +474,10 @@ export const useScroll: <T>(contentPanelRef: ContentPanelRef<T>) => UseScrollRes
     const protectedScrollAPI: UseScrollResult<T>['protectedScrollAPI'] = useMemo(() => ({
         setPadding,
         virtualRowInfo: virtualRowInfo.current,
-        virtualColumnInfo: virtualColumnInfo.current
-    }), [setPadding, virtualRowInfo, virtualColumnInfo]);
+        virtualColumnInfo: virtualColumnInfo.current,
+        lastVirtualPageNumber,
+        // virtualPageChange
+    }), [setPadding, virtualRowInfo, virtualColumnInfo, lastVirtualPageNumber]); //, virtualPageChange
 
     return {
         publicScrollAPI,

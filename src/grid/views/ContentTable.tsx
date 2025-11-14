@@ -41,11 +41,7 @@ const ContentTableBase: <T>(props: Partial<IContentTableBase> & RefAttributes<Co
         <T, >(props: Partial<IContentTableBase>, ref: RefObject<ContentTableRef<T>>) => {
             // Access grid context providers
             const { colElements: ColElements, offsetX } = useGridMutableProvider<T>();
-            const { id
-                , disableDOMVirtualization
-                , scrollModule,
-                // virtualColGroupElements
-            } = useGridComputedProvider<T>();
+            const { id, virtualizationSettings, scrollModule } = useGridComputedProvider<T>();
 
             // Refs for DOM elements and child components
             const contentTableRef: RefObject<HTMLTableElement | null>  = useRef<HTMLTableElement>(null);
@@ -57,12 +53,10 @@ const ContentTableBase: <T>(props: Partial<IContentTableBase> & RefAttributes<Co
              * Contains column definitions for the table
              */
             const colGroupContent: JSX.Element = useMemo(() => {
-                // console.log('content colGroupContent => ', scrollModule?.virtualColumnInfo.startIndex, scrollModule?.virtualColumnInfo.endIndex);
-
                 let visibleCols: JSX.Element[] = [];
 
                 if (ColElements.length) {
-                    if (disableDOMVirtualization) {
+                    if (!virtualizationSettings.enableColumn) {
                         visibleCols = ColElements;
                     } else {
                         const startIndex: number = scrollModule?.virtualColumnInfo?.startIndex ?? 0;
@@ -91,21 +85,11 @@ const ContentTableBase: <T>(props: Partial<IContentTableBase> & RefAttributes<Co
                 ColElements,
                 id,
                 offsetX,
-                disableDOMVirtualization,
+                virtualizationSettings.enableColumn,
                 scrollModule?.virtualColumnInfo?.startIndex,
                 scrollModule?.virtualColumnInfo?.endIndex,
                 forceRerender, totalWidth.current
             ]);
-            // const colGroupContent: JSX.Element = useMemo<JSX.Element>(() => {
-            //     console.log('content colGroupContent => ', scrollModule?.virtualColumnInfo.startIndex, scrollModule?.virtualColumnInfo.endIndex);
-            //     return (
-            //     <colgroup
-            //         key={`content-${id}-colgroup`}
-            //         id={`content-${id}-colgroup`}
-            //     >
-            //         {ColElements.length ? (disableDOMVirtualization ? ColElements : ColElements.slice(scrollModule?.virtualColumnInfo.startIndex, scrollModule?.virtualColumnInfo.endIndex)) : null}
-            //     </colgroup>
-            // )}, [ColElements, id, offsetX, virtualColGroupElements, scrollModule?.virtualColumnInfo.startIndex, scrollModule?.virtualColumnInfo.endIndex, forceRerender]);
 
             /**
              * Expose internal elements and methods through the forwarded ref

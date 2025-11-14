@@ -2,7 +2,7 @@ import { ComponentType, HTMLAttributes, ReactElement, ReactNode } from 'react';
 import { DataManager, DataResult, Query, ReturnType as DataReturnType, Aggregates } from '@syncfusion/react-data';
 import { IL10n } from '@syncfusion/react-base';
 import { HeaderCellRenderEvent, CellRenderEvent, RowRenderEvent, ServiceLocator } from '../types/interfaces';
-import { GridLine, SortDirection, WrapMode, Action, ClipMode, ValueType, RowType, ToolbarItems } from './index';
+import { GridLine, SortDirection, WrapMode, Action, ClipMode, ValueType, RowType, ToolbarItems, ScrollMode, Theme } from './index';
 import { FilterSettings, FilterEvent } from '../types/filter.interfaces';
 import { ColumnProps } from '../types/column.interfaces';
 import { CellFocusEvent } from '../types/focus.interfaces';
@@ -15,6 +15,7 @@ import { RowSelectEvent, RowSelectingEvent, SelectionSettings } from '../types/s
 import { PageEvent, PageSettings } from '../types/page.interfaces';
 import { SortEvent, SortSettings } from '../types/sort.interfaces';
 import { SearchEvent, SearchSettings } from '../types/search.interfaces';
+import { VirtualizationSettings } from './virtualization.interface';
 
 /**
  * Represents information about a specific row and cell in the grid.
@@ -256,31 +257,6 @@ export interface GridProps<T = unknown> extends Omit<HTMLAttributes<HTMLDivEleme
      * ```
      */
     width?: number | string;
-
-    /**
-     * Disables row virtualization when set to true.
-     * The grid uses row virtualization by default for performance. Set this to true to render all rows.
-     *
-     * @default false
-     */
-    disableDOMVirtualization?: boolean;
-
-    /**
-     * Number of extra rows to render above and below the viewport when virtualization is enabled.
-     * Helps smooth scrolling. Similar to AG Grid and MUI DataGrid rowBuffer.
-     *
-     * @default 5
-     */
-    rowBuffer?: number;
-    /**
-     * Number of extra columns to render left and right the viewport when virtualization is enabled.
-     * Helps smooth scrolling. Similar to AG Grid and MUI DataGrid columnBuffer.
-     *
-     * @default 5
-     */
-    columnBuffer?: number;
-
-    getRowHeight?: ((props: Partial<RowInfo<T>>) => number);
 
     /**
      * Configures the visibility of grid lines between cells.
@@ -579,7 +555,7 @@ export interface GridProps<T = unknown> extends Omit<HTMLAttributes<HTMLDivEleme
      * This property sets a uniform height for all rows in the grid. When set to a number, all rows will have exactly that height in pixels.
      * When null (default), row height is determined automatically based on content and styles.
      *
-     * @default null
+     * @default 50
      *
      * @example
      * ```tsx
@@ -591,6 +567,14 @@ export interface GridProps<T = unknown> extends Omit<HTMLAttributes<HTMLDivEleme
      * ```
      */
     rowHeight?: number;
+
+    getRowHeight?: ((props: Partial<RowInfo<T>>) => number);
+    /** @default Theme.Material3 */
+    theme?: Theme;
+    /** @default {enableRow: true, enableColumn: true, preventMaxRenderedRows: false, rowBuffer: preventMaxRenderedRows ? 500 : 5, columnBuffer: 5} */
+    virtualizationSettings?: VirtualizationSettings;
+    /** @default ScrollMode.Auto */
+    scrollMode?: ScrollMode;
 
     /**
      * Child components for the grid.

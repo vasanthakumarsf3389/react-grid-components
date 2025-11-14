@@ -1,6 +1,4 @@
-import { forwardRef, ForwardRefExoticComponent, RefAttributes, useImperativeHandle, useRef, useMemo, memo, CSSProperties, RefObject, JSX, useState
-    // , useState
-} from 'react';
+import { forwardRef, ForwardRefExoticComponent, RefAttributes, useImperativeHandle, useRef, useMemo, memo, CSSProperties, RefObject, JSX, useState } from 'react';
 import { HeaderTableBase } from './index';
 import { HeaderPanelRef, HeaderTableRef, IHeaderPanelBase } from '../types';
 import { useGridComputedProvider, useGridMutableProvider } from '../contexts';
@@ -20,13 +18,6 @@ const DEFAULT_TABLE_STYLE: CSSProperties = {
     borderSpacing: '0.25px'
 };
 
-// const ABSOLUTE_FILL: CSSProperties = {
-//     position: 'absolute',
-//     top: 0,
-//     left: 0,
-//     right: 0
-// };
-
 /**
  * HeaderPanelBase component renders the static area for the grid header.
  * This component wraps the HeaderTableBase in a scrollable container and
@@ -44,14 +35,13 @@ const HeaderPanelBase: ForwardRefExoticComponent<Partial<IHeaderPanelBase> & Ref
     memo(forwardRef<HeaderPanelRef, Partial<IHeaderPanelBase>>(
         (props: Partial<IHeaderPanelBase>, ref: RefObject<HeaderPanelRef>) => {
             const { panelAttributes, scrollContentAttributes } = props;
-            const { filterSettings, gridLines, disableDOMVirtualization } = useGridComputedProvider();
+            const { filterSettings, gridLines, virtualizationSettings } = useGridComputedProvider();
             const { offsetX, totalVirtualColumnWidth } = useGridMutableProvider();
 
             // Refs for DOM elements and child components
             const headerPanelRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
             const headerScrollRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
             const headerTableRef: RefObject<HeaderTableRef> = useRef<HeaderTableRef>(null);
-            // const [wrapperWidth, setWrapperWidth] = useState<number>(null);
             const [columnClientWidth, setColumnClientWidth] = useState<number>(0);
 
             /**
@@ -70,18 +60,13 @@ const HeaderPanelBase: ForwardRefExoticComponent<Partial<IHeaderPanelBase> & Ref
             const headerTableFilter: string = filterSettings?.enabled && gridLines === 'Default' ? 'sf-filter-bar-table' : '';
             const headerRightBorder: string = !filterSettings?.enabled || (filterSettings.enabled && (gridLines === 'Vertical' || gridLines === 'None'))  ? ' sf-grid-header-border' : '';
             const virtualWrapperStyle: CSSProperties = useMemo(() => ({
-                // ...ABSOLUTE_FILL,
                 transform: `translate3d(${offsetX || 0}px, 0px, 0)`,
-                // transform: `translate(0px, ${offsetY || 0}px)`,
-                // 'min-width': headerTableRef.current?.getHeaderTable?.().scrollWidth || headerScrollRef.current?.clientWidth || undefined
                 width: columnClientWidth
             }), [offsetX, headerScrollRef.current?.clientWidth, columnClientWidth]);
 
             const virtualTrackStyle: CSSProperties = useMemo(() => ({
                 position: 'relative',
-                // height: '100%',
                 width: totalVirtualColumnWidth || undefined
-                // width: columnClientWidth
             }), [totalVirtualColumnWidth, columnClientWidth]);
             /**
              * Memoized header table component to prevent unnecessary re-renders
@@ -91,7 +76,6 @@ const HeaderPanelBase: ForwardRefExoticComponent<Partial<IHeaderPanelBase> & Ref
                     ref={(headerTable: HeaderTableRef) => {
                         headerTableRef.current = headerTable;
                         setColumnClientWidth(headerTable?.columnClientWidth);
-                        // setWrapperWidth()
                     }}
                     className={`${CSS_HEADER_TABLE} ${headerTableFilter}`}
                     role="presentation"
@@ -109,7 +93,7 @@ const HeaderPanelBase: ForwardRefExoticComponent<Partial<IHeaderPanelBase> & Ref
                         {...scrollContentAttributes}
                         className={scrollContentAttributes.className + headerRightBorder}
                     >
-                        {disableDOMVirtualization ? (
+                        { !virtualizationSettings.enableRow && !virtualizationSettings.enableColumn ? (
                             headerTable
                         ) : (
                             <>
@@ -119,7 +103,6 @@ const HeaderPanelBase: ForwardRefExoticComponent<Partial<IHeaderPanelBase> & Ref
                                 </div>
                             </>
                         )}
-                        {/* {headerTable} */}
                     </div>
                 </div>
             );
