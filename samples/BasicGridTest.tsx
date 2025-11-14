@@ -33,7 +33,6 @@ export interface GridBaseTestProps {
   virtualizationSettings?: VirtualizationSettings;
   enableHover: boolean;
   allowSearching?: boolean;
-  disableDOMVirtualization?: boolean;
   enableRtl: boolean;
   gridLines: GridLine | string;
   height: string | number;
@@ -104,7 +103,6 @@ export const GridBaseTest: React.FC<GridBaseTestProps> = ({
   virtualizationSettings,
   enableHover,
   allowSearching,
-  disableDOMVirtualization,
   enableRtl,
   gridLines,
   height,
@@ -547,7 +545,7 @@ export const GridBaseTest: React.FC<GridBaseTestProps> = ({
               className='custom-grid-class'
               dataSource={data}
               allowKeyboard={allowKeyboard}
-              // disableDOMVirtualization={disableDOMVirtualization}
+              virtualizationSettings={virtualizationSettings}
               // rowClass={rowClass}
               // dataSource={editableData}
               toolbar={toolbar}

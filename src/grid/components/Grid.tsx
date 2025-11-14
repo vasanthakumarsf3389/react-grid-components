@@ -13,7 +13,7 @@ import {
     useEffect
 } from 'react';
 import { ITooltip, Tooltip } from '@syncfusion/react-popups';
-import { SortDirection, RenderRef, ValueType, ActionType } from '../types';
+import { SortDirection, RenderRef, ValueType, ActionType, ScrollMode } from '../types';
 import { GridProps, GridRef, IGridBase } from '../types/grid.interfaces';
 import { PagerArgsInfo } from '../types/page.interfaces';
 import { useGridComputedProps } from '../hooks';
@@ -107,7 +107,7 @@ const GridBase: <T, >(props: Partial<IGridBase<T>> & RefAttributes<GridRef<T>>) 
                         previousPage: publicAPI.pageSettings.currentPage, requestType: ActionType.Paging
                     };
                     args.type = 'pageChanging';
-                    const confirmResult: boolean = await protectedAPI?.editModule?.checkUnsavedChanges?.();
+                    const confirmResult: boolean = publicAPI.scrollMode === ScrollMode.Virtual ? true : await protectedAPI?.editModule?.checkUnsavedChanges?.();
                     if (!confirmResult) {
                         return;
                     }

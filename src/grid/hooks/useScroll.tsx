@@ -367,13 +367,15 @@ export const useScroll: <T>(contentPanelRef: ContentPanelRef<T>) => UseScrollRes
                                 let newPages: number[] = [];
                                 if (startPage === endPage) {
                                     // Single page scenario
-                                    newPages = [startPage];
-                                    args.currentPage = startPage;
+                                    newPages = [startPage ? startPage : 1];
+                                    args.currentPage = startPage ? startPage : 1;
                                     // virtualRowInfo.current.isAppendOrInsert = undefined;
                                 } else {
                                     // Multiple pages scenario
                                     for (let pageNo = startPage; pageNo <= endPage; pageNo++) {
-                                        newPages.push(pageNo);
+                                        if (pageNo) {
+                                            newPages.push(pageNo);
+                                        }
                                     }
                                     // Direction-aware append/insert
                                     // virtualRowInfo.current.isAppendOrInsert = startPage > pageSettings.currentPage ? 'append' : 'insert';

@@ -257,7 +257,6 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     dataSource: data,
-    // disableDOMVirtualization: true,
     scrollMode: ScrollMode.Virtual,
     allowSearching: true,
     distinctShipCountryDataSource: DataUtil.distinct(data, 'ShipCountry', true) as DynamicDataItem[],

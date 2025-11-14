@@ -133,7 +133,7 @@ export const useRender: <T>() => UseRenderResult<T> = <T, >(): UseRenderResult<T
      */
     const dataManagerSuccess: (response: Response | ReturnType) => void = useCallback((response: Response | ReturnType): void => {
         const data: ReturnType = response as ReturnType;
-        if (!data?.result?.length && data.count && grid.pageSettings?.enabled
+        if (!data?.result?.length && data.count && (grid.pageSettings?.enabled || grid.scrollMode === ScrollMode.Virtual)
             && gridAction.requestType !== ActionType.Paging) {
             if (Object.keys(gridAction).length) {
                 delete gridAction.cancel;
@@ -148,7 +148,7 @@ export const useRender: <T>() => UseRenderResult<T> = <T, >(): UseRenderResult<T
             grid.goToPage(Math.ceil(data.count / grid.pageSettings.pageSize));
             return;
         }
-        if (grid.pageSettings?.enabled) {
+        if (grid.pageSettings?.enabled || grid.scrollMode === ScrollMode.Virtual) {
             grid.pagerModule?.goToPage(currentPage);
         }
         setTotalRecordsCount(data.count);
@@ -163,7 +163,7 @@ export const useRender: <T>() => UseRenderResult<T> = <T, >(): UseRenderResult<T
          * Data manager success handler:
          * Updates virtual cache and current view data based on active pages.
          */
-        if (scrollMode === ScrollMode.Virtual && scrollModule?.virtualRowInfo?.currentPages.length > 1) { // && !virtualizationSettings.enableCache
+        if (scrollMode === ScrollMode.Virtual && scrollModule?.virtualRowInfo?.currentPages.length > 1) {
             const activePages = scrollModule.virtualRowInfo.currentPages; // e.g., [2, 3]
             const pageSize = pageSettings.pageSize;
 
@@ -200,9 +200,9 @@ export const useRender: <T>() => UseRenderResult<T> = <T, >(): UseRenderResult<T
 
         } else {
             if (scrollMode === ScrollMode.Virtual) {
-                // Single page virtual mode: reset everything
-                setVirtualCachedViewData(() => {
-                    const newMap = new Map<number, T>();
+                // Single page virtual mode: reset everything only if cache not enabled
+                setVirtualCachedViewData((prevMap: Map<number, T>) => {
+                    const newMap = !virtualizationSettings.enableCache ? new Map<number, T>() : prevMap;
                     const startKey = (pageSettings.currentPage - 1) * pageSettings.pageSize;
                     for (let i = 0; i < data.result.length; i++) {
                         newMap.set(startKey + i, data.result[i] as T);

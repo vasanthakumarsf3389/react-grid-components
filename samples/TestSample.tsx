@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Grid, Column, Columns, ColumnProps, CellRenderEvent, HeaderCellRenderEvent, GridRef, RowSelectEvent, ColumnTemplateProps, GridLine, DataRequestEvent, FilterSettings, SortSettings, PageSettings, RowSelectingEvent, RowRenderEvent, AggregateColumn, AggregateRow, Aggregates, PageEvent, ValueType, EditSettings, SortEvent, FilterEvent, SearchEvent, AggregateColumnProps, SearchSettings, TextAlign, ClipMode, FilterBarType, ActionType, RowInfo, EditType, AggregateType, CellType, ScrollMode } from '../src/index';
+import { Grid, Column, Columns, ColumnProps, CellRenderEvent, HeaderCellRenderEvent, GridRef, RowSelectEvent, ColumnTemplateProps, GridLine, DataRequestEvent, FilterSettings, SortSettings, PageSettings, RowSelectingEvent, RowRenderEvent, AggregateColumn, AggregateRow, Aggregates, PageEvent, ValueType, EditSettings, SortEvent, FilterEvent, SearchEvent, AggregateColumnProps, SearchSettings, TextAlign, ClipMode, FilterBarType, ActionType, RowInfo, EditType, AggregateType, CellType, ScrollMode, VirtualizationSettings } from '../src/index';
 import { ChangeEventArgs, DropDownList } from '@syncfusion/react-dropdowns';
 // import { DataManager, DataUtil } from '@syncfusion/react-data';
 import { complexData, customerData, DressList, empData, employeeData, employeeeData, employeeInformation, employeeRecord, generateDynamicData, getTradeData, gridData, hotelBookingData, initialFoodOrderDetails, libraryData, nullData, orderData, orderDetails, productData, restaurantData, salesDetails, studentData, supplierContractData, support, tasksData } from './data';
@@ -4040,10 +4040,13 @@ export const VirtualScrollingSample: React.FC = () => {
   const gridRef = useRef<GridRef>(null);
   const [isRender, setIsRender] = useState(false);
   const [enableRtl, setEnableRtl] = useState(false);
+  const [enableVirtualScrollCache, setEnableVirtualScrollCache] = useState(false);
   const [dataCount, setDataCount] = useState(100000);
   const hostUrl: string = 'https://ej2services.syncfusion.com/react/hotfix/';
   const data: DataManager = useMemo(() => new DataManager({ url: hostUrl + 'api/UrlDataSource', adaptor: new UrlAdaptor  }), []);
   const query = useMemo(() => new Query().addParams('dataCount', '' + dataCount), [dataCount]);
+  // const pageSettings = useMemo<PageSettings>(() => ({ enabled: true }), []);
+  const virtualizationSettings = useMemo<VirtualizationSettings>(() => ({ enableCache: enableVirtualScrollCache }), [enableVirtualScrollCache]);
   return (
     <div>
       <button onClick={() => setIsRender(!isRender)}>{isRender ? 'Destroy' : 'Render'} Data Grid</button>
@@ -4059,6 +4062,9 @@ export const VirtualScrollingSample: React.FC = () => {
       <button onClick={() => {
         setEnableRtl(!enableRtl);
       }}>RTL {enableRtl ? 'Enabled' : 'Disabled'}</button>
+      <button onClick={() => {
+        setEnableVirtualScrollCache(!enableVirtualScrollCache);
+      }}>Virtual Scroll Cache {enableVirtualScrollCache ? 'Enabled' : 'Disabled'}</button>
       {isRender &&
         <Provider
           // dir={'rtl'}
@@ -4071,7 +4077,8 @@ export const VirtualScrollingSample: React.FC = () => {
             query={query}
             enableHover={false}
             scrollMode={ScrollMode.Virtual}
-            pageSettings={{ enabled: true }}
+            // pageSettings={pageSettings}
+            virtualizationSettings={virtualizationSettings}
             // rowHeight={38}
             height='96vh'
           // ref={(g) => { gridInstance = g }}

@@ -25,5 +25,8 @@ export interface VirtualizationSettings {
      * @default false
      */
     preventMaxRenderedRows?: boolean;
+    /**
+     * @default true
+     */
     enableCache?: boolean;
 }

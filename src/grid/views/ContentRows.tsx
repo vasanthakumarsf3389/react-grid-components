@@ -125,8 +125,8 @@ const ContentRowsBase: <T>(props: Partial<IContentRowsBase> & RefAttributes<Cont
     memo(forwardRef<ContentRowsRef, Partial<IContentRowsBase>>(
         <T, >(_props: Partial<IContentRowsBase>, ref: RefObject<ContentRowsRef<T>>) => {
             const { columnsDirective, currentViewData, virtualCachedViewData, editModule, uiColumns, offsetY } = useGridMutableProvider<T>();
-            const { rowHeight, enableAltRow, columns, rowTemplate, getRowHeight, scrollModule, virtualizationSettings, scrollMode, pageSettings
-                // , setCurrentPage, setGridAction
+            const { rowHeight, enableAltRow, columns, rowTemplate, getRowHeight, scrollModule, virtualizationSettings, scrollMode, pageSettings,
+                sortSettings, filterSettings, searchSettings
              } = useGridComputedProvider<T>();
 
             // Refs for DOM elements and child components
@@ -306,8 +306,16 @@ const ContentRowsBase: <T>(props: Partial<IContentRowsBase> & RefAttributes<Cont
             }, [columns]);
 
             useMemo(() => {
+                totalRenderedRowHeight.current = 0;
+                rowsObjectRef.current = [];
+                cachedRowObjects.current.clear();
+            }, [filterSettings?.columns, filterSettings?.columns.length, sortSettings?.columns, sortSettings?.columns.length,  searchSettings?.value]);
+
+            useMemo(() => {
                 if (scrollMode === ScrollMode.Virtual) {
-                    // if (virtualizationSettings.enableCache) {return;}
+                    if (virtualizationSettings.enableCache) {return;}
+
+                    // Remove all not in view pages cached rowObjects
                     const previousPages = scrollModule?.virtualRowInfo?.previousPages ?? [];
                     const currentPages = scrollModule?.virtualRowInfo?.currentPages ?? [];
 

@@ -1,7 +1,8 @@
 import { RefObject, useCallback, useMemo } from 'react';
 import {
     Action, DataChangeRequestEvent, DataRequestEvent,
-    MutableGridBase, PendingState
+    MutableGridBase, PendingState,
+    ScrollMode
 } from '../types';
 import { SortDescriptor } from '../types/sort.interfaces';
 import { GridActionEvent, IGrid } from '../types/grid.interfaces';
@@ -171,7 +172,7 @@ export const useData: <T>(gridInstance?: Partial<IGrid<T>> & Partial<MutableGrid
 
     const pageQuery: (query: Query) => Query = useCallback((query: Query): Query => {
         const fName: string = 'fn';
-        if (grid.pageSettings?.enabled) {
+        if (grid.pageSettings?.enabled || grid.scrollMode === ScrollMode.Virtual) {
             const currentPageVal: number = Math.max(1, grid?.currentPage);
             if (grid.pageSettings.pageCount <= 0) {
                 grid.pageSettings.pageCount = 8;
@@ -189,7 +190,7 @@ export const useData: <T>(gridInstance?: Partial<IGrid<T>> & Partial<MutableGrid
             query.page(currentPageVal, grid.pageSettings.pageSize);
         }
         return query;
-    }, [grid.pageSettings, grid?.currentPage, grid.pageSettings?.enabled]);
+    }, [grid.pageSettings, grid?.currentPage, grid.pageSettings?.enabled, grid.scrollMode]);
 
     const getSearchColumnFieldNames: () => string[] = (): string[] => {
         const colFieldNames: string[] = [];

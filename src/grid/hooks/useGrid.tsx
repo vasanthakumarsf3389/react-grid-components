@@ -141,8 +141,10 @@ export const useGridComputedProps: <T, >(props: Partial<IGridBase<T>>, gridRef?:
     const dataSource: DataManager | DataResult = useMemo(() => {
         if (props.dataSource instanceof DataManager) {
             if (props.scrollMode === ScrollMode.Virtual) {
-                props.dataSource.dataSource.enableCache = props.virtualizationSettings?.enableCache ?? true;
-                // props.dataSource['isEnableCache'] = props.virtualizationSettings?.enableCache ?? true;
+                return new DataManager({
+                    ...props.dataSource.dataSource,
+                    enableCache: props.virtualizationSettings?.enableCache ?? true
+                }, props.dataSource.defaultQuery, props.dataSource.adaptor);
             }
             return props.dataSource;
         }
@@ -797,6 +799,7 @@ export const useGridComputedProps: <T, >(props: Partial<IGridBase<T>>, gridRef?:
         filterSettings: FilterSettings;
         searchSettings: SearchSettings;
         pageSettings: PageSettings;
+        scrollMode: ScrollMode;
         getPrimaryKeyFieldNames: () => string[];
         onDataRequest: (args: DataRequestEvent) => void;
         onDataChangeRequest: (args: DataChangeRequestEvent<T>) => void;
@@ -809,13 +812,14 @@ export const useGridComputedProps: <T, >(props: Partial<IGridBase<T>>, gridRef?:
         filterSettings: filterModule?.filterSettings,
         searchSettings: searchModule?.searchSettings,
         pageSettings,
+        scrollMode,
         currentPage,
         getPrimaryKeyFieldNames,
         onDataRequest: props.onDataRequest,
         onDataChangeRequest: props.onDataChangeRequest
     }), [props.dataSource, query, sortSettings?.enabled, filterModule?.filterSettings?.enabled,
         pageSettings?.enabled, sortModule?.sortSettings, searchModule?.searchSettings?.enabled, uiColumns,
-        columns, filterModule?.filterSettings, searchModule?.searchSettings, pageSettings, currentPage]);
+        columns, filterModule?.filterSettings, searchModule?.searchSettings, pageSettings, currentPage, scrollMode]);
 
     const dataOperations: UseDataResult<T> = useData<T>(gridInstance, gridAction, dataState);
     const dataModule: UseDataResult<T> = dataOperations;

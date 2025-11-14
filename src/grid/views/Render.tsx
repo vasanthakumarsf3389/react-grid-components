@@ -180,6 +180,7 @@ const RenderBase: <T>(_props: Partial<IRenderBase> & RefAttributes<RenderRef<T>>
             contentPanelRef.current?.contentScrollRef.scrollTop,
             scrollMode, dataModule, totalRecordsCount
         ]);
+
         // Memoize content panel to prevent unnecessary re-renders
         const contentPanel: JSX.Element = useMemo(() => {
             const toolbarHeight: number = toolbarModule?.getToolbar()?.clientHeight ?? 0;
