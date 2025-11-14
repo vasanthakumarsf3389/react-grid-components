@@ -99,7 +99,7 @@ describe('Column Value Formatter', () => {
             
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
         });
 
@@ -153,7 +153,7 @@ describe('Column Value Formatter', () => {
                 // Wait for grid to render
                 await waitFor(() => {
                     expect(testContainer.querySelector('.sf-grid')).not.toBeNull();
-                    expect(testContainer.querySelector('.sf-spin-hide')).not.toBeNull();
+                    expect(testContainer.querySelector('.sf-spinner')).toBeNull();
                 });
 
                 let fmtr: IValueFormatter = gridRef.current.serviceLocator.getService<IValueFormatter>('valueFormatter');
@@ -209,7 +209,7 @@ describe('Column Value Formatter', () => {
             
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
         });
 
@@ -256,7 +256,7 @@ describe('Column Value Formatter', () => {
 
                 await waitFor(() => {
                     expect(testContainer.querySelector('.sf-grid')).not.toBeNull();
-                    expect(testContainer.querySelector('.sf-spin-hide')).not.toBeNull();
+                    expect(testContainer.querySelector('.sf-spinner')).toBeNull();
                 });
 
                 let fmtr: IValueFormatter = gridRef.current.serviceLocator.getService<IValueFormatter>('valueFormatter');
@@ -291,7 +291,7 @@ describe('Column Value Formatter', () => {
                 
                 await waitFor(() => {
                     expect(container.querySelector('.sf-grid')).not.toBeNull();
-                    expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                    expect(container.querySelector('.sf-spinner')).toBeNull();
                 });
             } finally {
                 console.error = originalConsoleError;
@@ -393,7 +393,7 @@ describe('Column Value Formatter', () => {
             
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
         });
 
@@ -526,7 +526,7 @@ describe('Column Value Formatter', () => {
 
             await waitFor(() => {
                 expect(result.container.querySelector('.sf-grid')).not.toBeNull();
-                expect(result.container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(result.container.querySelector('.sf-spinner')).toBeNull();
             });
 
             const cells = result.container.querySelectorAll('tbody tr:first-child td');

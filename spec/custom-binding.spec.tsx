@@ -115,7 +115,7 @@ describe('Grid Custom Binding Functionality', () => {
             // Initial render assertions
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
                 expect(gridRef.current.getRows().length).toBe(5);
             }, { interval: 100, timeout: 10000 });
 
@@ -238,7 +238,7 @@ describe('Grid Custom Binding Functionality', () => {
 
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
                 expect(gridRef.current.getRows().length).toBe(3);
             }, { interval: 100, timeout: 10000 });
 

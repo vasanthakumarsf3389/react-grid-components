@@ -136,7 +136,7 @@ describe('Grid Aggregate Functionality', () => {
         });
 
         await waitFor(() => {
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull()
+            expect(container.querySelector('.sf-spinner')).toBeNull()
         });
 
         await act(async() => {
@@ -248,7 +248,7 @@ describe('Grid Aggregate Functionality', () => {
         });
 
         await waitFor(() => {
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
     }, 5000);
 });

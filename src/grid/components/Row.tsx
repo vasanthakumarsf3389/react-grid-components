@@ -67,7 +67,9 @@ const RowBase: <T>(props: IRowBase<T> & RefAttributes<RowRef>) => ReactElement =
         } = props;
         const { headerRowDepth, isInitialBeforePaint, editModule, uiColumns, isInitialLoad, totalVirtualColumnWidth, offsetX
             // , startColumnIndex, setVirtualColGroupElements, colElements: ColElements
-        } = useGridMutableProvider<T>();
+       , commandColumnModule, dataModule }
+            = useGridMutableProvider<T>();
+        const { commandEdit, commandEditRef } = commandColumnModule;
         const { onRowRender, onAggregateRowRender, serviceLocator, rowClass,
             sortSettings, rowHeight, editSettings, columns, rowTemplate, headerScrollRef,
             scrollModule, virtualizationSettings } = useGridComputedProvider<T>();
@@ -77,6 +79,9 @@ const RowBase: <T>(props: IRowBase<T> & RefAttributes<RowRef>) => ReactElement =
         const editInlineFormRef: RefObject<InlineEditFormRef<T>> = useRef<InlineEditFormRef<T>>(null);
         const [syncFormState, setSyncFormState] = useState(editInlineFormRef.current?.formState);
         const [rowObject, setRowObject] = useState<IRow<ColumnProps<T>>>(row);
+        if (dataModule?.dataManager && 'result' in dataModule?.dataManager && rowObject?.data) {
+            rowObject.data = row.data;
+        }
         const cachedCellObjects: RefObject<Map<number | string, IColumnBase<T> & { reactElement: JSX.Element }>> = useRef<(Map<number | string, IColumnBase<T> & { reactElement: JSX.Element }>)>(new Map());
         let isOffsetXChanged: boolean = false;
         // const previousRowClassRef = useRef<string | undefined>(undefined);
@@ -95,7 +100,8 @@ const RowBase: <T>(props: IRowBase<T> & RefAttributes<RowRef>) => ReactElement =
             if (rowType === RenderType.Content &&
                 (!editModule?.editSettings?.allowEdit ||
                  !(editModule?.isEdit && editModule?.editRowIndex >= 0 && editModule?.editRowIndex === row.rowIndex) ||
-                 isNullOrUndefined(editModule?.originalData))) {
+                 isNullOrUndefined(editModule?.originalData)) &&
+                 !(editModule?.editSettings?.allowEdit && commandEdit.current && commandEditRef.current[rowObject.uid])) {
                 return null;
             }
             return (
@@ -109,6 +115,7 @@ const RowBase: <T>(props: IRowBase<T> & RefAttributes<RowRef>) => ReactElement =
                     isAddOperation={false}
                     columns={uiColumns ?? columns as ColumnProps<T>[]}
                     editData={editModule?.editData}
+                    rowObject={rowObject}
                     validationErrors={editModule?.validationErrors || {}}
                     editRowIndex={row?.rowIndex}
                     // editRowIndex={row?.ariaRowIndex}
@@ -133,7 +140,8 @@ const RowBase: <T>(props: IRowBase<T> & RefAttributes<RowRef>) => ReactElement =
             editModule?.showAddNewRowData,
             editModule?.editSettings?.showAddNewRow,
             editModule?.editSettings?.newRowPosition,
-            editSettings?.template
+            editSettings?.template,
+            Object.keys(commandEditRef?.current).length
         ]);
 
         /**
@@ -395,8 +403,9 @@ const RowBase: <T>(props: IRowBase<T> & RefAttributes<RowRef>) => ReactElement =
         return (
             <>
                 { renderRowTemplate ? renderRowTemplate :
-                    rowType === RenderType.Content && editModule?.editSettings?.allowEdit && editModule?.isEdit &&
+                    rowType === RenderType.Content && editModule?.editSettings?.allowEdit && ((editModule?.isEdit &&
                     editModule?.editRowIndex >= 0 && editModule?.editRowIndex === row.rowIndex && !isNullOrUndefined(editModule?.originalData)
+                    && !commandEdit.current) || (commandEdit.current && commandEditRef.current[rowObject.uid]))
                         ? inlineEditForm
                         : (<tr
                             ref={rowRef}

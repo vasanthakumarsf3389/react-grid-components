@@ -242,7 +242,7 @@ const RenderBase: <T>(_props: Partial<IRenderBase> & RefAttributes<RenderRef<T>>
 
         return (
             <>
-                <Spinner overlay={true} visible={privateRenderAPI.isContentBusy} className={cssClass}/>
+                <Spinner visible={privateRenderAPI.isContentBusy} className={cssClass} overlay={true} />
                 {toolbarModule && toolbar?.length > 0 && (
                     <GridToolbar
                         key={id + '_grid_toolbar'}

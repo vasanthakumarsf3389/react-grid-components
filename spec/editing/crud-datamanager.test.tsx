@@ -55,7 +55,7 @@ describe('CRUD Operations with DataManager Integration', () => {
   const waitForGridRender = async (container: HTMLElement) => {
     await waitFor(() => {
       expect(container.querySelector('.sf-grid')).not.toBeNull();
-      expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+      expect(container.querySelector('.sf-spinner')).toBeNull();
     });
   };
 

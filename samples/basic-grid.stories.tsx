@@ -720,6 +720,66 @@ export const NormalEditingWithToolbar: Story = {
   }
 };
 
+export const CommandColumnEditing: Story = {
+  args: {
+    dataSource: data,
+    enableHover: true,
+    enableRtl: false,
+    gridLines: 'Both',
+    height: 600,
+    enableToggle: true,
+    Selectiontype: SelectionMode.Multiple,
+    isPrimaryKey: true,
+    allowEdit: true,
+    defaultFreightValue: 120,
+    allowDelete: true,
+    confirmOnDelete: false,
+    allowAdd: true,
+    toolbar: ['Add'],
+    editOnDoubleClick: true,
+    allowTextWrap: false,
+    wrapMode: "Both",
+    width: '100%',
+    allowPaging: true,
+    orderDateEllipsisClipMode: 'EllipsisWithTooltip',
+    allowSorting: true,
+    allowFiltering: true,
+    disableHtmlEncode: true,
+    enableStickyHeader: true,
+    enableHtmlSanitizer: false,
+    showOrderID: true,
+    orderIDWidth: '180',
+    orderIDTextAlign: 'Right',
+    enableAriaLabel: false,
+    useOrderIDTemplate: false,
+    useOrderIDValueAccessor: false,
+    useOrderIDHeaderValueAccessor: false,
+    activeEditType: EditType.CheckBox,
+    orderDateEditType: EditType.DatePicker,
+    shipCountryEditType: EditType.DropDownList,
+    // _freightEditType: EditType.NumericTextBox,
+    cascadingData: cascadingData,
+    showOrderDate: true,
+    orderDateWidth: '90',
+    orderDateFormat: 'M/d/yyyy',
+    showFreight: true,
+    freightWidth: '120',
+    freightFormat: {format: 'C2'},
+    showShipCountry: false,
+    shipCountryWidth: '130',
+    showShipName: true,
+    showAddNewRow: false,
+    isSingleClickEdit: false,
+    shipNameWidth: '130',
+    showPerformanceMetrics: true,
+    initialShowSpinner: false,
+    showAggregates: true,
+    showSalary: false,
+    showCost: false,
+    showCommandEditing: true
+  }
+};
+
 export const AllFeature: Story = {
   args: {
     // Reusing props from Default story

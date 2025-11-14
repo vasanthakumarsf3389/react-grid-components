@@ -58,7 +58,7 @@ describe('Grid showAddNewRow Selection Functionality', () => {
         // Wait for grid to render
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         // Wait for grid to render
@@ -118,7 +118,7 @@ describe('Grid showAddNewRow Selection Functionality', () => {
         // Wait for grid to render
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         // Wait for grid to render
@@ -178,7 +178,7 @@ describe('Grid showAddNewRow Selection Functionality', () => {
         // Wait for grid to render
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         // Wait for grid to render
@@ -239,7 +239,7 @@ describe('Grid showAddNewRow Selection Functionality', () => {
         // Wait for grid to render
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         // Wait for grid to render with add new row
@@ -289,7 +289,7 @@ describe('Grid showAddNewRow Selection Functionality', () => {
         // Wait for grid to render
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         // Wait for grid to render
@@ -352,7 +352,7 @@ describe('Grid showAddNewRow Selection Functionality', () => {
         // Wait for grid to render
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         // Wait for grid to render with toolbar
@@ -420,7 +420,7 @@ describe('Grid showAddNewRow Selection Functionality', () => {
         // Wait for grid to render
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         // Wait for grid to render
@@ -516,7 +516,7 @@ describe('Grid showAddNewRow Selection Functionality', () => {
         // Wait for grid to render
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         // Wait for grid to render
@@ -609,7 +609,7 @@ describe('Grid showAddNewRow Selection Functionality', () => {
         // Wait for grid to render
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         // Wait for grid to render
@@ -700,7 +700,7 @@ describe('Grid showAddNewRow Selection Functionality', () => {
         // Wait for grid to render
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         // Wait for grid to render
@@ -765,7 +765,7 @@ describe('Grid showAddNewRow Selection Functionality', () => {
         // Wait for grid to render
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         // Wait for grid to render

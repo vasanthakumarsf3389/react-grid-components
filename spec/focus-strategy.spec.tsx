@@ -98,7 +98,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
         });
 
@@ -171,7 +171,7 @@ describe('Grid Focus Strategy', () => {
             );
 
             await waitFor(() => {
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             await act(async () => {
@@ -300,7 +300,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             const cells = container.querySelectorAll('td');
             expect(cells.length).toBeGreaterThan(0);
@@ -475,7 +475,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
                 expect(gridRef.current).not.toBeNull();
                 expect(gridRef.current.element).not.toBeNull();
             });
@@ -866,7 +866,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             expect(dataBoundMock).toHaveBeenCalled();
             await act(async () => {
@@ -922,7 +922,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
         });
 
@@ -999,7 +999,7 @@ describe('Grid Focus Strategy', () => {
             );
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             await act(async () => {
                 gridRef.current.element.focus();
@@ -1056,7 +1056,7 @@ describe('Grid Focus Strategy', () => {
             );
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             await act(async () => {
                 fireEvent.keyDown(document.body, { key: 'w', code: 'KeyW', altKey: true, keyCode: 87 });
@@ -1126,7 +1126,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             const cells = container.querySelectorAll('td');
             expect(cells.length).toBeGreaterThan(0);
@@ -1165,7 +1165,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             const cells = container.querySelectorAll('td:not(.sf-display-none)');
             expect(cells.length).toBeGreaterThan(0);
@@ -1237,7 +1237,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             const cells = container.querySelectorAll('td');
             expect(cells.length).toBeGreaterThan(0);
@@ -1301,7 +1301,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             const cells = container.querySelectorAll('td:not(.sf-display-none)');
             expect(cells.length).toBeGreaterThan(0);
@@ -1374,7 +1374,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             const cells = container.querySelectorAll('td:not(.sf-display-none)');
             expect(cells.length).toBeGreaterThan(0);
@@ -1465,7 +1465,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             const cells = container.querySelectorAll('td');
             expect(cells.length).toBeGreaterThan(0);
@@ -1500,7 +1500,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             const focusModule = gridRef.current.focusModule;
             expect(focusModule).not.toBeNull();
@@ -1528,7 +1528,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             await act(async () => {
                 fireEvent.focus(gridRef.current.element);
@@ -1569,7 +1569,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             const getNavigationDirection = gridRef.current.focusModule.getNavigationDirection;
             expect(typeof getNavigationDirection).toBe('function');
@@ -1632,7 +1632,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             const cells = container.querySelectorAll('td');
             expect(cells.length).toBeGreaterThan(0);
@@ -1665,7 +1665,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             const cells = container.querySelectorAll('td');
             expect(cells.length).toBeGreaterThan(0);
@@ -1701,7 +1701,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             const cells = container.querySelectorAll('td');
             expect(cells.length).toBeGreaterThan(0);
@@ -1735,7 +1735,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             const rows: NodeListOf<HTMLTableRowElement> = container.querySelectorAll('tbody tr');
             const lastRow = rows[rows.length - 1];
@@ -1784,7 +1784,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             const headerCells = container.querySelectorAll('th');
             const firstHeaderCell = headerCells[0];
@@ -1857,7 +1857,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             const headerScrollElement = gridRef.current.headerScrollRef;
             const contentScrollElement = gridRef.current.contentScrollRef;
@@ -1997,7 +1997,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             const headerScrollElement = gridRef.current.headerScrollRef;
             const contentScrollElement = gridRef.current.contentScrollRef;
@@ -2056,7 +2056,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             const headerScrollElement = gridRef.current.headerScrollRef;
             const contentScrollElement = gridRef.current.contentScrollRef;
@@ -2093,7 +2093,7 @@ describe('Grid Focus Strategy', () => {
             );
             await waitFor(() => {
                 expect(dynContainer.querySelector('.sf-grid')).not.toBeNull();
-                expect(dynContainer.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(dynContainer.querySelector('.sf-spinner')).toBeNull();
             });
             const cells = dynContainer.querySelectorAll('td');
             await act(async () => {
@@ -2119,7 +2119,7 @@ describe('Grid Focus Strategy', () => {
                 );
             });
             await waitFor(() => {
-                expect(dynContainer.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(dynContainer.querySelector('.sf-spinner')).toBeNull();
             });
             const newCells = dynContainer.querySelectorAll('td');
             await act(async () => {
@@ -2151,7 +2151,7 @@ describe('Grid Focus Strategy', () => {
             );
             await waitFor(() => {
                 expect(visContainer.querySelector('.sf-grid')).not.toBeNull();
-                expect(visContainer.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(visContainer.querySelector('.sf-spinner')).toBeNull();
             });
             const cells = visContainer.querySelectorAll('td');
             await act(async () => {
@@ -2182,7 +2182,7 @@ describe('Grid Focus Strategy', () => {
                 );
             });
             await waitFor(() => {
-                expect(visContainer.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(visContainer.querySelector('.sf-spinner')).toBeNull();
             });
             await act(async () => {
                 fireEvent.keyDown(document.body, { key: 'w', code: 'KeyW', altKey: true, keyCode: 87 });
@@ -2221,7 +2221,7 @@ describe('Grid Focus Strategy', () => {
                 );
             });
             await waitFor(() => {
-                expect(visContainer.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(visContainer.querySelector('.sf-spinner')).toBeNull();
             });
             await act(async () => {
                 fireEvent.keyDown(document.body, { key: 'w', code: 'KeyW', altKey: true, keyCode: 87 });
@@ -2289,7 +2289,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             const cells = container.querySelectorAll('td');
             expect(cells.length).toBeGreaterThan(0);
@@ -2337,7 +2337,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             const cells = container.querySelectorAll('td');
             expect(cells.length).toBeGreaterThan(0);
@@ -2368,7 +2368,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             const cells = container.querySelectorAll('td');
             expect(cells.length).toBeGreaterThan(0);
@@ -2414,7 +2414,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             const cells = container.querySelectorAll('td');
             expect(cells.length).toBeGreaterThan(0);
@@ -2463,7 +2463,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             const headerCells = container.querySelectorAll('th');
             await act(async () => {
@@ -2555,7 +2555,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             await act(async () => {
                 fireEvent.click(buttonRef.current);
@@ -2634,7 +2634,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
                 expect(container.querySelector('.sf-grid-footer-container')).not.toBeNull();
                 expect(container.querySelector('.sf-grid-summary-row')).not.toBeNull();
                 expect(container.querySelectorAll('.sf-grid-summary-row')).toHaveLength(2);
@@ -2760,7 +2760,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
                 expect(container.querySelector('.sf-rtl')).not.toBeNull();
             });
             const cells = container.querySelectorAll('td');
@@ -2799,7 +2799,7 @@ describe('Grid Focus Strategy', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
                 expect(container.querySelector('.sf-row-min-height')).not.toBeNull();
             });
             const cells = container.querySelectorAll('td');

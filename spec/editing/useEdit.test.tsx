@@ -95,7 +95,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
         // Wait for grid to render
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         // Verify initial edit state matches original Grid behavior
@@ -129,7 +129,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
         // Wait for grid to render
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
         // Verify all edit settings are properly configured
         expect(gridRef.current?.editSettings).toEqual(expect.objectContaining(editSettings));
@@ -152,7 +152,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
         // Wait for grid to render
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         // Start editing first row
@@ -187,7 +187,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
         // Wait for grid to render
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         // Start editing
@@ -230,7 +230,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
           // Wait for grid to render
           await waitFor(() => {
               expect(container.querySelector('.sf-grid')).not.toBeNull();
-              expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+              expect(container.querySelector('.sf-spinner')).toBeNull();
           });
 
           // Select first row (simulate row selection)
@@ -267,7 +267,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
           // Wait for grid to render
           await waitFor(() => {
               expect(container.querySelector('.sf-grid')).not.toBeNull();
-              expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+              expect(container.querySelector('.sf-spinner')).toBeNull();
           });
 
           // Start editing
@@ -303,7 +303,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
           // Wait for grid to render
           await waitFor(() => {
               expect(container.querySelector('.sf-grid')).not.toBeNull();
-              expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+              expect(container.querySelector('.sf-spinner')).toBeNull();
           });
 
           // Start editing
@@ -348,7 +348,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
           // Wait for grid to render
           await waitFor(() => {
               expect(container.querySelector('.sf-grid')).not.toBeNull();
-              expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+              expect(container.querySelector('.sf-spinner')).toBeNull();
           });
 
           const secondRow: HTMLTableRowElement = gridRef.current.getRowByIndex(1);
@@ -387,7 +387,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
           // Wait for grid to render
           await waitFor(() => {
               expect(container.querySelector('.sf-grid')).not.toBeNull();
-              expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+              expect(container.querySelector('.sf-spinner')).toBeNull();
           });
 
           const firstRow = gridRef.current.getRowByIndex(0);
@@ -420,7 +420,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
           // Wait for grid to render
           await waitFor(() => {
               expect(container.querySelector('.sf-grid')).not.toBeNull();
-              expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+              expect(container.querySelector('.sf-spinner')).toBeNull();
           });
 
           // Start editing
@@ -468,7 +468,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
           // Wait for grid to render
           await waitFor(() => {
               expect(container.querySelector('.sf-grid')).not.toBeNull();
-              expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+              expect(container.querySelector('.sf-spinner')).toBeNull();
           });
 
           // Start editing
@@ -524,7 +524,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
           // Wait for grid to render
           await waitFor(() => {
               expect(container.querySelector('.sf-grid')).not.toBeNull();
-              expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+              expect(container.querySelector('.sf-spinner')).toBeNull();
           });
 
           const newRecord = { name: 'New User', age: 28, email: 'new@example.com', active: true };
@@ -560,7 +560,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
           // Wait for grid to render
           await waitFor(() => {
               expect(container.querySelector('.sf-grid')).not.toBeNull();
-              expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+              expect(container.querySelector('.sf-spinner')).toBeNull();
           });
 
           const newRecord = { name: 'Inserted User', age: 32, email: 'inserted@example.com', active: false };
@@ -611,7 +611,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Add record without providing data - should use defaultValues
@@ -671,7 +671,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Add record without data
@@ -723,7 +723,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Add record without data
@@ -768,7 +768,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Add record without data
@@ -812,7 +812,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Add record without data and save
@@ -866,7 +866,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Add record without data
@@ -931,7 +931,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(topContainer.querySelector('.sf-grid')).not.toBeNull();
-                expect(topContainer.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(topContainer.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Add record without data
@@ -974,7 +974,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // With showAddNewRow, the add new row should be automatically displayed
@@ -1009,7 +1009,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
           // Wait for grid to render
           await waitFor(() => {
               expect(container.querySelector('.sf-grid')).not.toBeNull();
-              expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+              expect(container.querySelector('.sf-spinner')).toBeNull();
           });
 
           const updatedData = { id: 1, name: 'John Updated', age: 31, email: 'john.updated@example.com', active: true };
@@ -1044,7 +1044,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
           // Wait for grid to render
           await waitFor(() => {
               expect(container.querySelector('.sf-grid')).not.toBeNull();
-              expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+              expect(container.querySelector('.sf-spinner')).toBeNull();
           });
 
           const updatedData = { id: 1, name: 'John Updated', age: 31, email: 'john.updated@example.com', active: true };
@@ -1072,7 +1072,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
           // Wait for grid to render
           await waitFor(() => {
               expect(container.querySelector('.sf-grid')).not.toBeNull();
-              expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+              expect(container.querySelector('.sf-spinner')).toBeNull();
           });
 
           // Delete record by primary key
@@ -1107,7 +1107,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
           // Wait for grid to render
           await waitFor(() => {
               expect(container.querySelector('.sf-grid')).not.toBeNull();
-              expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+              expect(container.querySelector('.sf-spinner')).toBeNull();
           });
           await act(async() => {
             // Select second row
@@ -1151,7 +1151,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Select multiple rows (first and third row)
@@ -1197,7 +1197,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Delete multiple records by passing array of data
@@ -1234,7 +1234,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Delete multiple records by primary key values
@@ -1274,7 +1274,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Delete with mixed data types (full records and partial records)
@@ -1322,7 +1322,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Select multiple rows
@@ -1376,7 +1376,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Select multiple rows
@@ -1428,7 +1428,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Select single row
@@ -1474,7 +1474,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Attempt to delete selected records
@@ -1530,7 +1530,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Attempt to delete selected records
@@ -1572,7 +1572,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Attempt to delete selected records
@@ -1618,7 +1618,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Attempt to delete selected records
@@ -1648,7 +1648,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Clear any existing selection
@@ -1685,7 +1685,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Select and delete two records
@@ -1731,7 +1731,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Select multiple rows
@@ -1791,7 +1791,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
           // Wait for grid to render
           await waitFor(() => {
               expect(container.querySelector('.sf-grid')).not.toBeNull();
-              expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+              expect(container.querySelector('.sf-spinner')).toBeNull();
           });
 
           await act(async() => {
@@ -1827,7 +1827,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
           // Wait for grid to render
           await waitFor(() => {
               expect(container.querySelector('.sf-grid')).not.toBeNull();
-              expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+              expect(container.querySelector('.sf-spinner')).toBeNull();
           });
 
           // Start editing
@@ -1866,7 +1866,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
           // Wait for grid to render
           await waitFor(() => {
               expect(container.querySelector('.sf-grid')).not.toBeNull();
-              expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+              expect(container.querySelector('.sf-spinner')).toBeNull();
           });
 
           await act(async() => {
@@ -1903,7 +1903,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
           // Wait for grid to render
           await waitFor(() => {
               expect(container.querySelector('.sf-grid')).not.toBeNull();
-              expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+              expect(container.querySelector('.sf-spinner')).toBeNull();
           });
 
           // Select first row
@@ -1937,7 +1937,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
           // Wait for grid to render
           await waitFor(() => {
               expect(container.querySelector('.sf-grid')).not.toBeNull();
-              expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+              expect(container.querySelector('.sf-spinner')).toBeNull();
           });
 
           // Start editing
@@ -1982,7 +1982,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
           // Wait for grid to render
           await waitFor(() => {
               expect(container.querySelector('.sf-grid')).not.toBeNull();
-              expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+              expect(container.querySelector('.sf-spinner')).toBeNull();
           });
 
           // Start editing
@@ -2028,7 +2028,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
           // Wait for grid to render
           await waitFor(() => {
               expect(container.querySelector('.sf-grid')).not.toBeNull();
-              expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+              expect(container.querySelector('.sf-spinner')).toBeNull();
           });
 
           // Attempt to start editing when not allowed
@@ -2053,7 +2053,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
           // Wait for grid to render
           await waitFor(() => {
               expect(container.querySelector('.sf-grid')).not.toBeNull();
-              expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+              expect(container.querySelector('.sf-spinner')).toBeNull();
           });
 
           // Attempt to add record when not allowed
@@ -2080,7 +2080,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
           // Wait for grid to render
           await waitFor(() => {
               expect(container.querySelector('.sf-grid')).not.toBeNull();
-              expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+              expect(container.querySelector('.sf-spinner')).toBeNull();
           });
 
           // Attempt to delete record when not allowed
@@ -2110,7 +2110,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Attempt to start editing when not allowed
@@ -2135,7 +2135,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Attempt to add record when not allowed
@@ -2163,7 +2163,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Attempt to delete record when not allowed
@@ -2192,7 +2192,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Double click on first row
@@ -2254,7 +2254,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Start editing
@@ -2283,7 +2283,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Start editing
@@ -2313,7 +2313,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Start editing
@@ -2343,7 +2343,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Start editing
@@ -2378,7 +2378,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Start editing
@@ -2434,7 +2434,7 @@ describe('useEdit Hook - Inline Editing Implementation Test Suite', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Start editing

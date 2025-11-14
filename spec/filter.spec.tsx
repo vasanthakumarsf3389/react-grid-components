@@ -144,7 +144,7 @@ describe('Grid Filtering Functionality (Continuous Action Optimized - Passing)',
       await waitFor(() => {
         expect(container.querySelector('.sf-filter-row')).not.toBeNull();
         expect(container.querySelector('.sf-grid')).not.toBeNull();
-        expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+        expect(container.querySelector('.sf-spinner')).toBeNull();
       });
 
       const input = Array.from(container.querySelectorAll('.sf-filter-row .sf-cell input'))
@@ -186,7 +186,7 @@ describe('Grid Filtering Functionality (Continuous Action Optimized - Passing)',
       await waitFor(() => {
         expect(container.querySelector('.sf-filter-row')).not.toBeNull();
         expect(container.querySelector('.sf-grid')).not.toBeNull();
-        expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+        expect(container.querySelector('.sf-spinner')).toBeNull();
       });
 
       // Apply filters using Enter
@@ -420,7 +420,7 @@ describe('Grid Filtering Functionality (Continuous Action Optimized - Passing)',
       await waitFor(() => {
         expect(container.querySelector('.sf-grid')).not.toBeNull();
         expect(container.querySelector('.sf-filter-row')).not.toBeNull();
-        expect(container.querySelector('.sf-spin-hide')).not.toBeNull(); // wait for initial load complete
+        expect(container.querySelector('.sf-spinner')).toBeNull(); // wait for initial load complete
       });
 
       // Find the CustomerID filter input
@@ -852,7 +852,7 @@ describe('Grid Filtering Functionality (Continuous Action Optimized - Passing)',
       await waitFor(() => {
         expect(container.querySelector('.sf-grid')).not.toBeNull();
         expect(container.querySelector('.sf-filter-row')).not.toBeNull();
-        expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+        expect(container.querySelector('.sf-spinner')).toBeNull();
       });
 
       // Find the CustomerID filter input
@@ -893,7 +893,7 @@ describe('Grid Filtering Functionality (Continuous Action Optimized - Passing)',
       await waitFor(() => {
         expect(container.querySelector('.sf-filter-row')).not.toBeNull();
         expect(container.querySelector('.sf-grid')).not.toBeNull();
-        expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+        expect(container.querySelector('.sf-spinner')).toBeNull();
       });
 
       // Test string column filtering
@@ -1061,7 +1061,7 @@ describe('Grid Filtering Functionality (Continuous Action Optimized - Passing)',
       await waitFor(() => {
         expect(container.querySelector('.sf-filter-row')).not.toBeNull();
         expect(container.querySelector('.sf-grid')).not.toBeNull();
-        expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+        expect(container.querySelector('.sf-spinner')).toBeNull();
       });
 
       // Find the OrderDate filter input
@@ -1177,7 +1177,7 @@ describe('Grid Filtering Functionality (Continuous Action Optimized - Passing)',
       await waitFor(() => {
         expect(container.querySelector('.sf-grid')).not.toBeNull();
         expect(container.querySelector('.sf-filter-row')).not.toBeNull();
-        expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+        expect(container.querySelector('.sf-spinner')).toBeNull();
       });
 
       const verifiedFilterInput = Array.from(container.querySelectorAll('.sf-filter-row .sf-cell input'))
@@ -1230,7 +1230,7 @@ describe('Grid Filtering Functionality (Continuous Action Optimized - Passing)',
       await waitFor(() => {
         expect(container.querySelector('.sf-grid')).not.toBeNull();
         expect(container.querySelector('.sf-filter-row')).not.toBeNull();
-        expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+        expect(container.querySelector('.sf-spinner')).toBeNull();
       });
 
       await act(async () => {
@@ -1263,7 +1263,7 @@ describe('Grid Filtering Functionality (Continuous Action Optimized - Passing)',
       await waitFor(() => {
         expect(container.querySelector('.sf-grid')).not.toBeNull();
         expect(container.querySelector('.sf-filter-row')).not.toBeNull();
-        expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+        expect(container.querySelector('.sf-spinner')).toBeNull();
       });
 
       await act(async () => {
@@ -1536,7 +1536,7 @@ describe('Grid Filtering Functionality (Continuous Action Optimized - Passing)',
       await waitFor(() => {
         expect(container.querySelector('.sf-grid')).not.toBeNull();
         expect(container.querySelector('.sf-filter-row')).not.toBeNull();
-        expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+        expect(container.querySelector('.sf-spinner')).toBeNull();
       });
 
       // Apply multiple filters
@@ -1620,6 +1620,10 @@ describe('Grid Filtering Functionality (Continuous Action Optimized - Passing)',
       });
 
       await waitFor(() => {
+          expect(container.querySelector('.sf-spinner')).toBeNull();
+      });
+
+      await waitFor(() => {
         // No filters should remain
         expect(gridRef.current.filterSettings.columns).toHaveLength(0);
         
@@ -1629,7 +1633,7 @@ describe('Grid Filtering Functionality (Continuous Action Optimized - Passing)',
         expect(beginArgs.requestType).toBe('Refresh');
         
         // Check that actionComplete was called
-        expect(onRefresh).toHaveBeenCalledTimes(1);
+        expect(onRefresh).toHaveBeenCalledTimes(2); // both onActionBegin + onActionComplete with same requestType 'Refresh'
       });
     });
   });
@@ -1653,7 +1657,7 @@ describe('Grid Filtering Functionality (Continuous Action Optimized - Passing)',
       await waitFor(() => {
         expect(container.querySelector('.sf-grid')).not.toBeNull();
         expect(container.querySelector('.sf-filter-row')).not.toBeNull();
-        expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+        expect(container.querySelector('.sf-spinner')).toBeNull();
       });
 
       await act(async () => {
@@ -1675,7 +1679,7 @@ describe('Grid Filtering Functionality (Continuous Action Optimized - Passing)',
       // Test focus and click events
       await act(async () => {
         // Find the orderDate filter input
-        const orderDateFilterInput = container.querySelector('.sf-filter-row .sf-cell input.sf-datepicker') as HTMLInputElement;
+        const orderDateFilterInput = container.querySelector('.sf-filter-row .sf-cell .sf-datepicker input') as HTMLInputElement;
         
         fireEvent.focus(orderDateFilterInput);
         fireEvent.click(orderDateFilterInput);
@@ -1699,7 +1703,7 @@ describe('Grid Filtering Functionality (Continuous Action Optimized - Passing)',
       await waitFor(() => {
         expect(container.querySelector('.sf-grid')).not.toBeNull();
         expect(container.querySelector('.sf-filter-row')).not.toBeNull();
-        expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+        expect(container.querySelector('.sf-spinner')).toBeNull();
       });
 
       // Apply a filter

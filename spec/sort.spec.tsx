@@ -63,7 +63,7 @@ describe('Grid Sorting Functionality', () => {
 
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             const orderIdHeaderCell = container.querySelectorAll('.sf-grid-header-row .sf-cell')[0] as HTMLElement;
@@ -452,8 +452,7 @@ describe('Grid Sorting Functionality', () => {
 
             // Wait for spinner to disappear
             await waitFor(() => {
-                expect(container.querySelector('.sf-spin-show')).toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull()
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             await act(async () => {
@@ -484,8 +483,7 @@ describe('Grid Sorting Functionality', () => {
 
             // Wait for spinner to disappear
             await waitFor(() => {
-                expect(container1.querySelector('.sf-spin-show')).toBeNull();
-                expect(container1.querySelector('.sf-spin-hide')).not.toBeNull()
+                expect(container1.querySelector('.sf-spinner')).toBeNull();
             });
 
             await act(async () => {
@@ -655,7 +653,7 @@ describe('Grid Sorting Functionality', () => {
 
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Find and click on the header cell
@@ -716,7 +714,7 @@ describe('Grid Sorting Functionality', () => {
 
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
              // Find and click on the header cell
             const rowCell = container.querySelector('.sf-grid-content-row .sf-cell');
@@ -762,7 +760,7 @@ describe('Grid Sorting Functionality', () => {
             );
 
             await waitFor(() => {
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             await act(async () => {

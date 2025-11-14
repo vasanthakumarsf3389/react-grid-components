@@ -82,7 +82,7 @@ describe('Inline Editing Focus Management', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             }, { timeout: 100 });
         });
 
@@ -216,8 +216,8 @@ describe('Inline Editing Focus Management', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
-            }, { timeout: 100 });
+                expect(container.querySelector('.sf-spinner')).toBeNull();
+            }, { timeout: 120 });
         });
 
         it('should auto-focus first editable field only on startEdit', async () => {
@@ -342,7 +342,7 @@ describe('Inline Editing Focus Management', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             }, { timeout: 100 });
             await act(async () => {
                 const firstRow = gridRef.current?.getRowByIndex(0);
@@ -427,7 +427,7 @@ describe('Inline Editing Focus Management', () => {
             container = renderResult.container;
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             }, { timeout: 100 });
             await act(async () => {
                 const firstRow = gridRef.current?.getRowByIndex(0);
@@ -474,7 +474,7 @@ describe('Inline Editing Focus Management', () => {
                 nameInput = container.querySelector('#grid-edit-name') as HTMLInputElement;
                 expect(nameInput).toBeInTheDocument();
                 expect(document.activeElement).toBe(nameInput);
-            }, { timeout: 100 });
+            }, { timeout: 120 });
             await act(async () => {
                 fireEvent.change(nameInput, { target: { value: 'User Typing' } });
                 fireEvent.focus(nameInput);

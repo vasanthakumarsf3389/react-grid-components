@@ -8,7 +8,7 @@ import { ICheckbox, CheckboxProps } from '@syncfusion/react-buttons';
 import { IDatePicker, DatePickerProps } from '@syncfusion/react-calendars';
 import { IDropDownList, DropDownListProps } from '@syncfusion/react-dropdowns';
 import { ActionType, EditType, NewRowPosition } from '../types/enum';
-import { ValueType } from './';
+import { IRow, ValueType } from './';
 
 /**
  * Edit mode enumeration for Grid edit modes.
@@ -730,6 +730,13 @@ export interface EditCellProps<T = unknown> {
      * @default null
      */
     formState?: FormState;
+
+    /**
+     * Provides access to row data, row index, and row state information.
+     *
+     * @default -
+     */
+    rowObject?: IRow<ColumnProps<T>>;
 }
 
 /**
@@ -850,9 +857,11 @@ export interface InlineEditFormRef<T = unknown> {
     /**
      * Sets focus on the first editable field in the form.
      *
+     * @param last - Optional parameter indicating whether to focus the last field.
+     * @param edit - Optional parameter indicating whether to ignore the primary column.
      * @returns {void}
      */
-    focusFirstField: () => void;
+    focusFirstField: (last?: boolean, edit?: boolean) => void;
 
     /**
      * Validates all form fields and returns the validation result.
@@ -902,6 +911,13 @@ export interface InlineEditFormRef<T = unknown> {
      * @default null
      */
     formRef: React.RefObject<IFormValidator>;
+
+    /**
+     * Reference to the row DOM element.
+     *
+     * @default null
+     */
+    readonly rowRef: RefObject<HTMLTableRowElement | null>;
 }
 
 /**
@@ -930,6 +946,13 @@ export interface InlineEditFormProps<T = unknown> extends EditFormProps<T> {
      * @default false
      */
     isAddOperation: boolean;
+
+    /**
+     * Provides access to row data, row index, and row state information.
+     *
+     * @default -
+     */
+    rowObject?: IRow<ColumnProps<T>>;
 }
 
 /**
@@ -987,6 +1010,13 @@ export interface ValidationTooltipsProps {
      * @default null
      */
     editCellRefs?: React.RefObject<{ [field: string]: EditCellRef }>;
+
+    /**
+     * Reference to the row DOM element.
+     *
+     * @default null
+     */
+    rowRef?: RefObject<HTMLTableRowElement>;
 }
 
 /**

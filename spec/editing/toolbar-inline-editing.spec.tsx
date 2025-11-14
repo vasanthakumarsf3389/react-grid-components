@@ -44,7 +44,7 @@ describe('Toolbar Inline Editing Integration', () => {
         // Wait for grid to render
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => {
@@ -104,7 +104,7 @@ describe('Toolbar Inline Editing Integration', () => {
         // Wait for grid to render
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => {
@@ -143,7 +143,7 @@ describe('Toolbar Inline Editing Integration', () => {
         // Wait for grid to render
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await act(async () => {
@@ -189,7 +189,7 @@ describe('Toolbar Inline Editing Integration', () => {
         // Wait for grid to render
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await act(async () => {
@@ -229,7 +229,7 @@ describe('Toolbar Inline Editing Integration', () => {
         // Wait for grid to render
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await act(async() => {
@@ -302,7 +302,7 @@ describe('Toolbar Inline Editing Integration', () => {
         // Wait for grid to render
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         const grid = container.querySelector('.sf-grid');
@@ -377,7 +377,7 @@ describe('Toolbar Inline Editing Integration', () => {
         // Wait for grid to render
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => {
@@ -416,7 +416,7 @@ describe('Toolbar Inline Editing Integration', () => {
         // Wait for grid to render
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await act(async () => {

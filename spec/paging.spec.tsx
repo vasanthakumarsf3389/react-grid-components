@@ -95,7 +95,7 @@ describe('Grid Paging Functionality', () => {
         // Wait for both grid and spinner
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         }, {
             timeout: 3000,
             interval: 100

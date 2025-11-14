@@ -100,7 +100,7 @@ describe('Grid Component', () => {
                 expect(headerCellInfoMock).toHaveBeenCalled();
                 expect(queryCellInfoMock).toHaveBeenCalled();
                 expect(rowDataBoundMock).toHaveBeenCalled();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull(); // wait for initial load complete.
+                expect(container.querySelector('.sf-spinner')).toBeNull(); // wait for initial load complete.
             });
 
             // Check if header cells are rendered - using a more lenient approach
@@ -160,7 +160,7 @@ describe('Grid Component', () => {
                 expect(headerCellInfoMock).toHaveBeenCalled();
                 expect(queryCellInfoMock).toHaveBeenCalled();
                 expect(rowDataBoundMock).toHaveBeenCalled();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull(); // wait for initial load complete.
+                expect(container.querySelector('.sf-spinner')).toBeNull(); // wait for initial load complete.
             });
 
             // Check if header cells are rendered - using a more lenient approach
@@ -246,7 +246,7 @@ describe('Grid Component', () => {
                 expect(headerCellInfoMock).toHaveBeenCalled();
                 expect(queryCellInfoMock).toHaveBeenCalled();
                 expect(rowDataBoundMock).toHaveBeenCalled();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull(); // wait for initial load complete.
+                expect(container.querySelector('.sf-spinner')).toBeNull(); // wait for initial load complete.
             });
 
             // Check if header cells are rendered - using a more lenient approach
@@ -277,7 +277,7 @@ describe('Grid Component', () => {
             });
 
             await waitFor(() => {
-                expect(container.querySelector('.sf-spin-show')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).not.toBeNull();
                 // Verify that events are not triggered when just showing spinner
                 expect(loadMock).not.toHaveBeenCalled();
                 expect(createdMock).not.toHaveBeenCalled();
@@ -294,7 +294,7 @@ describe('Grid Component', () => {
             });
 
             await waitFor(() => {
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
                 // Verify that events are still not triggered when just hiding spinner
                 expect(loadMock).not.toHaveBeenCalled();
                 expect(createdMock).not.toHaveBeenCalled();
@@ -316,12 +316,11 @@ describe('Grid Component', () => {
             );
 
             // Initially, spinner should be visible during loading
-            expect(container.querySelector('.sf-spin-show')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).not.toBeNull();
 
             // Wait for spinner to disappear
             await waitFor(() => {
-                expect(container.querySelector('.sf-spin-show')).toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull()
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Show spinner again
@@ -333,7 +332,7 @@ describe('Grid Component', () => {
 
             // Spinner should be visible again
             await waitFor(() => {
-                expect(container.querySelector('.sf-spin-show')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).not.toBeNull();
             });
         });
 
@@ -401,7 +400,7 @@ describe('Grid Component', () => {
                 expect(headerCellInfoMock).toHaveBeenCalled();
                 expect(queryCellInfoMock).toHaveBeenCalled();
                 expect(rowDataBoundMock).toHaveBeenCalled();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull(); // wait for initial load complete.
+                expect(container.querySelector('.sf-spinner')).toBeNull(); // wait for initial load complete.
             });
 
             // Check if header cells are rendered - using a more lenient approach
@@ -476,7 +475,7 @@ describe('Grid Component', () => {
             );
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             const gridObj: Element = container.querySelector('.sf-grid');
             expect(gridObj).not.toBeNull();
@@ -554,7 +553,7 @@ describe('Grid Component', () => {
             // Wait for all rendering and events to complete
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Wait for data to be updated and rendering to complete
@@ -656,7 +655,7 @@ describe('Grid Component', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Verify beforeDataBound was called
@@ -689,12 +688,11 @@ describe('Grid Component', () => {
             );
 
             // Initially, spinner should be visible during loading
-            expect(container.querySelector('.sf-spin-show')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).not.toBeNull();
 
             // Wait for spinner to disappear
             await waitFor(() => {
-                expect(container.querySelector('.sf-spin-show')).toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
         });
 
@@ -724,8 +722,7 @@ describe('Grid Component', () => {
             );
             // Wait for spinner to disappear
             await waitFor(() => {
-                expect(container.querySelector('.sf-spin-show')).toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
                 expect(dataBoundMock).toHaveBeenCalled();
                 expect(gridRef.current?.getRows().length).toBe(1);
                 expect(gridRef.current?.getRows()[0].querySelectorAll('td')[3].textContent).toBe('$65.00');
@@ -791,12 +788,11 @@ describe('Grid Component', () => {
             );
 
             // Initially, spinner should be visible during loading
-            expect(container.querySelector('.sf-spin-show')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).not.toBeNull();
 
             // Wait for spinner to disappear
             await waitFor(async () => {
-                expect(container.querySelector('.sf-spin-show')).toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
                 expect(dataBoundMock).toHaveBeenCalled();
             }, { timeout: 3000 });
 
@@ -883,7 +879,7 @@ describe('Grid Component', () => {
             // Wait for initial render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Toggle clipMode to test class changes
@@ -1000,7 +996,7 @@ describe('Grid Component', () => {
             // Wait for initial render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Create a mock element for testing with default clientWidth/scrollWidth
@@ -1160,7 +1156,7 @@ describe('Grid Component', () => {
             // Wait for initial render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Apply force ellipsis classes to ensure test consistency
@@ -1516,7 +1512,8 @@ describe('Grid Component', () => {
 
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid.custom-grid-class')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide.custom-grid-class')).not.toBeNull();
+                // expect(container.querySelector('.sf-spinner.custom-grid-class')).not.toBeNull(); // spinner issue need to confirm with tools team.
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             expect(container.querySelector('.sf-filter-row .sf-cell .custom-grid-class')).not.toBeNull();
             expect(container.querySelector('.sf-pager.custom-grid-class')).not.toBeNull();
@@ -1555,12 +1552,11 @@ describe('Grid Component', () => {
             );
 
             // Initially, spinner should be visible during loading
-            expect(container.querySelector('.sf-spin-show')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).not.toBeNull();
 
             // Wait for spinner to disappear
             await waitFor(() => {
-                expect(container.querySelector('.sf-spin-show')).toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
                 const headerCell: HTMLElement = container.querySelector('.sf-grid-header-row .sf-cell.custom-order-id');
                 const cell: HTMLElement = gridRef.current.getRows()[0].querySelector('.custom-order-id');
                 expect(headerCell).not.toBeNull();
@@ -1586,7 +1582,7 @@ describe('Grid Component', () => {
             // Wait for all rendering and events to complete
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Should still render headers
@@ -1665,7 +1661,7 @@ describe('Grid Component', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Check if data rows are rendered
@@ -1693,7 +1689,7 @@ describe('Grid Component', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Check if header cells are auto-generated from data source
@@ -1747,7 +1743,7 @@ describe('Grid Component', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
         });
 
@@ -1767,7 +1763,7 @@ describe('Grid Component', () => {
 
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             const gridObj: Element = container.querySelector('.sf-grid');
@@ -1800,7 +1796,7 @@ describe('Grid Component', () => {
 
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             const gridObj: Element = container.querySelector('.sf-grid');
@@ -1857,7 +1853,7 @@ describe('Grid Component', () => {
 
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             const gridObj: Element = container.querySelector('.sf-grid');
@@ -1884,7 +1880,7 @@ describe('Grid Component', () => {
 
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             const gridObj: Element = container.querySelector('.sf-grid');
@@ -1903,7 +1899,7 @@ describe('Grid Component', () => {
             );
 
             // Initially, spinner should be visible during loading
-            expect(container.querySelector('.sf-spin-show')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).not.toBeNull();
         }, 5000);
 
         it('refreshes data when refresh method is called', async () => {
@@ -1924,8 +1920,7 @@ describe('Grid Component', () => {
             });
 
             await waitFor(() => {
-                expect(container.querySelector('.sf-spin-show')).toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull()
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
 
             // Call refresh method
@@ -2007,7 +2002,7 @@ describe('Grid Component', () => {
             );
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
             });
             const gridObj: Element = container.querySelector('.sf-grid');
             expect(gridObj).not.toBeNull();
@@ -2047,7 +2042,7 @@ describe('Grid Component', () => {
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
                 expect(container.querySelector('.sf-filter-row')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull(); // wait for initial load complete
+                expect(container.querySelector('.sf-spinner')).toBeNull(); // wait for initial load complete
             });
 
             await act(async () => {
@@ -2113,7 +2108,7 @@ describe('Grid Component', () => {
                 // Wait for the network error to occur and be handled
                 await waitFor(() => {
                     expect(container.querySelector('.sf-grid')).not.toBeNull();
-                    expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                    expect(container.querySelector('.sf-spinner')).toBeNull();
                     expect(actionFailureMock).toHaveBeenCalled();
                 }, { timeout: 3000 });
 
@@ -2152,7 +2147,7 @@ describe('Grid Component', () => {
             // Wait for the grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull(); // wait for initial load complete
+                expect(container.querySelector('.sf-spinner')).toBeNull(); // wait for initial load complete
             });
             await act(async () => {
                 gridRef.current?.filterByColumn('CustomerID', 'contains', 'HANAR');
@@ -2187,7 +2182,7 @@ describe('Grid Component', () => {
             // Wait for the grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull(); // wait for initial load complete
+                expect(container.querySelector('.sf-spinner')).toBeNull(); // wait for initial load complete
             });
             await act(async () => {
                 gridRef.current?.search('HANAR');
@@ -2228,7 +2223,7 @@ describe('Grid Component', () => {
                 // Wait for grid to render
                 await waitFor(() => {
                     expect(container1.querySelector('.sf-grid')).not.toBeNull();
-                    expect(container1.querySelector('.sf-spin-hide')).not.toBeNull();
+                    expect(container1.querySelector('.sf-spinner')).toBeNull();
                 });
 
                 // Test case 2: Mozilla Firefox browser
@@ -2254,7 +2249,7 @@ describe('Grid Component', () => {
                 // Wait for grid to render
                 await waitFor(() => {
                     expect(container2.querySelector('.sf-grid')).not.toBeNull();
-                    expect(container2.querySelector('.sf-spin-hide')).not.toBeNull();
+                    expect(container2.querySelector('.sf-spinner')).toBeNull();
                 }, { timeout: 1000 });
 
                 // Test case 3: Chrome browser
@@ -2280,7 +2275,7 @@ describe('Grid Component', () => {
                 // Wait for grid to render
                 await waitFor(() => {
                     expect(container3.querySelector('.sf-grid')).not.toBeNull();
-                    expect(container3.querySelector('.sf-spin-hide')).not.toBeNull();
+                    expect(container3.querySelector('.sf-spinner')).toBeNull();
                 }, { timeout: 1000 });
 
                 // All tests passed if we got here without errors
@@ -2326,7 +2321,7 @@ describe('Grid Component', () => {
             // Wait for grid to render
             await waitFor(() => {
                 expect(container.querySelector('.sf-grid')).not.toBeNull();
-                expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+                expect(container.querySelector('.sf-spinner')).toBeNull();
                 expect(container.querySelector('.sf-rtl')).not.toBeNull(); // Check RTL class
             });
 

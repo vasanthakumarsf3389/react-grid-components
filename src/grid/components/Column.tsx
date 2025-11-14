@@ -27,6 +27,7 @@ import { isNullOrUndefined, SanitizeHtmlHelper } from '@syncfusion/react-base';
 import { Checkbox } from '@syncfusion/react-buttons';
 import { ArrowUpIcon, ArrowDownIcon } from '@syncfusion/react-icons';
 import { ColumnProps, IColumnBase, ColumnRef, CellClassProps } from '../types/column.interfaces';
+import { CommandColumnBase } from './CommandColumn';
 
 // CSS class constants following enterprise naming convention
 const CSS_HEADER_CELL_DIV: string = 'sf-grid-header-cell';
@@ -35,6 +36,7 @@ const CSS_SORT_ICON: string = 'sf-grid-sort-container sf-icons';
 const CSS_SORT_NUMBER: string = 'sf-grid-sort-order';
 const CSS_DESCENDING_SORT: string = 'sf-descending sf-icon-descending';
 const CSS_ASENDING_SORT: string = 'sf-ascending sf-icon-ascending';
+const CSS_COMMAND_CELL: string = 'sf-grid-command-cell';
 
 /**
  * ColumnBase component renders a table cell (th or td) with appropriate content
@@ -301,18 +303,27 @@ const ColumnBase: <T>(props: Partial<IColumnBase<T>>) => JSX.Element = memo(<T, 
 
         const content: string | JSX.Element = !isNullOrUndefined(props.cell.column.template) || isMaskCell ? formattedValue as ReactElement
             : sanitizeContent(formattedValue as string);
-        classNames.push(content === '' || isNullOrUndefined(content) ? 'sf-empty-cell' : '');
+        classNames.push((content === '' || isNullOrUndefined(content)) && !props.cell.column.getCommandItems ? 'sf-empty-cell' : '');
         // Remove duplicates and join
         const finalClassName: string = [...new Set(classNames)].filter((cls: string) => cls).join(' ');
 
         return (
-            <td
-                ref={cellRef.current.cellRef}
-                {...customAttributes}
-                className={finalClassName}
-                {...(disableHtmlEncode || isNullOrUndefined(disableHtmlEncode) ?
-                    { children: content } :
-                    { dangerouslySetInnerHTML: { __html: content } })} />
+            props.cell.column.type === ColumnType.Command ?
+                <td
+                    ref={cellRef.current.cellRef}
+                    {...customAttributes}
+                    className={`${finalClassName} ${CSS_COMMAND_CELL}`}
+                >
+                    <CommandColumnBase row={props.row} column={props.cell.column} />
+                </td>
+                :
+                <td
+                    ref={cellRef.current.cellRef}
+                    {...customAttributes}
+                    className={finalClassName}
+                    {...(disableHtmlEncode || isNullOrUndefined(disableHtmlEncode) ?
+                        { children: content } :
+                        { dangerouslySetInnerHTML: { __html: content } })} />
         );
     }, [
         cellType,

@@ -32,7 +32,7 @@ import {
 import { defaultColumnProps } from '../hooks';
 import { Columns, RenderBase, Aggregates } from '../views';
 import { addLastRowBorder, compareSelectedProperties, getObject, parseUnit, setFormatter } from '../utils';
-import { ActionType, FilterEvent, PageEvent, ScrollMode, SearchEvent, SortEvent } from '../types';
+import { ActionType, ColumnType, FilterEvent, PageEvent, ScrollMode, SearchEvent, SortEvent } from '../types';
 
 /**
  * CSS class names used in the component
@@ -76,6 +76,9 @@ export const useRender: <T>() => UseRenderResult<T> = <T, >(): UseRenderResult<T
     const updateColumnTypes: (data: Object) => void = useCallback((data: Object) => {
         let value: string | number | boolean | Object;
         (uiColumns ?? grid.columns).map((newColumn: Partial<IColumnBase<T>>) => {
+            if (!isNullOrUndefined(newColumn.getCommandItems)) {
+                newColumn.type = ColumnType.Command;
+            }
             if (isNullOrUndefined(newColumn.field)) {
                 return newColumn;
             }

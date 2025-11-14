@@ -254,7 +254,7 @@ describe('Grid Inline Editing with Validation and Confirmation Dialogs - Compreh
     const waitForGridRender = async (container: HTMLElement): Promise<void> => {
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull(); // 1
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull(); // 2
+            expect(container.querySelector('.sf-spinner')).toBeNull(); // 2
         }, { timeout: 3000 });
     };
 

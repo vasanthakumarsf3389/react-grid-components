@@ -8,13 +8,14 @@ import { FormValueType } from '@syncfusion/react-inputs';
 import { NumericTextBoxProps, TextBoxProps } from '@syncfusion/react-inputs';
 import { DatePickerProps } from '@syncfusion/react-calendars';
 import { DropDownListProps } from '@syncfusion/react-dropdowns';
+import { CommandColumnProps } from './command.interfaces';
 
 /**
  * Defines the properties for configuring a column in the grid, including layout, behavior, and data binding options.
  * Specifies comprehensive column settings that control appearance, functionality, and user interaction capabilities.
  * Enables customization of sorting, filtering, editing, and display characteristics for individual grid columns.
  */
-export interface ColumnProps<T = unknown> {
+export interface ColumnProps<T = unknown> extends CommandColumnProps {
     /**
      * Defines the field name that maps the column to a specific data source property for data binding operations.
      * Enables sorting and filtering functionality based on the specified field name within the dataset.

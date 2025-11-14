@@ -107,7 +107,7 @@ describe('Grid Scroll Functionality', () => {
 
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         }, {
             timeout: 2000,
             interval: 50

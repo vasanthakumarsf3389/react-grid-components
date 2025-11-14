@@ -15,6 +15,7 @@ import { searchModule, SearchSettings, SearchEvent } from './search.interfaces';
 import { SortSettings, SortModule, SortEvent, SortDescriptor } from '../types/sort.interfaces';
 import { ToolbarAPI } from './toolbar.interfaces';
 import * as React from 'react';
+import { UseCommandColumnResult } from './command.interfaces';
 
 /**
  * IValueFormatter interface defines the methods for value formatting services
@@ -420,6 +421,7 @@ export interface MutableGridBase<T = unknown> {
     totalRecordsCount?: number;
     responseData?: Object;
     setResponseData?: Dispatch<SetStateAction<Object>>;
+    commandColumnModule?: UseCommandColumnResult;
     /**
      * Get the parent element
      */

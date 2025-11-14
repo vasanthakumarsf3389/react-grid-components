@@ -97,7 +97,7 @@ describe('Grid Selection-Editing Interactions', () => {
         // Wait for grid to be fully rendered
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
         
         await waitFor(() => {
@@ -349,7 +349,7 @@ describe('Grid Selection Continuous - Default Mode', () => {
         // Wait for grid to be fully rendered
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
         
         // Wait for gridRef to be populated
@@ -469,7 +469,7 @@ describe('Grid Selection Continuous - Default Mode', () => {
         // Wait for grid to be fully rendered
         await waitFor(() => {
             expect(templateContainer.querySelector('.sf-grid')).not.toBeNull();
-            expect(templateContainer.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(templateContainer.querySelector('.sf-spinner')).toBeNull();
         });
         
         // Wait for gridRef to be populated
@@ -520,7 +520,7 @@ describe('Grid Selection Continuous - Single Mode', () => {
         // Wait for grid to be fully rendered
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
         
         // Wait for gridRef to be populated
@@ -639,7 +639,7 @@ describe('Grid Selection Continuous - Multiple Mode', () => {
         // Wait for grid to be fully rendered
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
         // Wait for gridRef to be populated
         await waitFor(() => {
@@ -848,7 +848,7 @@ describe('Grid Selection Continuous - Event Handling', () => {
         // Wait for grid to be fully rendered
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
         
         // Wait for gridRef to be populated
@@ -914,7 +914,7 @@ describe('Grid Selection Continuous - Event Handling', () => {
         // Wait for grid to be fully rendered
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
         
         // Wait for gridRef to be populated
@@ -960,7 +960,7 @@ describe('Grid Selection Continuous - Event Handling', () => {
         // Wait for grid to be fully rendered
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
         
         // Wait for gridRef to be populated
@@ -1006,7 +1006,7 @@ describe('Grid Selection Continuous - Event Handling', () => {
         // Wait for grid to be fully rendered
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
         
         // Wait for gridRef to be populated
@@ -1058,7 +1058,7 @@ describe('Grid Selection Continuous - Event Handling', () => {
         // Wait for grid to be fully rendered
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
         
         // Wait for gridRef to be populated
@@ -1157,7 +1157,7 @@ describe('Grid Selection Continuous - Event Handling', () => {
         // Wait for grid to be fully rendered
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
         
         // Wait for gridRef to be populated
@@ -1205,7 +1205,7 @@ describe('Grid Selection Continuous - Event Handling', () => {
         // Wait for grid to be fully rendered
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
         
         // Wait for gridRef to be populated
@@ -1253,7 +1253,7 @@ describe('Grid Selection Continuous - Event Handling', () => {
         // Wait for grid to be fully rendered
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
         
         // Wait for gridRef to be populated
@@ -1302,7 +1302,7 @@ describe('Grid Selection Continuous - Event Handling', () => {
         // Wait for grid to be fully rendered
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
         
         // Wait for gridRef to be populated
@@ -1350,7 +1350,7 @@ describe('Grid Selection Continuous - Event Handling', () => {
         // Wait for grid to be fully rendered
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
         
         // Wait for gridRef to be populated
@@ -1407,7 +1407,7 @@ describe('Grid Selection Continuous - Event Handling', () => {
         // Wait for grid to be fully rendered
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
         
         // Wait for gridRef to be populated
@@ -1504,7 +1504,7 @@ describe('Grid Selection – Additional Scenarios', () => {
         // Wait for grid to be fully rendered
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -1546,7 +1546,7 @@ describe('Grid Selection – Additional Scenarios', () => {
         // Wait for grid to be fully rendered
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -1600,7 +1600,7 @@ describe('Grid Selection – Additional Scenarios', () => {
         // Wait for grid to be fully rendered
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -1646,7 +1646,7 @@ describe('Grid Selection – Additional Scenarios', () => {
         // Wait for grid to be fully rendered
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -1696,7 +1696,7 @@ describe('Grid Selection – Additional Scenarios', () => {
         // Wait for grid to be fully rendered
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -1741,7 +1741,7 @@ describe('Grid Selection – Additional Scenarios', () => {
         // Wait for grid to be fully rendered
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -1803,7 +1803,7 @@ describe('Grid Selection – Keyboard & Toggle scenarios', () => {
         // Wait for grid to be fully rendered
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -1843,7 +1843,7 @@ describe('Grid Selection – Keyboard & Toggle scenarios', () => {
         // Wait for grid to be fully rendered
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -1882,7 +1882,7 @@ describe('Grid Selection – Keyboard & Toggle scenarios', () => {
         // Wait for grid to be fully rendered
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -1920,7 +1920,7 @@ describe('Grid Selection – Keyboard & Toggle scenarios', () => {
         // Wait for grid to be fully rendered
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -1959,7 +1959,7 @@ describe('Grid Selection – Keyboard & Toggle scenarios', () => {
         // Wait for grid to be fully rendered
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -2005,7 +2005,7 @@ describe('Grid Selection – Keyboard & Toggle scenarios', () => {
         // Wait for grid to be fully rendered
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -2051,7 +2051,7 @@ describe('Grid Selection – Keyboard & Toggle scenarios', () => {
         
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -2091,7 +2091,7 @@ describe('Grid Selection – Keyboard & Toggle scenarios', () => {
         // Wait for grid to be fully rendered
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -2180,7 +2180,7 @@ describe('Grid Sort-Selection Interactions', () => {
 
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         // Select a row first
@@ -2220,7 +2220,7 @@ describe('Grid Sort-Selection Interactions', () => {
 
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         // Select multiple rows
@@ -2265,7 +2265,7 @@ describe('Grid Sort-Selection Interactions', () => {
 
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         // Select a row
@@ -2305,7 +2305,7 @@ describe('Grid Sort-Selection Interactions', () => {
 
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -2354,7 +2354,7 @@ describe('Grid Sort-Selection Interactions', () => {
 
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -2428,7 +2428,7 @@ describe('Grid Sort-Selection Interactions', () => {
 
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         // Sort first
@@ -2469,7 +2469,7 @@ describe('Grid Sort-Selection Interactions', () => {
 
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -2524,7 +2524,7 @@ describe('Grid Sort-Selection Interactions', () => {
 
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -2612,7 +2612,7 @@ describe('Grid Selection Event Arguments', () => {
 
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -2663,7 +2663,7 @@ describe('Grid Selection Event Arguments', () => {
 
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -2703,7 +2703,7 @@ describe('Grid Selection Event Arguments', () => {
 
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -2743,7 +2743,7 @@ describe('Grid Selection Event Arguments', () => {
 
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -2818,7 +2818,7 @@ describe('Grid Filter-Selection Interactions', () => {
 
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         // Select a row first
@@ -2858,7 +2858,7 @@ describe('Grid Filter-Selection Interactions', () => {
 
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         // Select multiple rows
@@ -2898,7 +2898,7 @@ describe('Grid Filter-Selection Interactions', () => {
 
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -2947,7 +2947,7 @@ describe('Grid Filter-Selection Interactions', () => {
 
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -3022,7 +3022,7 @@ describe('Grid Filter-Selection Interactions', () => {
 
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -3039,7 +3039,9 @@ describe('Grid Filter-Selection Interactions', () => {
         await waitFor(() => {
             expect(gridRef.current.filterSettings.columns.length).toBe(1);
         });
-
+        await waitFor(() => {
+            expect(container.querySelector('.sf-spinner')).toBeNull();
+        });
         // Select first row
         await act(async () => {
             if (gridRef.current) {
@@ -3054,7 +3056,7 @@ describe('Grid Filter-Selection Interactions', () => {
         // Use keyboard to select next row (Shift+Down)
         await act(async () => {
             if (gridRef.current) {
-                fireEvent.keyDown(gridRef.current.element, { key: 'ArrowDown', code: 'ArrowDown', shiftKey: true });
+                fireEvent.keyDown(gridRef.current.getRows()[0].querySelector('.sf-grid-content-row .sf-cell'), { key: 'ArrowDown', code: 'ArrowDown', shiftKey: true });
                 await new Promise(resolve => setTimeout(resolve, 50));
             }
         });
@@ -3096,7 +3098,7 @@ describe('Grid Filter-Selection Interactions', () => {
 
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         // Apply filter and make selection
@@ -3177,7 +3179,7 @@ describe('Grid Paging-Selection Interactions', () => {
 
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         // Select a row on first page
@@ -3217,7 +3219,7 @@ describe('Grid Paging-Selection Interactions', () => {
 
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         // Select multiple rows
@@ -3262,7 +3264,7 @@ describe('Grid Paging-Selection Interactions', () => {
 
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         // Select a row with paging disabled
@@ -3316,7 +3318,7 @@ describe('Grid Paging-Selection Interactions', () => {
 
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         // Select multiple rows
@@ -3356,7 +3358,7 @@ describe('Grid Paging-Selection Interactions', () => {
 
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         // Select last row of first page with keyboard
@@ -3441,7 +3443,7 @@ describe('Grid Search-Selection Interactions', () => {
 
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -3483,7 +3485,7 @@ describe('Grid Search-Selection Interactions', () => {
 
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -3492,6 +3494,10 @@ describe('Grid Search-Selection Interactions', () => {
         await act(async () => {
             gridRef.current.search('TOM');
             await new Promise(resolve => setTimeout(resolve, 500));
+        });
+
+        await waitFor(() => {
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         // Select row from search results
@@ -3507,6 +3513,10 @@ describe('Grid Search-Selection Interactions', () => {
         await act(async () => {
             gridRef.current.search('VIN');
             await new Promise(resolve => setTimeout(resolve, 500));
+        });
+
+        await waitFor(() => {
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         // Selection should be cleared
@@ -3540,7 +3550,7 @@ describe('Grid Search-Selection Interactions', () => {
 
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -3549,6 +3559,10 @@ describe('Grid Search-Selection Interactions', () => {
         await act(async () => {
             gridRef.current.search('T'); // Should match TOMSP, VICTE
             await new Promise(resolve => setTimeout(resolve, 500));
+        });
+
+        await waitFor(() => {
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         // Select first row
@@ -3599,7 +3613,7 @@ describe('Grid Search-Selection Interactions', () => {
 
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -3649,7 +3663,7 @@ describe('Grid Search-Selection Interactions', () => {
 
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => { expect(gridRef.current).not.toBeNull(); });
@@ -3727,7 +3741,7 @@ describe('Grid Toolbar & Selection Integration', () => {
         // Wait for grid and toolbar to render
         await waitFor(() => {
             expect(container.querySelector('.sf-grid')).not.toBeNull();
-            expect(container.querySelector('.sf-spin-hide')).not.toBeNull();
+            expect(container.querySelector('.sf-spinner')).toBeNull();
         });
 
         await waitFor(() => {

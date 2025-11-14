@@ -152,7 +152,15 @@ export enum ColumnType {
      *
      * @default 'dateTime'
      */
-    DateTime = 'dateTime'
+    DateTime = 'dateTime',
+
+    /**
+     * Represents a special column type for rendering command buttons (Edit, Delete, Update, Cancel).
+     * Used to define a column that displays action buttons instead of data values.
+     *
+     * @default 'command'
+     */
+    Command = 'command'
 }
 
 /**
@@ -749,6 +757,63 @@ export enum KeyboardKeys {
     DELETE = 'Delete',
     CTRL_HOME = 'Home',
     CTRL_END = 'End'
+}
+
+/**
+ * Enumerates the types of command items (action buttons) available in a command column.
+ * Defines the built-in command button types that can be displayed within grid rows for CRUD operations.
+ *
+ * @default -
+ * @example
+ * ```tsx
+ * // Using command item types in a command column
+ * const getCommandItems = (event: CommandItemEvent) => [
+ *   <CommandItem type={CommandItemType.Edit} />,
+ *   <CommandItem type={CommandItemType.Delete} />
+ * ];
+ *
+ * // In a grid configuration
+ * <Grid>
+ *   <Column
+ *     field="command"
+ *     type={ColumnType.Command}
+ *     getCommandItems={getCommandItems}
+ *   />
+ * </Grid>
+ * ```
+ */
+export enum CommandItemType {
+    /**
+     * Represents an "Edit" command button.
+     * Used in normal (non-edit) row mode to initiate editing.
+     *
+     * @default 0
+     */
+    Edit,
+
+    /**
+     * Represents a "Delete" command button.
+     * Used in normal (non-edit) row mode to delete the record.
+     *
+     * @default 1
+     */
+    Delete,
+
+    /**
+     * Represents an "Update" (Save) command button.
+     * Used in edit mode to save changes to the record.
+     *
+     * @default 2
+     */
+    Update,
+
+    /**
+     * Represents a "Cancel" command button.
+     * Used in edit mode to discard changes and exit editing.
+     *
+     * @default 3
+     */
+    Cancel
 }
 export enum ScrollMode {
     Virtual = 'Virtual',

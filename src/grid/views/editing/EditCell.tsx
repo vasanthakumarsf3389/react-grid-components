@@ -31,14 +31,16 @@ export const EditCell: <T>(props: EditCellProps<T> & RefAttributes<EditCellRef>)
         onFocus,
         isAdd,
         disabled,
-        formState
+        formState,
+        rowObject
     }: EditCellProps<T>, ref: React.ForwardedRef<EditCellRef>) => {
         // Type for component refs that can be either native HTML elements or Syncfusion components
         const inputRef: RefObject<EditCellInputRef> = useRef<EditCellInputRef>(null);
 
         // Access grid context to get complete dataSource for dropdown
         const gridContext: Partial<GridRef<T>> & Partial<MutableGridSetter<T>> = useGridComputedProvider<T>();
-        const { cssClass } = useGridMutableProvider();
+        const { cssClass, commandColumnModule } = useGridMutableProvider();
+        const { commandEdit } = commandColumnModule;
         const dataSource: T[] | DataManager | DataResult = gridContext.dataSource;
 
         /**
@@ -69,7 +71,7 @@ export const EditCell: <T>(props: EditCellProps<T> & RefAttributes<EditCellRef>)
                     const element: HTMLElement = currentInput.element as HTMLElement;
                     if (element && typeof element.querySelector === 'function') {
                         if (element && !element.hasAttribute('disabled') && !(element.hasAttribute('readonly') && !element.classList.contains('sf-dropdownlist')) && typeof element.focus === 'function') {
-                            (element.classList.contains('sf-date-wrapper') ? element.querySelector('input') : element).focus();
+                            ((element.classList.contains('sf-date-wrapper') || element.classList.contains('sf-datepicker')) ? element.querySelector('input') : element).focus();
                         }
                     }
                     else if (element && !element.hasAttribute('disabled') && !element.hasAttribute('readonly') && typeof element.focus === 'function') {
@@ -148,7 +150,7 @@ export const EditCell: <T>(props: EditCellProps<T> & RefAttributes<EditCellRef>)
                 const isDisabled: boolean = disabled || column.allowEdit === false || (column.isPrimaryKey === true && !isAdd);
                 const baseProps: {[key: string]: string | number | boolean} = {
                     'data-mappinguid': column.uid,
-                    'id': `grid-edit-${column.field}`
+                    'id': `${commandEdit.current ? rowObject.uid + '-' : ''}grid-edit-${column.field}`
                 };
 
                 switch (editorType) {

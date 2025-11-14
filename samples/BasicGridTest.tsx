@@ -4,7 +4,7 @@ import { DataManager, DataResult, DataUtil, Predicate, Query } from '@syncfusion
 import { Button } from '@syncfusion/react-buttons';
 // import { L10n, loadCldr, setCulture } from '@syncfusion/react-base';
 import './sample.css';
-import { AggregateColumnProps, ClipMode, DataRequestEvent, DataChangeRequestEvent, ColumnEditParams, EditType, getObject, Grid, GridLine, GridRef, RowInfo, TextAlign, ToolbarItems, WrapMode, ColumnTemplateProps, ValueAccessorProps, RowClassProps, ValueType, CellClassProps, CellType, RowType, FilterBarType, AggregateData, CustomAggregateData, PageEvent, FilterEvent, SortEvent, FormRenderEvent, SaveEvent, DeleteEvent, SelectionMode, RowAddEvent, RowEditEvent, SearchSettings, ScrollMode, VirtualizationSettings } from '../src/index';
+import { AggregateColumnProps, ClipMode, DataRequestEvent, DataChangeRequestEvent, ColumnEditParams, EditType, getObject, Grid, GridLine, GridRef, RowInfo, TextAlign, ToolbarItems, WrapMode, ColumnTemplateProps, ValueAccessorProps, RowClassProps, ValueType, CellClassProps, CellType, RowType, FilterBarType, AggregateData, CustomAggregateData, PageEvent, FilterEvent, SortEvent, FormRenderEvent, SaveEvent, DeleteEvent, SelectionMode, CommandItemEvent, CommandItemType, CommandItem, RowAddEvent, RowEditEvent, SearchSettings, ScrollMode, VirtualizationSettings } from '../src/index';
 import { AggregateColumn, AggregateRow, Aggregates, Column, EditTemplateProps } from '../src/index';
 import { Columns } from '../src/index';
 import { CustomBindingData, DynamicDataItem } from './data';
@@ -94,6 +94,7 @@ export interface GridBaseTestProps {
   showSalary?: boolean;
   showCost?: boolean;
   customBindingAggregates?: boolean;
+  showCommandEditing?: boolean;
 }
 
 export const GridBaseTest: React.FC<GridBaseTestProps> = ({
@@ -163,7 +164,8 @@ export const GridBaseTest: React.FC<GridBaseTestProps> = ({
   showAggregates = false,
   showSalary = false,
   showCost = false,
-  customBindingAggregates = false
+  customBindingAggregates = false,
+  showCommandEditing = false
 }) => {
     const gridRef = useRef<GridRef<DynamicDataItem>>(null);
   const [showSpinner, setShowSpinner] = useState(initialShowSpinner);
@@ -546,7 +548,7 @@ export const GridBaseTest: React.FC<GridBaseTestProps> = ({
               dataSource={data}
               allowKeyboard={allowKeyboard}
               virtualizationSettings={virtualizationSettings}
-              // rowClass={rowClass}
+              rowClass={rowClass}
               // dataSource={editableData}
               toolbar={toolbar}
               scrollMode={scrollMode}
@@ -882,6 +884,19 @@ export const GridBaseTest: React.FC<GridBaseTestProps> = ({
                     allowEdit={false}
                     editTemplate={shipNameEditTemplate}
                   />
+                <Column
+                  headerText='Command Actions'
+                  width={300}
+                  visible={showCommandEditing}
+                  getCommandItems={(args: CommandItemEvent) => {
+                    return [
+                      <CommandItem type={CommandItemType.Edit} />,
+                      <CommandItem type={CommandItemType.Delete} />,
+                      <CommandItem type={CommandItemType.Update} />,
+                      <CommandItem type={CommandItemType.Cancel} />,
+                    ];
+                  }}
+                />
               </Columns>
               {showAggregates && <Aggregates>
                 <AggregateRow>

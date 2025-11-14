@@ -1,4 +1,4 @@
-import { memo, useRef, useEffect, useCallback, forwardRef, useMemo, useState, useImperativeHandle, CSSProperties, JSX, RefAttributes, ReactElement } from 'react';
+import { memo, useRef, useEffect, useCallback, forwardRef, useMemo, useState, useImperativeHandle, CSSProperties, JSX, RefAttributes, ReactElement, RefObject } from 'react';
 import { FieldValidationRules, Form, FormField, FormState, FormValueType, IFormValidator, ValidationRules } from '@syncfusion/react-inputs';
 import { EditCell, ValidationTooltips } from '../index';
 import { EditCellRef, InlineEditFormProps, InlineEditFormRef } from '../../types/edit.interfaces';
@@ -8,6 +8,7 @@ import { ColumnProps, ColumnValidationParams, IColumnBase } from '../../types/co
 import { getObject } from '../../utils';
 import { DataUtil } from '@syncfusion/react-data';
 import { isNullOrUndefined, isUndefined } from '@syncfusion/react-base';
+import { CommandColumnBase } from '../../components/CommandColumn';
 
 /**
  * InlineEditForm component that prevents unnecessary re-renders during typing
@@ -28,7 +29,8 @@ export const InlineEditForm: <T>(props: InlineEditFormProps<T> & RefAttributes<I
         rowUid,
         template: CustomTemplate,
         disabled = false,
-        isAddOperation
+        isAddOperation,
+        rowObject
     }: InlineEditFormProps<T>, ref: React.ForwardedRef<InlineEditFormRef<T>>) => {
         // Use refs to store stable callback references
         const onFieldChangeRef: React.RefObject<((field: string, value: ValueType | null) => void) |
@@ -46,11 +48,13 @@ export const InlineEditForm: <T>(props: InlineEditFormProps<T> & RefAttributes<I
                 onFieldChangeRef.current?.(field, value);
             }, []);
 
+        const rowRef: RefObject<HTMLTableRowElement> = useRef<HTMLTableRowElement>(null);
         const formRef: React.RefObject<IFormValidator> = useRef<IFormValidator>(null);
         const editCellRefs: React.RefObject<{ [field in keyof T]?: EditCellRef }> = useRef<{ [field in keyof T]?: EditCellRef }>({});
         const { rowHeight, id, getVisibleColumns, serviceLocator, editModule, contentPanelRef, contentTableRef,
             height, scrollModule, virtualizationSettings } = useGridComputedProvider<T>();
-        const { colElements: ColElements, cssClass, offsetX } = useGridMutableProvider<T>();
+        const { colElements: ColElements, cssClass, focusModule, commandColumnModule, offsetX } = useGridMutableProvider<T>();
+        const { commandEdit } = commandColumnModule;
         const formatter: IValueFormatter = serviceLocator?.getService<IValueFormatter>('valueFormatter');
 
         /**
@@ -222,15 +226,15 @@ export const InlineEditForm: <T>(props: InlineEditFormProps<T> & RefAttributes<I
          * For add operations, primary key fields should be focused first
          * For edit operations, skip primary key fields (they're disabled)
          */
-        const focusFirstField: () => void = useCallback(() => {
+        const focusFirstField: (last?: boolean, edit?: boolean) => void = useCallback((last?: boolean, edit?: boolean) => {
             let firstEditableColumn: ColumnProps<T> | undefined;
 
             if (isAddOperation) {
                 // For add operations, primary key fields are enabled and should be focused first
-                firstEditableColumn = columns.find((col: ColumnProps<T>) =>
-                    col.allowEdit !== false && col.visible &&
-                    col.field &&
-                    col.isPrimaryKey === true
+                firstEditableColumn = (last ? [...columns].reverse() : columns).find((col: ColumnProps<T>) =>
+                    (col.allowEdit !== false || col.getCommandItems) && col.visible &&
+                    (col.field || col.getCommandItems) &&
+                    (col.isPrimaryKey === true || edit)
                 );
 
                 // If no primary key field found, find the first non-primary key editable field
@@ -244,26 +248,33 @@ export const InlineEditForm: <T>(props: InlineEditFormProps<T> & RefAttributes<I
             } else {
                 // For edit operations, skip primary key fields (they're disabled)
                 // Focus the first non-primary key editable field
-                if (editModule.focusLastField.current) {
+                if (editModule.focusLastField.current || last) {
                     firstEditableColumn = [...columns].reverse().find((col: ColumnProps<T>) =>
-                        col.allowEdit !== false && col.visible &&
+                        (col.allowEdit !== false || col.getCommandItems) && col.visible &&
                         !col.isPrimaryKey &&
-                        col.field
+                        (col.field || col.getCommandItems)
                     );
                 } else {
                     firstEditableColumn = columns.find((col: ColumnProps<T>) =>
-                        col.allowEdit !== false && col.visible &&
+                        (col.allowEdit !== false || col.getCommandItems) && col.visible &&
                         !col.isPrimaryKey &&
-                        col.field
+                        (col.field || col.getCommandItems)
                     );
                 }
                 editModule.focusLastField.current = false;
             }
 
-            if (firstEditableColumn && editCellRefs.current[firstEditableColumn.field]) {
+            if ((firstEditableColumn && editCellRefs.current[firstEditableColumn.field]) || firstEditableColumn?.getCommandItems) {
                 requestAnimationFrame(() => {
                     setTimeout(() => {
-                        editCellRefs?.current?.[firstEditableColumn?.field]?.focus?.();
+                        focusModule.removeFocusTabIndex();
+                        focusModule.setGridFocus(true);
+                        if (firstEditableColumn?.getCommandItems) {
+                            const commandItems: HTMLElement[] = focusModule.getCommandItems(rowRef.current.querySelector('.sf-grid-command-cell'));
+                            (last ? commandItems[commandItems.length - 1] : commandItems[0]).focus();
+                        } else {
+                            editCellRefs?.current?.[firstEditableColumn?.field]?.focus?.();
+                        }
                     }, 0);
                 });
             }
@@ -400,6 +411,7 @@ export const InlineEditForm: <T>(props: InlineEditFormProps<T> & RefAttributes<I
          * Expose imperative methods via ref
          */
         useImperativeHandle(ref, () => ({
+            rowRef: rowRef,
             focusFirstField,
             validateForm,
             getEditCells,
@@ -417,23 +429,23 @@ export const InlineEditForm: <T>(props: InlineEditFormProps<T> & RefAttributes<I
          * and automatically saves the form while maintaining proper focus management
          * For add operations, include primary key fields in boundary detection
          */
-        const handleTabBoundaryNavigation: (event: KeyboardEvent, currentField: string) => boolean =
-            useCallback((event: KeyboardEvent, currentField: string) => {
+        const handleTabBoundaryNavigation: (event: React.KeyboardEvent, currentField: string) => boolean =
+            useCallback((event: React.KeyboardEvent, currentField: string) => {
                 // Get editable columns based on operation type
                 let editableColumns: ColumnProps<T>[];
 
                 if (isAddOperation) {
                     // For add operations, include primary key fields (they're enabled)
                     editableColumns = columns.filter((col: ColumnProps<T>) =>
-                        col.allowEdit !== false &&
-                        col.field
+                        (col.allowEdit !== false || col.getCommandItems) &&
+                        (col.field || col.getCommandItems)
                     );
                 } else {
                     // For edit operations, exclude primary key fields (they're disabled)
                     editableColumns = columns.filter((col: ColumnProps<T>) =>
-                        col.allowEdit !== false && col.visible &&
+                        (col.allowEdit !== false || col.getCommandItems) && col.visible &&
                         !col.isPrimaryKey &&
-                        col.field
+                        (col.field || col.getCommandItems)
                     );
                 }
 
@@ -442,14 +454,18 @@ export const InlineEditForm: <T>(props: InlineEditFormProps<T> & RefAttributes<I
                 if (currentIndex === -1) {
                     return false;
                 }
-
+                const commandItem: boolean = focusModule.isNextCommandItem(event);
                 const isTabForward: boolean = event.key === 'Tab' && !event.shiftKey;
                 const isTabBackward: boolean = event.key === 'Tab' && event.shiftKey;
-                const isLastField: boolean = currentIndex === editableColumns.length - 1;
-                const isFirstField: boolean = currentIndex === 0;
+                const isLastField: boolean = currentIndex === editableColumns.length - 1 && !commandItem;
+                const isFirstField: boolean = currentIndex === 0 && !commandItem;
 
                 // Detect boundary conditions for auto-save
                 if ((isTabForward && isLastField) || (isTabBackward && isFirstField)) {
+                    if (commandEdit.current) {
+                        focusModule.editToRow(event);
+                        return false;
+                    }
                     // Track Tab direction for proper focus management
                     lastTabDirectionRef.current = isTabForward;
 
@@ -471,7 +487,7 @@ export const InlineEditForm: <T>(props: InlineEditFormProps<T> & RefAttributes<I
                 }
 
                 return false; // Indicate that normal Tab navigation should continue
-            }, [columns, isAddOperation, onSave]);
+            }, [columns, isAddOperation, onSave, focusModule]);
 
         /**
          * Render edit cells with proper data binding
@@ -492,12 +508,14 @@ export const InlineEditForm: <T>(props: InlineEditFormProps<T> & RefAttributes<I
                 // Let EditCell handle undefined values appropriately for each input type
                 const fieldError: string = validationErrors[column.field];
 
+                const commandColumn: boolean = !isNullOrUndefined(column.getCommandItems);
+
                 if (!isEditable) {
                     return column.visible ? (
                         <td
                             key={`edit-cell-${column.field || index}`}
                             className={'sf-cell sf-grid-edit-cell sf-edit-disabled' + (isAddOperation && isLastRow ? ' sf-last-row' : '') +
-                                (!isAddOperation && isLastRow ? ' sf-last-cell' : '')}
+                                (!isAddOperation && isLastRow ? ' sf-last-cell' : '') + (commandColumn ? ' sf-grid-command-cell' : '')}
                             data-mappinguid={column.uid}
                             role='gridcell'
                             aria-colindex={index + 1}
@@ -506,23 +524,28 @@ export const InlineEditForm: <T>(props: InlineEditFormProps<T> & RefAttributes<I
                                 textAlign: (column.textAlign?.toLowerCase() as CSSProperties['textAlign'])
                             }}
                         >
-                            <FormField name={column.field}>
-                                <EditCell<T>
-                                    ref={(cellRef: EditCellRef | null) => storeEditCellRef(column.field, cellRef)}
-                                    column={{ ...column, allowEdit: false }}
-                                    value={getObject(column.field, formState?.values) ?? formState?.values?.[column.field]}
-                                    data={internalData as T}
-                                    error={formState?.errors[column.field]}
-                                    onChange={handleFieldChange.bind(null, column)}
-                                    onBlur={handleFieldBlur.bind(null, column)}
-                                    disabled={disabled}
-                                    onFocus={() => {
-                                        formState?.onFocus?.(column.field);
-                                    }}
-                                    isAdd={isAddOperation}
-                                    formState={formState}
-                                />
-                            </FormField>
+                            {commandColumn ?
+                                <CommandColumnBase row={rowObject} column={column} />
+                                :
+                                <FormField name={column.field}>
+                                    <EditCell<T>
+                                        ref={(cellRef: EditCellRef | null) => storeEditCellRef(column.field, cellRef)}
+                                        column={{ ...column, allowEdit: false }}
+                                        value={getObject(column.field, formState?.values) ?? formState?.values?.[column.field]}
+                                        data={internalData as T}
+                                        error={formState?.errors[column.field]}
+                                        onChange={handleFieldChange.bind(null, column)}
+                                        onBlur={handleFieldBlur.bind(null, column)}
+                                        disabled={disabled}
+                                        onFocus={() => {
+                                            formState?.onFocus?.(column.field);
+                                        }}
+                                        isAdd={isAddOperation}
+                                        formState={formState}
+                                        rowObject={rowObject}
+                                    />
+                                </FormField>
+                            }
                         </td>
                     ) : (
                         <td
@@ -561,6 +584,7 @@ export const InlineEditForm: <T>(props: InlineEditFormProps<T> & RefAttributes<I
                                 }}
                                 isAdd={isAddOperation}
                                 formState={formState}
+                                rowObject={rowObject}
                             />
                         </FormField>
                     </td>
@@ -659,7 +683,7 @@ export const InlineEditForm: <T>(props: InlineEditFormProps<T> & RefAttributes<I
             return () => {
                 formRef.current?.element?.removeEventListener('editCellTab', handleTabEvent as EventListener);
             };
-        }, [handleTabBoundaryNavigation]);
+        }, [handleTabBoundaryNavigation, focusModule]);
 
         /**
          * Enhanced focus management for proper auto-focus behavior
@@ -752,6 +776,7 @@ export const InlineEditForm: <T>(props: InlineEditFormProps<T> & RefAttributes<I
 
         return rowUid ? (
             <tr
+                ref={rowRef}
                 className={'sf-grid-content-row ' + (rowUid.includes('grid-add-row') ? 'sf-grid-add-row' : 'sf-grid-edit-row')}
                 aria-rowindex={editRowIndex + 1}
                 data-uid={rowUid}
@@ -790,7 +815,7 @@ export const InlineEditForm: <T>(props: InlineEditFormProps<T> & RefAttributes<I
                         </table>
 
                         {formState && Object.keys(formState.errors).length > 0 && (
-                            <ValidationTooltips formState={formState} editCellRefs={editCellRefs} />
+                            <ValidationTooltips formState={formState} editCellRefs={editCellRefs} rowRef={rowRef} />
                         )}
                     </Form>
                 </td>
